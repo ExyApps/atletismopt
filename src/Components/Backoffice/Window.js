@@ -2,14 +2,7 @@ import React from 'react';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Card from '@mui/material/Card';
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
-import { Checkbox, Collapse, IconButton } from '@mui/material';
-import CircularProgress from '@mui/material/CircularProgress';
-
-import { TiKeyOutline } from "react-icons/ti";
-
+import { Checkbox, Collapse, IconButton, Tooltip } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -18,20 +11,40 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
+import Divider from '@mui/material/Divider';
+
+import SaveRoundedIcon from '@mui/icons-material/SaveRounded';
+import FilterListRoundedIcon from '@mui/icons-material/FilterListRounded';
+import ArrowDropDownRoundedIcon from '@mui/icons-material/ArrowDropDownRounded';
+import ArrowDropUpRoundedIcon from '@mui/icons-material/ArrowDropUpRounded';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import CloseIcon from '@mui/icons-material/Close';
+
+import { VscTextSize } from "react-icons/vsc";
+import { MdCalendarMonth } from "react-icons/md";
+import { MdAccessTime } from "react-icons/md";
+import { Md123 } from "react-icons/md";
+import { MdOutlineCheckBox } from "react-icons/md";
+import { TiKeyOutline } from "react-icons/ti";
 
 import styled from '@mui/material/styles/styled';
 import tableCellClasses from '@mui/material/TableCell/tableCellClasses';
 
-import { makeQueryDB } from '../../Utils/Communication/Communication';
+import { getResults } from '../../Utils/Communication/Communication';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
       backgroundColor: "#281e37",
       color: theme.palette.common.white,
-      padding: "5px 5px"
+      padding: "5px 5px",
+      fontSize: 12,
+      fontWeight: "bold",
+      cursor: "pointer",
+      userSelect: "none",
     },
     [`&.${tableCellClasses.body}`]: {
-      fontSize: 14,
+      fontSize: 12,
       padding: "5px 5px",
     },
   }));
@@ -50,57 +63,41 @@ export default class Window extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            queryWindow: true,
+            structure: props.structure,
+            relations: props.relations,
+            request: {},
+
             queryLoading: false,
-            queryComplete: false,
+
             queryResult: [],
+            completeQueryResult: [],
 
-            parent: props.parent,
-
-            mainTable: "",
-            mainTableColumns: {},
-            mainTableOpen: true,
-
-            tablePage: 0,
-            rowsPerPage: 5,
-        }
-    }
-
-    addTable(table) {
-        if (!this.state.queryWindow) return;
-
-        var mainTableColumns = {};
-        for (var column in this.state.parent.state.structure[table]) {
-            var columnName = this.state.parent.state.structure[table][column]["name"];
-            mainTableColumns[columnName] = true;
-        }
-        this.setState({
-            mainTable: table,
-            mainTableColumns: mainTableColumns,
-        });
-    }
-
-    async makeQuery() {
-        this.setState({
-            queryLoading: true,
-        });
-
-        var queryResult = await makeQueryDB(
-            this.state.mainTable,
-            this.state.mainTableColumns
-        );
-
-        this.setState({
-            queryLoading: false,
-            queryResult: queryResult["data"],
-            queryWindow: false,
             tablePage: 0,
             rowsPerPage: 10,
-            queryComplete: true
-        });
+
+            sortingColumn: "id",
+            sortingDirection: 1
+        }
+
+        this.filters = React.createRef();
     }
 
-    handleChangePage(event, newPage) {
+    getIconColumn(columnType) {
+        if (columnType.includes("VARCHAR")) {
+            return <VscTextSize size={15} color={"#aaa"} />
+        } else if (columnType.includes("DATE")) {
+            return <MdCalendarMonth size={15} color={"#aaa"} />
+        } else if (columnType.includes("TIME")) {
+            return <MdAccessTime  size={15} color={"#aaa"} />
+        } else if (columnType.includes("INT") || columnType.includes("FLOAT") || columnType.includes("DOUBLE")) {
+            return <Md123 size={23} color={"#aaa"} />
+        } else if (columnType.includes("BOOL")) {
+            return <MdOutlineCheckBox size={15} color={"#aaa"} />
+        }
+        return null;
+    }
+
+    handleChangePage(_, newPage) {
         this.setState({
             tablePage: newPage
         });
@@ -113,29 +110,132 @@ export default class Window extends React.Component {
         });
     }
 
-    render() {
+    sortRows() {
+        var queryResult = this.state.queryResult;
+        var sortingColumn = this.state.sortingColumn;
+        var sortingDirection = this.state.sortingDirection;
 
-        if (!this.state.pageWindow) {
-            console.log(this.state.parent.state.structure);
-            console.log(this.state.parent.state.structure[this.state.mainTable]);
+        queryResult.sort((a, b) => {
+            if (sortingDirection === 1) {
+                if (a[sortingColumn] < b[sortingColumn]) return -1;
+                if (a[sortingColumn] > b[sortingColumn]) return 1;
+                return 0;
+            } else {
+                if (a[sortingColumn] > b[sortingColumn]) return -1;
+                if (a[sortingColumn] < b[sortingColumn]) return 1;
+                return 0;
+            }
+        });
+
+        this.setState({
+            queryResult: queryResult,
+        });
+    }
+
+    handleHeaderClick(column) {
+        var previousSortingColumn = this.state.sortingColumn;
+        var previousSortingDirection = this.state.sortingDirection;
+
+        var newSortingDirection = 1;
+        var newSortingColumn = column;
+
+        if (previousSortingColumn === column) {
+            newSortingDirection = previousSortingDirection * -1;
         }
+        
+        this.setState({
+            sortingColumn: newSortingColumn,
+            sortingDirection: newSortingDirection,
+        }, () => this.sortRows());
+    }
 
-        return (
+    dropEvent(e) {
+        e.preventDefault();
+        var data = e.dataTransfer.getData("text/plain");
+        var request = this.state.request;
+
+        if (Object.keys(request).includes(data)) {
+            return;
+        }
+        
+        var fields = this.state.structure[data].map((field) => {
+            return {
+                "name": field["name"],
+                "type": field["type"],
+                "primary_key": field["primary_key"],
+                "checked": true,
+            }
+        });
+
+        request[data] = {
+            table: data,
+            open: false,
+            fields: fields
+        };
+
+        this.setState({
+            request: request,
+        });
+    }
+
+    async getTableInfo() {
+
+        this.setState({
+            queryLoading: true,
+        });
+
+        var data = await getResults(this.state.request);
+        var results = data["results"];
+
+        var firstPrimaryColumn = null;
+
+        Object.keys(this.state.request).map((table, index) => {
+            var fields = this.state.request[table].fields;
+            return fields.map((field, fIndex) => {
+                if (field["checked"]) {
+                    if (field["primary_key"] > 0) {
+                        firstPrimaryColumn = `${table}$${field["name"]}`;
+                    }
+                    return null;
+                }
+                return null;
+            })
+        });
+
+        this.setState({
+            completeQueryResult: results,
+            queryResult: results,
+            queryLoading: false,
+            sortingColumn: firstPrimaryColumn,
+            sortingDirection: 1,
+        });
+    }
+
+    render() {
+        return (  
             <Box
                 sx={{
                     display: "flex",
                     flexDirection: "row",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    width: "100%",
                     height: "100%",
+                    width: "100%",
                 }}
             >
-            {
-                this.state.queryLoading
-                ? <CircularProgress />
-                : this.state.queryWindow
-                    ? <Box
+                <Box
+                    sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        height: "calc(100vh - 5rem)",
+                        width: "100%",
+                        padding: "10px",
+                        borderRadius: "5px",
+                        backgroundColor: "#eee",
+                        border: "1px solid #bbb",
+                    }}
+                >
+                    <Box
                         sx={{
                             width: "100%",
                             height: "100%",
@@ -151,42 +251,12 @@ export default class Window extends React.Component {
                                 alignItems: "center",
                             }}
                         >
-                            <span>Query:</span>
-                            <Box>
-                                {
-                                    this.state.queryComplete
-                                    ? <Button
-                                        sx={{
-                                            p: 0,
-                                            textTransform: "none",
-                                            mr: "2rem"
-                                        }}
-                                        onClick={() => this.setState({queryWindow: false})}
-                                    >
-                                        Ver Resultados
-                                    </Button>
-                                    : null
-                                }
-
-                                <Button
-                                    sx={{
-                                        p: 0,
-                                        textTransform: "none",
-                                    }}
-                                    onClick={() => this.makeQuery()}
-                                >
-                                    Executar
-                                </Button>
-
+                            <Box
+                                sx={{display: "flex", flexDirection: "row", alignItems: "center"}}
+                            >
+                                <span>Resultados:</span>
                             </Box>
 
-                        </Box>
-                        <Box
-                            sx={{
-                                mt: "0.75rem",
-                                ml: "1rem",
-                            }}
-                        >
                             <Box
                                 sx={{
                                     display: "flex",
@@ -194,115 +264,36 @@ export default class Window extends React.Component {
                                     alignItems: "center",
                                 }}
                             >
-                                <span style={{fontSize: "13px"}}>Tabela Principal:</span>
-                                <Card
-                                    sx={{
-                                        m: "0px 0.5rem",
-                                        p: "2px 7px",
-                                    }}
-                                >
-                                    <p style={{fontSize: "13px", margin: "0px"}}>{this.state.mainTable}</p>
-                                </Card>
-                                {
-                                    this.state.mainTable === ""
-                                    ? null
-                                    : <IconButton
-                                        onClick={() => {
-                                            this.setState({
-                                                mainTableOpen: !this.state.mainTableOpen
-                                            })
+                                <Tooltip title="Filtros" placement='top'>
+                                    <IconButton
+                                        sx={{
+                                            p: 0,
+                                            m: 0,
+                                            ml: "1rem"
                                         }}
+                                        onClick={() => alert("Filtros")}
+                                        color="primary"
                                     >
-                                        {
-                                            this.state.mainTableOpen ? <ExpandLess /> : <ExpandMore />
-                                        }
+                                        <FilterListRoundedIcon />
                                     </IconButton>
-                                }
+                                </Tooltip>
+
+                                <Tooltip title="Guardar" placement='top'>
+                                    <IconButton
+                                        disabled
+                                        sx={{
+                                            p: 0,
+                                            m: 0,
+                                            ml: "1rem"
+                                        }}
+                                        onClick={() => alert("Guardar alterações")}
+                                        color="primary"
+                                    >
+                                        <SaveRoundedIcon />
+                                    </IconButton>
+                                </Tooltip>
 
                             </Box>
-                            {
-                                this.state.mainTable !== ""
-                                ? <Collapse in={this.state.mainTableOpen} timeout="auto" unmountOnExit>
-                                    <Box
-                                        sx={{
-                                            display: "flex",
-                                            flexDirection: "column",
-                                            alignItems: "flex-start",
-                                            ml: "1rem",
-                                        }}
-                                    >
-                                        {
-                                            Object.keys(this.state.parent.state.structure[this.state.mainTable]).map((column) => {
-                                                var columnDict = this.state.parent.state.structure[this.state.mainTable][column];
-                                                return (
-                                                    <Box
-                                                        sx={{
-                                                            display: "flex",
-                                                            flexDirection: "row",
-                                                            alignItems: "center",
-                                                            mt: "0.5rem",
-                                                        }}
-                                                    >
-                                                        <Checkbox
-                                                            disabled={columnDict["primary_key"] === 1}
-                                                            checked={this.state.mainTableColumns[columnDict["name"]]}
-                                                            onChange={() => {
-                                                                var mainTableColumns = this.state.mainTableColumns;
-                                                                mainTableColumns[columnDict["name"]] = !mainTableColumns[columnDict["name"]];
-                                                                this.setState({
-                                                                    mainTableColumns: mainTableColumns,
-                                                                });
-                                                            }}
-                                                            sx={{
-                                                                padding: "0px",
-                                                                mr: "0.5rem",
-                                                            }}
-                                                        />
-                                                        <span style={{fontSize: "13px"}}>{columnDict["name"]}</span>
-                                                        <Card
-                                                            sx={{
-                                                                ml: "0.5rem",
-                                                                p: "2px 7px",
-                                                            }}
-                                                        >
-                                                            <p style={{fontSize: "13px", margin: "0px"}}>{columnDict["type"]}</p>
-                                                        </Card>
-                                                    </Box>
-                                                )
-                                            })
-                                        }
-                                    </Box>
-                                </Collapse>
-                                : null
-                            }
-                        </Box>
-                    </Box>
-                    : <Box
-                        sx={{
-                            width: "100%",
-                            height: "100%",
-                            display: "flex",
-                            flexDirection: "column",
-                        }}
-                    >
-                        <Box
-                            sx={{
-                                display: "flex", 
-                                flexDirection: "row",
-                                justifyContent: "space-between",
-                                alignItems: "center",
-                            }}
-                        >
-                            <span>Resultados:</span>
-                            <Button
-                                sx={{
-                                    p: 0,
-                                    textTransform: "none",
-                                }}
-                                onClick={() => this.setState({queryWindow: true})}
-                            >
-                                Voltar
-                            </Button>
                         </Box>
 
                         <Paper sx={{ width: '100%', overflow: 'hidden', mt: "0.75rem" }}>
@@ -311,25 +302,40 @@ export default class Window extends React.Component {
                                     <TableHead>
                                         <StyledTableRow>
                                             {
-                                                Object.keys(this.state.mainTableColumns).map((column, index) => {
-                                                    if (this.state.mainTableColumns[column]) {
-                                                        return (
-                                                            <StyledTableCell
-                                                                key={column}
-                                                                align="center"
-                                                            >
-                                                                <Box sx={{display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center"}}>
-                                                                    {column}
-                                                                    {
-                                                                        this.state.parent.state.structure[this.state.mainTable][index]["primary_key"] === 1
-                                                                        ? <TiKeyOutline sx={{ml: "1rem", fontSize: 20}} />
-                                                                        : null
-                                                                    }
-                                                                </Box>
-                                                            </StyledTableCell>
-                                                        )
-                                                    }
-                                                    return null;
+                                                Object.keys(this.state.request).map((table, index) => {
+                                                    var fields = this.state.request[table].fields;
+                                                    return fields.map((field, fIndex) => {
+                                                        if (field["checked"]) {
+                                                            return (
+                                                                <StyledTableCell
+                                                                    key={field.name}
+                                                                    align="center"
+                                                                    onClick={() => this.handleHeaderClick(`${table}$${field.name}`)}
+
+                                                                >
+                                                                    <Box sx={{display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center"}}>
+                                                                        {
+                                                                            this.getIconColumn(field.type)
+                                                                        }
+                                                                        <span style={{margin: "0px 5px"}}>{field.name}</span>
+                                                                        {
+                                                                            field["primary_key"] > 0
+                                                                            ? <TiKeyOutline size={18} color={"#FFD700"} />
+                                                                            : null
+                                                                        }
+                                                                        {
+                                                                            this.state.sortingColumn === `${table}$${field.name}`
+                                                                            ? this.state.sortingDirection === 1
+                                                                                ? <ArrowDropDownRoundedIcon />
+                                                                                : <ArrowDropUpRoundedIcon />
+                                                                            : null
+                                                                        }
+                                                                    </Box>
+                                                                </StyledTableCell>
+                                                            )
+                                                        }
+                                                        return null;
+                                                    })
                                                 })
                                             }
                                         </StyledTableRow>
@@ -342,20 +348,17 @@ export default class Window extends React.Component {
                                                 return (
                                                     <StyledTableRow role="checkbox" tabIndex={-1} key={row.id}>
                                                         {
-                                                            Object.keys(this.state.mainTableColumns).map((column, index) => {
-                                                                if (this.state.mainTableColumns[column]) {
-                                                                    return (
-                                                                        <StyledTableCell key={column} align="center" sx={{
-                                                                            "&:hover": {
-                                                                                cursor: this.state.parent.state.structure[this.state.mainTable][index]["primary_key"] !== 1 ? "pointer" : "default",
-                                                                                backgroundColor: this.state.parent.state.structure[this.state.mainTable][index]["primary_key"] !== 1 ? "#aaa" : null,
-                                                                            },
-                                                                        }}>
-                                                                            {row[column]}
+                                                            Object.keys(this.state.request).map((table, index) => {
+                                                                var fields = this.state.request[table].fields;
+                                                                return fields.map((field, fIndex) => {
+                                                                    if (field["checked"]) {
+                                                                        return <StyledTableCell align="center">
+                                                                            <span>{row[`${table}$${field.name}`]}</span>
                                                                         </StyledTableCell>
-                                                                    )
-                                                                }
-                                                                return null;
+
+                                                                    }
+                                                                    return null;
+                                                                })
                                                             })
                                                         }
                                                     </StyledTableRow>
@@ -377,7 +380,188 @@ export default class Window extends React.Component {
                             </Paper>
 
                     </Box>
-            }</Box>
+                </Box>
+
+                <Box
+                    sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        padding: "5px",
+                        pr: "0.5rem",
+                        borderTop: "2px solid #bbb",
+                        borderBottom: "2px solid #bbb",
+                        borderLeft: "2px solid #bbb",
+                        ml: "0.5rem",
+
+                        width: `${this.state.fieldsSize}px`,
+                        minWidth: "10rem",
+                        maxWidth: "18rem",
+                    }}
+                    onDrop={(e) => {
+                        this.dropEvent(e);
+                    }}
+                    onDragEnter={(e) => e.preventDefault()}
+                    onDragOver={(e) => e.preventDefault()}
+                    onDragLeave={(e) => e.preventDefault()}
+                >
+                    <Box
+                        sx={{
+                            display: "flex",
+                            flexDirection: "row",
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                        }}
+                    >
+                        <span
+                            style={{
+                                fontSize: "13px",
+                                fontWeight: "bold",
+                            }}
+                        >
+                            Info:
+                        </span>
+
+                        <Button
+                            sx={{
+                                textTransform: "none",
+                                m: 0,
+                                p: 0,
+                                fontSize: "13px",
+                            }}
+                            onClick={() => this.getTableInfo()}
+                        >
+                            Atualizar
+                        </Button>
+                    </Box>
+
+                    {
+                        Object.keys(this.state.request).map((table, index) => {
+                            return (
+                                <Box
+                                    key={table}
+                                >
+                                    <Divider />
+
+                                    <Box
+                                        sx={{
+                                            display: "flex",
+                                            flexDirection: "row",
+                                            alignItems: "center",
+                                            justifyContent: "space-between",
+                                        }}
+                                    >
+                                        <Box
+                                            sx={{
+                                                display: "flex",
+                                                flexDirection: "row",
+                                                alignItems: "center",
+                                            }}
+                                        >
+                                            <IconButton
+                                                onClick={() => {
+                                                    var request = this.state.request;
+                                                    request[table].open = !request[table].open;
+
+                                                    this.setState({
+                                                        request: request,
+                                                    });
+                                                }}
+                                                sx={{
+                                                    m: 0,
+                                                    p: 0,
+                                                    mr: "5px"
+                                                }}
+                                            >
+                                                {
+                                                    this.state.request[table].open ?
+                                                    <ExpandMoreIcon
+                                                        sx={{
+                                                            fontSize: "17px",
+                                                        }}
+                                                    />
+                                                    :
+                                                    <ChevronRightIcon
+                                                        sx={{
+                                                            fontSize: "17px",
+                                                        }}
+                                                    />
+                                                }
+                                            </IconButton>
+
+                                            <span style={{fontSize: "13px"}}>{table}</span>
+                                        </Box>
+
+                                        <IconButton
+                                            onClick={() => {
+                                                var request = this.state.request;
+
+                                                delete request[table];
+
+                                                this.setState({
+                                                    request: request,
+                                                });
+                                            }}
+                                        >
+                                            <CloseIcon
+                                                sx={{
+                                                    fontSize: "13px",
+                                                }}
+                                            />
+                                        </IconButton>
+                                    </Box>
+                                    <Collapse
+                                        in={this.state.request[table].open}
+                                        timeout="auto"
+                                        unmountOnExit
+                                    >
+                                        <Box
+                                            sx={{
+                                                display: "flex",
+                                                flexDirection: "column",
+                                                pl: "25px",
+                                            }}
+                                        >
+                                            {
+                                                this.state.request[table].fields.map((field, fIndex) => {
+                                                    return <Box
+                                                        key={field["name"]}
+                                                        sx={{
+                                                            display: "flex",
+                                                            flexDirection: "row",
+                                                            alignItems: "center",
+                                                            fontSize: "13px",
+                                                        }}
+                                                    >
+                                                        <Checkbox
+                                                            disabled={field["primary_key"] ? true : false}
+                                                            checked={field["checked"]}
+                                                            onChange={(e) => {
+                                                                var request = this.state.request;
+                                                                request[table].fields[fIndex].checked = e.target.checked;
+
+                                                                this.setState({
+                                                                    request: request,
+                                                                });
+                                                            }}
+                                                            size="small"
+                                                            sx={{
+                                                                m: 0,
+                                                                p: 0,
+                                                            }}
+                                                        />
+
+                                                        <span style={{marginLeft: "5px", fontSize: "11px"}}>{field["name"]}</span>
+                                                    </Box>
+                                                })
+                                            }
+                                        </Box>
+                                    </Collapse>
+                                </Box>
+                            )
+                        })
+                    }
+                </Box>
+            </Box>
         )
     }
 }
