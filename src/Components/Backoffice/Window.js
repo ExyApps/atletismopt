@@ -2,7 +2,7 @@ import React from 'react';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import { Checkbox, Collapse, IconButton, Tooltip } from '@mui/material';
+import { Checkbox, CircularProgress, Collapse, IconButton, TextField, Tooltip } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -20,6 +20,7 @@ import ArrowDropUpRoundedIcon from '@mui/icons-material/ArrowDropUpRounded';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import CloseIcon from '@mui/icons-material/Close';
+import UndoIcon from '@mui/icons-material/Undo';
 
 import { VscTextSize } from "react-icons/vsc";
 import { MdCalendarMonth } from "react-icons/md";
@@ -67,18 +68,19 @@ export default class Window extends React.Component {
 			structure: props.structure,
 			relations: props.relations,
 
+			queryLoading: false,
 			preparingRequest: {},
 			request: {},
 
-
-			queryLoading: false,
-
 			queryResult: [],
 			completeQueryResult: [],
+			changeHistory: [],
+
+			changing: [null, null],
+			initialValue: null,
 
 			tablePage: 0,
 			rowsPerPage: 10,
-
 			sortingColumn: "id",
 			sortingDirection: 1
 		}
@@ -158,12 +160,13 @@ export default class Window extends React.Component {
 		var data = e.dataTransfer.getData("text/plain");
 		var preparingRequest = this.state.preparingRequest;
 
+		// If the new table is already added, don't add it
 		if (Object.keys(preparingRequest).includes(data)) {
 			this.notification.current.openNotication(NotificationType.Error, "Tabela já adicionada");
 			return;
 		}
 
-		// Transform the above loops into a one line condition
+		// If the new table is not a foreign key of any of the tables already added, don't add it
 		if (Object.keys(preparingRequest).filter((key) => this.state.relations[key].filter((rel) => rel['referred_table'] === data).length === 0).length > 0) {
 			this.notification.current.openNotication(NotificationType.Error, "Nenhuma das tabelas adicionadas tem relação com esta tabela");
 			return;
@@ -223,7 +226,68 @@ export default class Window extends React.Component {
 		});
 	}
 
+	finishChanging() {
+		var changing = this.state.changing;
+		var initialValue = this.state.initialValue;
+		var queryResult = this.state.queryResult;
+		var changeHistory = this.state.changeHistory;
 
+		var key = changing[0];
+		var column = changing[1];
+
+		var row = null;
+		for (var i = 0; i < queryResult.length; i++) {
+			for (var k in key) {
+				if (queryResult[i][k] !== key[k]) {
+					break;
+				}
+			}
+
+			row = queryResult[i];
+			break;
+		}
+
+		var currentValue = row[column];
+
+		if (initialValue !== currentValue) {
+			changeHistory.push({
+				key: key,
+				column: column,
+				initialValue: initialValue,
+				currentValue: currentValue,
+			});
+		}
+
+		this.setState({
+			changing: [null, null],
+			initialValue: null,
+			changeHistory: changeHistory,
+		});
+
+		return;
+	}
+
+	undo() {
+		var changeHistory = this.state.changeHistory;
+		var queryResult = this.state.queryResult;
+
+		var lastChange = changeHistory.pop();
+
+		for (var i = 0; i < queryResult.length; i++) {
+			for (var k in lastChange.key) {
+				if (queryResult[i][k] !== lastChange.key[k]) {
+					break;
+				}
+			}
+			queryResult[i][lastChange.column] = lastChange.initialValue;
+			break;
+		}
+
+		this.setState({
+			changeHistory: changeHistory,
+			queryResult: queryResult,
+		});
+	}
 
 	render() {
 		return (
@@ -269,6 +333,34 @@ export default class Window extends React.Component {
 							<Box
 								sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}
 							>
+								{
+									this.state.changeHistory.length > 0
+										? <Tooltip title="Undo" placement='top'>
+											<IconButton
+												sx={{
+													p: 0,
+													m: 0,
+													mr: "1rem"
+												}}
+												onClick={() => this.undo()}
+												color="primary"
+											>
+												<UndoIcon />
+											</IconButton>
+										</Tooltip>
+										: <IconButton
+											disabled
+											sx={{
+												p: 0,
+												m: 0,
+												mr: "1rem"
+											}}
+											color="primary"
+										>
+											<UndoIcon />
+										</IconButton>
+								}
+
 								<span>Resultados:</span>
 							</Box>
 
@@ -293,20 +385,33 @@ export default class Window extends React.Component {
 									</IconButton>
 								</Tooltip>
 
-								<Tooltip title="Guardar" placement='top'>
-									<IconButton
-										disabled
-										sx={{
-											p: 0,
-											m: 0,
-											ml: "1rem"
-										}}
-										onClick={() => alert("Guardar alterações")}
-										color="primary"
-									>
-										<SaveRoundedIcon />
-									</IconButton>
-								</Tooltip>
+								{
+									this.state.changeHistory.length > 0
+										? <Tooltip title="Guardar" placement='top'>
+											<IconButton
+												sx={{
+													p: 0,
+													m: 0,
+													ml: "1rem"
+												}}
+												onClick={() => alert("Guardar alterações")}
+												color="primary"
+											>
+												<SaveRoundedIcon />
+											</IconButton>
+										</Tooltip>
+										: <IconButton
+											disabled
+											sx={{
+												p: 0,
+												m: 0,
+												ml: "1rem"
+											}}
+											color="primary"
+										>
+											<SaveRoundedIcon />
+										</IconButton>
+								}
 
 							</Box>
 						</Box>
@@ -319,6 +424,7 @@ export default class Window extends React.Component {
 											{
 												Object.keys(this.state.request).map((table, index) => {
 													var fields = this.state.request[table].fields;
+
 													return fields.map((field, fIndex) => {
 														if (field["checked"]) {
 															return (
@@ -359,17 +465,90 @@ export default class Window extends React.Component {
 										{
 											this.state.queryResult
 												.slice(this.state.tablePage * this.state.rowsPerPage, this.state.tablePage * this.state.rowsPerPage + this.state.rowsPerPage)
-												.map((row) => {
+												.map((row, rowIndex) => {
 													return (
-														<StyledTableRow tabIndex={-1} key={row.id}>
+														<StyledTableRow tabIndex={-1} key={rowIndex}>
 															{
 																Object.keys(this.state.request).map((table, index) => {
 																	var fields = this.state.request[table].fields;
+																	var primaryKeys = fields.filter((field) => field["primary_key"] > 0);
+
+																	var key = {};
+																	primaryKeys.map((pKey) => {
+																		key[pKey.name] = row[`${table}$${pKey.name}`];
+																		return null;
+																	});
+
 																	return fields.map((field, fIndex) => {
 																		if (field["checked"]) {
-																			return <StyledTableCell key={`${row.id} ${field.name}`} align="center">
-																				<span>{row[`${table}$${field.name}`]}</span>
-																			</StyledTableCell>
+																			return (
+																				<StyledTableCell
+																					key={`${rowIndex} ${field.name}`}
+																					align="center"
+																					sx={{
+																						"&:hover": field.primary_key === 0
+																							? {
+																								backgroundColor: "#ddd",
+																								cursor: "pointer"
+																							}
+																							: {}
+																					}}
+																					onClick={() => {
+																						this.setState({
+																							changing: [key, `${table}$${field.name}`],
+																							initialValue: row[`${table}$${field.name}`]
+																						})
+																					}}
+																				>
+																					{
+																						JSON.stringify(this.state.changing[0]) === JSON.stringify(key) && this.state.changing[1] === `${table}$${field.name}`
+																							? <TextField
+																								key={`Changing ${rowIndex} ${table}$${field.name}`}
+																								fullWidth
+																								multiline
+																								inputRef={(input) => input && input.focus()}
+																								onFocus={(e) => {
+																									e.currentTarget.setSelectionRange(
+																										e.currentTarget.value.length,
+																										e.currentTarget.value.length
+																									)
+																								}}
+																								onBlur={() => this.finishChanging()}
+																								onAbort={() => this.finishChanging()}
+																								onKeyDown={(e) => {
+																									if (e.key === "Enter") {
+																										this.finishChanging();
+																									}
+																								}}
+																								value={row[`${table}$${field.name}`]}
+																								onChange={(e) => {
+																									var queryResult = this.state.queryResult;
+																									queryResult[rowIndex][`${table}$${field.name}`] = e.target.value;
+
+																									this.setState({
+																										queryResult: queryResult
+																									});
+																								}}
+																								inputProps={{
+																									style: {
+																										fontSize: "12px",
+																										padding: 0,
+																										textAlign: "center",
+																									}
+																								}}
+																								sx={{
+																									"& .MuiInputBase-root": {
+																										fontSize: "12px",
+																										padding: 0,
+																										textAlign: "center",
+																									},
+																								}}
+																							/>
+																							: <span key={`Static ${rowIndex} ${table}$${field.name}`}>{row[`${table}$${field.name}`]}</span>
+																					}
+
+																				</StyledTableCell>
+																			)
 																		}
 																		return null;
 																	})
@@ -436,6 +615,7 @@ export default class Window extends React.Component {
 						</span>
 
 						<Button
+							disabled={Object.keys(this.state.preparingRequest).length === 0}
 							sx={{
 								textTransform: "none",
 								m: 0,
@@ -444,6 +624,12 @@ export default class Window extends React.Component {
 							}}
 							onClick={() => this.getTableInfo()}
 						>
+							{
+								this.state.queryLoading
+									? <CircularProgress size={15} color="inherit" style={{ marginRight: "5px" }} />
+									: null
+							}
+
 							Atualizar
 						</Button>
 					</Box>
