@@ -1,9 +1,51 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat:regular,bold,italic&subset=latin,latin-ext');
-
-body {
-  font-family: 'Montserrat', sans-serif;
+@font-face {
+	font-family: 'WorldAthletics';
+	src: local('WorldAthletics'), url(./Fonts/WorldAthletics.woff) format('woff');
 }
 
-.gold-text {
-  color: #FFD700;
+* {
+	font-family: WorldAthletics, sans-serif;
+}
+
+:root {
+	--background-color: #121212;
+	--menu-bar-color: #181818;
+	--top-gradient-color: #404040;
+	--bottom-gradient-color: #282828;
+	--primary-text-color: #fff;
+	--secondary-text-color: #b3b3b3;
+
+	background-color: var(--background-color);
+	height: 300%;
+}
+
+.carousel,
+.carousel img {
+	max-height: 90vh;
+}
+
+.carousel img {
+	object-fit: cover;
+}
+
+/* Navbar */
+.navbar {
+	background: rgba(24, 24, 24, 0.2);
+	position: relative;
+	height: 55px;
+}
+
+.navbar-brand {
+	position: absolute;
+	left: 50%;
+	margin-left: -50px !important;
+	margin-right: 0px !important;
+	display: block;
+	font-weight: bolder;
+}
+
+
+/* Scrollbar */
+::-webkit-scrollbar {
+	display: none;
 }
