@@ -19,16 +19,37 @@
 	height: 300%;
 }
 
+/*******************************************************
+ * Carousel
+ *******************************************************/
 .carousel,
 .carousel img {
 	max-height: 90vh;
+}
+
+@media (max-width: 768px) {
+
+	.carousel,
+	.carousel img {
+		max-height: 50vh;
+	}
+}
+
+@media (max-width: 480px) {
+
+	.carousel,
+	.carousel img {
+		max-height: 40vh;
+	}
 }
 
 .carousel img {
 	object-fit: cover;
 }
 
-/* Navbar */
+/*******************************************************
+ * Navbar
+ *******************************************************/
 .navbar {
 	background: rgba(24, 24, 24, 0.2);
 	position: relative;
@@ -44,8 +65,9 @@
 	font-weight: bolder;
 }
 
-
-/* Scrollbar */
+/*******************************************************
+ * Scrollbar
+ *******************************************************/
 ::-webkit-scrollbar {
 	display: none;
 }

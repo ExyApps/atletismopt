@@ -8,10 +8,6 @@ import Navbar from 'react-bootstrap/Navbar';
 import ImageCarrosel from '../Components/ImageCarousel/ImageCarousel';
 
 export default class Home extends React.Component {
-	constructor(props) {
-		super(props);
-	}
-
 	componentDidMount() {
 		window.addEventListener('scroll', this.handleScroll);
 	}
