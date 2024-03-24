@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/atletismopt/static/css/main.c2a4ca6b.css",
-    "main.js": "/atletismopt/static/js/main.75817069.js",
+    "main.css": "/atletismopt/static/css/main.b0e7fd6f.css",
+    "main.js": "/atletismopt/static/js/main.2fe5648f.js",
     "static/js/453.b7ca9cea.chunk.js": "/atletismopt/static/js/453.b7ca9cea.chunk.js",
     "static/media/WorldAthletics.woff": "/atletismopt/static/media/WorldAthletics.c718bd76dd857e55dd13.woff",
     "index.html": "/atletismopt/index.html",
-    "main.c2a4ca6b.css.map": "/atletismopt/static/css/main.c2a4ca6b.css.map",
-    "main.75817069.js.map": "/atletismopt/static/js/main.75817069.js.map",
+    "main.b0e7fd6f.css.map": "/atletismopt/static/css/main.b0e7fd6f.css.map",
+    "main.2fe5648f.js.map": "/atletismopt/static/js/main.2fe5648f.js.map",
     "453.b7ca9cea.chunk.js.map": "/atletismopt/static/js/453.b7ca9cea.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.c2a4ca6b.css",
-    "static/js/main.75817069.js"
+    "static/css/main.b0e7fd6f.css",
+    "static/js/main.2fe5648f.js"
   ]
 }
