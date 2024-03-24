@@ -48,21 +48,81 @@
 }
 
 /*******************************************************
+ * Hamburguer
+ *******************************************************/
+.menu-btn {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 20px;
+	height: 20px;
+	cursor: pointer;
+	transition: all .5s ease-in-out;
+	margin-right: 1rem;
+}
+
+.menu-btn__burger {
+	width: 20px;
+	height: 3px;
+	background: #fff;
+	border-radius: 5px;
+	box-shadow: 0 2px 5px rgba(255, 101, 47, .2);
+	transition: all .5s ease-in-out;
+}
+
+.menu-btn__burger::before,
+.menu-btn__burger::after {
+	content: '';
+	position: absolute;
+	width: 20px;
+	height: 3px;
+	background: #fff;
+	border-radius: 5px;
+	box-shadow: 0 2px 5px rgba(255, 101, 47, .2);
+	transition: all .5s ease-in-out;
+}
+
+.menu-btn__burger::before {
+	transform: translateY(-6px);
+}
+
+.menu-btn__burger::after {
+	transform: translateY(6px);
+}
+
+/* ANIMATION */
+.menu-btn.open .menu-btn__burger {
+	transform: translateX(-50px);
+	background: transparent;
+	box-shadow: none;
+}
+
+.menu-btn.open .menu-btn__burger::before {
+	transform: rotate(45deg) translate(35px, -35px);
+}
+
+.menu-btn.open .menu-btn__burger::after {
+	transform: rotate(-45deg) translate(35px, 35px);
+}
+
+/*******************************************************
  * Navbar
  *******************************************************/
 .navbar {
 	background: rgba(24, 24, 24, 0.2);
 	position: relative;
 	height: 55px;
+	padding: 0 1.5rem !important;
 }
 
-.navbar-brand {
-	position: absolute;
-	left: 50%;
-	margin-left: -50px !important;
-	margin-right: 0px !important;
-	display: block;
-	font-weight: bolder;
+.navbar-brand,
+.nav-link {
+	color: var(--primary-text-color) !important;
+}
+
+.nav-link {
+	margin-left: 1rem !important;
 }
 
 /*******************************************************
