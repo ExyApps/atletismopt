@@ -12,6 +12,11 @@
 	font-family: 'WorldAthletics', sans-serif !important;
 }
 
+body {
+	margin: 0;
+	padding: 0;
+}
+
 :root {
 	--background-color: #121212;
 	--menu-bar-color: #181818;
@@ -128,6 +133,7 @@
 	padding: 0 1.5rem !important;
 	display: flex !important;
 	justify-content: space-between !important;
+	transition: all .5s ease-in-out;
 }
 
 .navbar-brand,
@@ -151,6 +157,36 @@
 	.pc-nav-link {
 		display: none !important;
 	}
+}
+
+.nav-links-sidebar {
+	position: absolute;
+	top: 0;
+	left: calc(-100vw - 1px);
+	width: calc(100vw + 1px);
+	height: 100vh;
+	background-color: var(--background-color);
+	transition: all .5s ease-in-out;
+	z-index: 20;
+	padding-top: 55px;
+
+	display: flex;
+	flex-direction: column;
+	border-right: 1px solid var(--secondary-text-color);
+}
+
+.nav-links-sidebar.open {
+	left: 0;
+}
+
+.nav-links-sidebar .nav-link {
+	padding: 1rem 1rem !important;
+	border-bottom: 1px solid var(--secondary-text-color) !important;
+	font-size: 1.1rem;
+}
+
+.nav-links-sidebar .nav-link:hover {
+	background-color: var(--menu-bar-color);
 }
 
 /*******************************************************
