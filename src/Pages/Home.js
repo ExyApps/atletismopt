@@ -1,6 +1,7 @@
 import React from 'react';
 import Navbar from 'react-bootstrap/Navbar';
-// import NavDropdown from 'react-bootstrap/NavDropdown';
+import Nav from 'react-bootstrap/Nav';
+import NavDropdown from 'react-bootstrap/NavDropdown';
 
 import ImageCarrosel from '../Components/ImageCarousel/ImageCarousel';
 
@@ -43,13 +44,22 @@ export default class Home extends React.Component {
 				<Navbar
 					className="navbar fixed-top"
 				>
+					<Navbar.Brand href="/">AtletismoPT</Navbar.Brand>
+
+					<Nav className="me-auto nav-links-container">
+						<Nav.Link className="pc-nav-link" href="/atletismopt/competicoes">Competições</Nav.Link>
+						<Nav.Link className="pc-nav-link" href="/atletismopt/perfis">Perfis</Nav.Link>
+						<Nav.Link className="pc-nav-link" href="/atletismopt/rankings">Rankings</Nav.Link>
+					</Nav>
+
+					<Nav.Link className="pc-nav-link" href="/atletismopt/sobre">Sobre</Nav.Link>
+
 					<div
 						className="menu-btn"
 						onClick={() => this.handleHamburgerClick()}
 					>
 						<div className="menu-btn__burger"></div>
 					</div>
-					<Navbar.Brand href="/">AtletismoPT</Navbar.Brand>
 				</Navbar>
 
 				<ImageCarrosel />

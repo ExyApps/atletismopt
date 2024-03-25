@@ -3,8 +3,13 @@
 	src: local('WorldAthletics'), url(./Fonts/WorldAthletics.woff) format('woff');
 }
 
+@font-face {
+	font-family: 'WorldAthleticsHeadline';
+	src: local('WorldAthleticsHeadline'), url(./Fonts/WorldAthleticsHeadline.woff) format('woff');
+}
+
 * {
-	font-family: WorldAthletics, sans-serif;
+	font-family: 'WorldAthletics', sans-serif !important;
 }
 
 :root {
@@ -14,6 +19,8 @@
 	--bottom-gradient-color: #282828;
 	--primary-text-color: #fff;
 	--secondary-text-color: #b3b3b3;
+
+	--primary-item-color: #bb86fc;
 
 	background-color: var(--background-color);
 	height: 300%;
@@ -59,7 +66,12 @@
 	height: 20px;
 	cursor: pointer;
 	transition: all .5s ease-in-out;
-	margin-right: 1rem;
+}
+
+@media (min-width: 768px) {
+	.menu-btn {
+		display: none;
+	}
 }
 
 .menu-btn__burger {
@@ -93,17 +105,17 @@
 
 /* ANIMATION */
 .menu-btn.open .menu-btn__burger {
-	transform: translateX(-50px);
+	transform: translateX(50px);
 	background: transparent;
 	box-shadow: none;
 }
 
 .menu-btn.open .menu-btn__burger::before {
-	transform: rotate(45deg) translate(35px, -35px);
+	transform: rotate(-45deg) translate(-35px, -35px);
 }
 
 .menu-btn.open .menu-btn__burger::after {
-	transform: rotate(-45deg) translate(35px, 35px);
+	transform: rotate(45deg) translate(-35px, 35px);
 }
 
 /*******************************************************
@@ -114,6 +126,8 @@
 	position: relative;
 	height: 55px;
 	padding: 0 1.5rem !important;
+	display: flex !important;
+	justify-content: space-between !important;
 }
 
 .navbar-brand,
@@ -121,8 +135,22 @@
 	color: var(--primary-text-color) !important;
 }
 
-.nav-link {
-	margin-left: 1rem !important;
+/* .nav-link {} */
+
+.navbar-container {
+	display: flex;
+	flex-direction: row;
+}
+
+.nav-links-container .nav-link {
+	padding: 0 1rem !important;
+	border-left: 1px solid var(--primary-text-color) !important;
+}
+
+@media (max-width: 767px) {
+	.pc-nav-link {
+		display: none !important;
+	}
 }
 
 /*******************************************************
@@ -130,4 +158,23 @@
  *******************************************************/
 ::-webkit-scrollbar {
 	display: none;
+}
+
+/*******************************************************
+ * 404 Page
+ *******************************************************/
+.page-404 {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	flex-direction: column;
+	background-color: var(--background-color);
+	color: var(--primary-text-color);
+}
+
+.page-404-button {
+	background-color: var(--bottom-gradient-color) !important;
+	color: var(--primary-text-color) !important;
+	border-color: var(--primary-item-color) !important;
 }
