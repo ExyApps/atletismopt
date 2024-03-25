@@ -7,7 +7,7 @@ export default class NavbarComponent extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			menuOpen: true,
+			menuOpen: false,
 			transparencyValue: 0.2
 		};
 	}
@@ -59,14 +59,14 @@ export default class NavbarComponent extends React.Component {
 					<Nav.Link className="pc-nav-link" href="/atletismopt/sobre">Sobre</Nav.Link>
 
 					<div
-						className="menu-btn open"
+						className="menu-btn"
 						onClick={() => this.handleHamburgerClick()}
 					>
 						<div className="menu-btn__burger"></div>
 					</div>
 				</Navbar>
 
-				<div className="nav-links-sidebar open">
+				<div className="nav-links-sidebar">
 					<Nav.Link className="sidebar-nav-link" href="/atletismopt/competicoes">Competições</Nav.Link>
 					<Nav.Link className="sidebar-nav-link" href="/atletismopt/perfis">Perfis</Nav.Link>
 					<Nav.Link className="sidebar-nav-link" href="/atletismopt/rankings">Rankings</Nav.Link>
