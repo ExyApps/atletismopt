@@ -133,7 +133,7 @@ body {
 	padding: 0 1.5rem !important;
 	display: flex !important;
 	justify-content: space-between !important;
-	transition: all .5s ease-in-out;
+	/* transition: all .1s ease-in-out; */
 }
 
 .navbar-brand,
@@ -199,7 +199,7 @@ body {
 /*******************************************************
  * 404 Page
  *******************************************************/
-.page-404 {
+.template-page {
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -209,7 +209,7 @@ body {
 	color: var(--primary-text-color);
 }
 
-.page-404-button {
+.template-page-button {
 	background-color: var(--bottom-gradient-color) !important;
 	color: var(--primary-text-color) !important;
 	border-color: var(--primary-item-color) !important;

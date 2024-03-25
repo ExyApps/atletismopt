@@ -13,7 +13,7 @@ export default class NavbarComponent extends React.Component {
 	}
 
 	componentDidMount() {
-		window.addEventListener('scroll', this.handleScroll);
+		window.addEventListener('scroll', (e) => this.handleScroll(e));
 	}
 
 	handleScroll(e) {
@@ -51,12 +51,12 @@ export default class NavbarComponent extends React.Component {
 					<Navbar.Brand href="/">AtletismoPT</Navbar.Brand>
 
 					<Nav className="me-auto nav-links-container">
-						<Nav.Link className="pc-nav-link" href="/atletismopt/competicoes">Competições</Nav.Link>
-						<Nav.Link className="pc-nav-link" href="/atletismopt/perfis">Perfis</Nav.Link>
-						<Nav.Link className="pc-nav-link" href="/atletismopt/rankings">Rankings</Nav.Link>
+						<Nav.Link className="pc-nav-link" href="/#/competicoes">Competições</Nav.Link>
+						<Nav.Link className="pc-nav-link" href="/#/perfis">Perfis</Nav.Link>
+						<Nav.Link className="pc-nav-link" href="/#/rankings">Rankings</Nav.Link>
 					</Nav>
 
-					<Nav.Link className="pc-nav-link" href="/atletismopt/sobre">Sobre</Nav.Link>
+					<Nav.Link className="pc-nav-link" href="/#/sobre">Sobre</Nav.Link>
 
 					<div
 						className="menu-btn"
@@ -67,10 +67,10 @@ export default class NavbarComponent extends React.Component {
 				</Navbar>
 
 				<div className="nav-links-sidebar">
-					<Nav.Link className="sidebar-nav-link" href="/atletismopt/competicoes">Competições</Nav.Link>
-					<Nav.Link className="sidebar-nav-link" href="/atletismopt/perfis">Perfis</Nav.Link>
-					<Nav.Link className="sidebar-nav-link" href="/atletismopt/rankings">Rankings</Nav.Link>
-					<Nav.Link className="sidebar-nav-link" href="/atletismopt/sobre">Sobre</Nav.Link>
+					<Nav.Link className="sidebar-nav-link" href="/#/competicoes">Competições</Nav.Link>
+					<Nav.Link className="sidebar-nav-link" href="/#/perfis">Perfis</Nav.Link>
+					<Nav.Link className="sidebar-nav-link" href="/#/rankings">Rankings</Nav.Link>
+					<Nav.Link className="sidebar-nav-link" href="/#/sobre">Sobre</Nav.Link>
 				</div>
 			</>
 		);

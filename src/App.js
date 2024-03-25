@@ -1,20 +1,32 @@
 import './App.css';
 
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 
-import Home from './Pages/Home'
-import Page404 from './Pages/Page404'
+import NavbarComponent from './Components/Navbar/Navbar';
+
+import Home from './Pages/Home';
+import Competicoes from './Pages/Competicoes';
+import Perfis from './Pages/Perfis';
+import Rankings from './Pages/Rankings';
+import Sobre from './Pages/Sobre';
+// import Page404 from './Pages/Page404'
 
 function App() {
 	return (
-		<BrowserRouter>
-			<Routes>
-				<Route path="/atletismopt" element={<Home />} />
-				{/* 404 error */}
-				<Route path="*" element={<Page404 />} />
-			</Routes>
-		</BrowserRouter>
+		<>
+			<NavbarComponent />
+			<HashRouter>
+				<Routes>
+					<Route exact path="/" element={<Home />} />
+					<Route exact path="/competicoes" element={<Competicoes />} />
+					<Route exact path="/perfis" element={<Perfis />} />
+					<Route exact path="/rankings" element={<Rankings />} />
+					<Route exact path="/sobre" element={<Sobre />} />
+					{/* <Route path="/*" element={<Page404 />} /> */}
+				</Routes>
+			</HashRouter>
+		</>
 	);
 }
 
