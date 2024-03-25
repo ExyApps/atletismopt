@@ -4,6 +4,7 @@ import React from 'react';
 import { HashRouter, Routes, Route } from 'react-router-dom';
 
 import NavbarComponent from './Components/Navbar/Navbar';
+import Footer from './Components/Footer/Footer';
 
 import Home from './Pages/Home';
 import Competicoes from './Pages/Competicoes';
@@ -26,6 +27,7 @@ function App() {
 					{/* <Route path="/*" element={<Page404 />} /> */}
 				</Routes>
 			</HashRouter>
+			<Footer />
 		</>
 	);
 }
