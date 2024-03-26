@@ -14,9 +14,11 @@ export default class NavbarComponent extends React.Component {
 
 	componentDidMount() {
 		window.addEventListener('scroll', (e) => this.handleScroll(e));
+		document.querySelector('.navbar').style.background = `rgba(24, 24, 24, ${this.state.transparencyValue})`;
 	}
 
 	handleScroll(e) {
+		if (window.location.pathname !== '/atletismopt') return;
 		var homeContentsDiv = document.querySelector('.home-contents');
 		var homeContentsDivOffset = homeContentsDiv.offsetTop;
 		var currentScroll = window.scrollY;
