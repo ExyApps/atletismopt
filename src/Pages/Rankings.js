@@ -9,7 +9,7 @@ export default function Rankings() {
 			<p>Ups! Página não terminada!</p>
 			<p>Aguarde enquanto acabamos de a desenvolver!</p>
 
-			<Button className="template-page-button" href="/">Voltar à Página Inicial</Button>
+			<Button className="template-page-button" href="/atletismopt">Voltar à Página Inicial</Button>
 		</div>
 	);
 }
