@@ -18,7 +18,7 @@ export default class NavbarComponent extends React.Component {
 	}
 
 	handleScroll(e) {
-		if (window.location.pathname !== '/atletismopt') return;
+		if (['/atletismo', '/'].includes(window.location.pathname)) return;
 		var homeContentsDiv = document.querySelector('.home-contents');
 		var homeContentsDivOffset = homeContentsDiv.offsetTop;
 		var currentScroll = window.scrollY;
