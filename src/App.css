@@ -168,9 +168,9 @@ body {
 
 .nav-links-sidebar {
 	position: absolute;
-	top: 0;
-	left: calc(-100vw - 1px);
-	width: calc(100vw + 1px);
+	top: 0px;
+	left: -100vw;
+	width: 100vw + 1px;
 	height: 100vh;
 	background-color: var(--background-color);
 	transition: all .5s ease-in-out;
@@ -179,7 +179,6 @@ body {
 
 	display: flex;
 	flex-direction: column;
-	border-right: 1px solid var(--secondary-text-color);
 }
 
 .nav-links-sidebar.open {
@@ -190,6 +189,7 @@ body {
 	padding: 1rem 1rem !important;
 	border-bottom: 1px solid var(--secondary-text-color) !important;
 	font-size: 1.1rem;
+	width: 100vw;
 }
 
 .nav-links-sidebar .nav-link:hover {

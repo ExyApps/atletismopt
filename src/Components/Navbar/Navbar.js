@@ -3,6 +3,8 @@ import React from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 
+import { Navigate } from 'react-router-dom';
+
 export default class NavbarComponent extends React.Component {
 	constructor(props) {
 		super(props);
@@ -30,12 +32,12 @@ export default class NavbarComponent extends React.Component {
 		this.setState({ transparencyValue: newTransparency });
 	}
 
-	handleHamburgerClick() {
+	handleHamburgerClick(url = null) {
 		if (this.state.menuOpen) {
 			document.querySelector('.menu-btn').classList.remove('open');
 			document.querySelector('.nav-links-sidebar').classList.remove('open');
 			document.querySelector('.navbar').style.background = `rgba(24, 24, 24, ${this.state.transparencyValue})`;
-			this.setState({ menuOpen: false });
+			this.setState({ menuOpen: false }, () => <Navigate to={url} />);
 		} else {
 			document.querySelector('.menu-btn').classList.add('open');
 			document.querySelector('.nav-links-sidebar').classList.add('open');
@@ -69,10 +71,30 @@ export default class NavbarComponent extends React.Component {
 				</Navbar>
 
 				<div className="nav-links-sidebar">
-					<Nav.Link className="sidebar-nav-link" href="/atletismopt/#/competicoes">Competições</Nav.Link>
-					<Nav.Link className="sidebar-nav-link" href="/atletismopt/#/perfis">Perfis</Nav.Link>
-					<Nav.Link className="sidebar-nav-link" href="/atletismopt/#/rankings">Rankings</Nav.Link>
-					<Nav.Link className="sidebar-nav-link" href="/atletismopt/#/sobre">Sobre</Nav.Link>
+					<Nav.Link
+						href="/atletismopt/#/competicoes"
+						onClick={() => this.handleHamburgerClick()}
+					>
+						Competições
+					</Nav.Link>
+					<Nav.Link
+						href="/atletismopt/#/perfis"
+						onClick={() => this.handleHamburgerClick()}
+					>
+						Perfis
+					</Nav.Link>
+					<Nav.Link
+						href="/atletismopt/#/rankings"
+						onClick={() => this.handleHamburgerClick()}
+					>
+						Rankings
+					</Nav.Link>
+					<Nav.Link
+						href="/atletismopt/#/sobre"
+						onClick={() => this.handleHamburgerClick()}
+					>
+						Sobre
+					</Nav.Link>
 				</div>
 			</>
 		);
