@@ -148,8 +148,6 @@ body {
 	color: var(--primary-text-color) !important;
 }
 
-/* .nav-link {} */
-
 .navbar-container {
 	display: flex;
 	flex-direction: row;
@@ -162,6 +160,12 @@ body {
 
 @media (max-width: 767px) {
 	.pc-nav-link {
+		display: none !important;
+	}
+}
+
+@media (min-width: 768px) {
+	.nav-links-sidebar {
 		display: none !important;
 	}
 }
@@ -185,15 +189,45 @@ body {
 	left: 0;
 }
 
-.nav-links-sidebar .nav-link {
+.mobile-nav-link {
 	padding: 1rem 1rem !important;
 	border-bottom: 1px solid var(--secondary-text-color) !important;
 	font-size: 1.1rem;
 	width: 100vw;
 }
 
-.nav-links-sidebar .nav-link:hover {
+.mobile-nav-link:hover {
 	background-color: var(--menu-bar-color);
+}
+
+.accordion-item {
+	border-radius: 0px !important;
+	border: none !important;
+	border-bottom: 1px solid var(--secondary-text-color) !important;
+	background-color: var(--background-color) !important;
+	/* color: var(--primary-text-color) !important; */
+}
+
+.accordion-header button {
+	padding: 1rem 1rem !important;
+	font-size: 1.1rem !important;
+	color: var(--primary-text-color) !important;
+	background-color: var(--background-color) !important;
+}
+
+.accordion-body {
+	padding: 0px !important;
+}
+
+.accordion-button:after {
+	background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>") !important;
+}
+
+.accordion-body .nav-link {
+	padding: 1rem 2.5rem !important;
+	font-size: 1rem !important;
+	background-color: var(--menu-bar-color) !important;
+	border-bottom: 1px solid var(--top-gradient-color) !important;
 }
 
 /*******************************************************

@@ -2,6 +2,8 @@ import React from 'react';
 
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
+import NavDropdown from 'react-bootstrap/NavDropdown';
+import Accordion from 'react-bootstrap/Accordion';
 
 import { Navigate } from 'react-router-dom';
 
@@ -55,9 +57,19 @@ export default class NavbarComponent extends React.Component {
 					<Navbar.Brand href="/atletismopt">AtletismoPT</Navbar.Brand>
 
 					<Nav className="me-auto nav-links-container">
-						<Nav.Link className="pc-nav-link" href="/atletismopt/#/competicoes">Competições</Nav.Link>
-						<Nav.Link className="pc-nav-link" href="/atletismopt/#/perfis">Perfis</Nav.Link>
+						<NavDropdown title="Competições" id="basic-nav-dropdown" className='pc-nav-link' bg="dark" data-bs-theme="dark">
+							<NavDropdown.Item href="atletismopt/#/competicoes">Calendário</NavDropdown.Item>
+							<NavDropdown.Item href="atletismopt/#/competicoes/resultados">Resultados</NavDropdown.Item>
+						</NavDropdown>
+
+						<NavDropdown title="Atletas" id="basic-nav-dropdown" className='pc-nav-link' bg="dark" data-bs-theme="dark">
+							<NavDropdown.Item href="atletismopt/#/perfis">Perfis</NavDropdown.Item>
+							<NavDropdown.Item href="atletismopt/#/perfis/confronto">Confronto Direto</NavDropdown.Item>
+						</NavDropdown>
+
 						<Nav.Link className="pc-nav-link" href="/atletismopt/#/rankings">Rankings</Nav.Link>
+						<Nav.Link className="pc-nav-link" href="/atletismopt/#/recordes">Recordes</Nav.Link>
+
 					</Nav>
 
 					<Nav.Link className="pc-nav-link" href="/atletismopt/#/sobre">Sobre</Nav.Link>
@@ -71,25 +83,59 @@ export default class NavbarComponent extends React.Component {
 				</Navbar>
 
 				<div className="nav-links-sidebar">
+					<Accordion>
+						<Accordion.Item eventKey="0">
+							<Accordion.Header>Competições</Accordion.Header>
+							<Accordion.Body>
+								<Nav.Link
+									href="/atletismopt/#/competicoes"
+									onClick={() => this.handleHamburgerClick()}
+								>
+									Calendário
+								</Nav.Link>
+								<Nav.Link
+									href="/atletismopt/#/resultados"
+									onClick={() => this.handleHamburgerClick()}
+								>
+									Resultados
+								</Nav.Link>
+							</Accordion.Body>
+						</Accordion.Item>
+						<Accordion.Item eventKey="1">
+							<Accordion.Header>Atletas</Accordion.Header>
+							<Accordion.Body>
+								<Nav.Link
+									href="/atletismopt/#/perfis"
+									onClick={() => this.handleHamburgerClick()}
+								>
+									Perfis
+								</Nav.Link>
+								<Nav.Link
+									href="/atletismopt/#/perfis/confronto"
+									onClick={() => this.handleHamburgerClick()}
+								>
+									Confronto Direto
+								</Nav.Link>
+							</Accordion.Body>
+						</Accordion.Item>
+					</Accordion>
+
 					<Nav.Link
-						href="/atletismopt/#/competicoes"
-						onClick={() => this.handleHamburgerClick()}
-					>
-						Competições
-					</Nav.Link>
-					<Nav.Link
-						href="/atletismopt/#/perfis"
-						onClick={() => this.handleHamburgerClick()}
-					>
-						Perfis
-					</Nav.Link>
-					<Nav.Link
+						className="mobile-nav-link"
 						href="/atletismopt/#/rankings"
 						onClick={() => this.handleHamburgerClick()}
 					>
 						Rankings
 					</Nav.Link>
 					<Nav.Link
+						className="mobile-nav-link"
+						href="/atletismopt/#/recordes"
+						onClick={() => this.handleHamburgerClick()}
+					>
+						Recordes
+					</Nav.Link>
+					<Nav.Link
+						className="mobile-nav-link"
 						href="/atletismopt/#/sobre"
 						onClick={() => this.handleHamburgerClick()}
 					>
