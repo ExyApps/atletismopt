@@ -1,0 +1,171 @@
+/*******************************************************
+ * Hamburguer
+ *******************************************************/
+.menu-btn {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 20px;
+	height: 20px;
+	cursor: pointer;
+	transition: all .5s ease-in-out;
+}
+
+@media (min-width: 768px) {
+	.menu-btn {
+		display: none;
+	}
+}
+
+.menu-btn__burger {
+	width: 20px;
+	height: 3px;
+	background: #fff;
+	border-radius: 5px;
+	box-shadow: 0 2px 5px rgba(255, 101, 47, .2);
+	transition: all .5s ease-in-out;
+}
+
+.menu-btn__burger::before,
+.menu-btn__burger::after {
+	content: '';
+	position: absolute;
+	width: 20px;
+	height: 3px;
+	background: #fff;
+	border-radius: 5px;
+	box-shadow: 0 2px 5px rgba(255, 101, 47, .2);
+	transition: all .5s ease-in-out;
+}
+
+.menu-btn__burger::before {
+	transform: translateY(-6px);
+}
+
+.menu-btn__burger::after {
+	transform: translateY(6px);
+}
+
+/* ANIMATION */
+.menu-btn.open .menu-btn__burger {
+	transform: translateX(50px);
+	background: transparent;
+	box-shadow: none;
+}
+
+.menu-btn.open .menu-btn__burger::before {
+	transform: rotate(-45deg) translate(-35px, -35px);
+}
+
+.menu-btn.open .menu-btn__burger::after {
+	transform: rotate(45deg) translate(-35px, 35px);
+}
+
+/*******************************************************
+ * Navbar
+ *******************************************************/
+.navbar {
+	background: rgba(24, 24, 24, 0.2);
+	position: relative;
+	height: 55px;
+	padding: 0 1.5rem !important;
+	display: flex !important;
+	justify-content: space-between !important;
+	/* transition: all .1s ease-in-out; */
+}
+
+.navbar-brand,
+.nav-link {
+	color: var(--primary-text-color) !important;
+}
+
+.navbar-container {
+	display: flex;
+	flex-direction: row;
+}
+
+.nav-links-container .nav-link {
+	padding: 0 1rem !important;
+	border-left: 1px solid var(--primary-text-color) !important;
+}
+
+@media (max-width: 767px) {
+	.pc-nav-link {
+		display: none !important;
+	}
+}
+
+@media (min-width: 768px) {
+	.nav-links-sidebar {
+		display: none !important;
+	}
+}
+
+.nav-links-sidebar {
+	position: absolute;
+	top: 0px;
+	left: -100vw;
+	width: 100vw + 1px;
+	height: 100vh;
+	background-color: var(--background-color);
+	transition: all .5s ease-in-out;
+	z-index: 20;
+	padding-top: 55px;
+
+	display: flex;
+	flex-direction: column;
+}
+
+.nav-links-sidebar.open {
+	left: 0;
+}
+
+.mobile-nav-link {
+	padding: 1rem 1.5rem !important;
+	border-bottom: 1px solid var(--secondary-text-color) !important;
+	font-size: 1.1rem;
+	width: 100vw;
+}
+
+.mobile-nav-link:hover {
+	background-color: var(--menu-bar-color);
+}
+
+.accordion-item {
+	border-radius: 0px !important;
+	border: none !important;
+	border-bottom: 1px solid var(--secondary-text-color) !important;
+	background-color: var(--background-color) !important;
+}
+
+.accordion-header button {
+	padding: 1rem 1.5rem !important;
+	font-size: 1.1rem !important;
+	color: var(--primary-text-color) !important;
+	background-color: var(--background-color) !important;
+}
+
+.accordion-body {
+	padding: 0px !important;
+}
+
+.accordion-body .nav-link:first-child {
+	border-top: 1px solid var(--secondary-text-color) !important;
+}
+
+.accordion-button:focus {
+	outline: 0 !important;
+	box-shadow: 0 0 0 0 rgba(0, 0, 0, 0) !important;
+}
+
+.accordion-button:after {
+	background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>") !important;
+}
+
+.accordion-body .nav-link {
+	padding: 1rem 2.5rem !important;
+	font-size: 1rem !important;
+	background-color: var(--menu-bar-color) !important;
+	border-bottom: 1px solid var(--top-gradient-color) !important;
+}

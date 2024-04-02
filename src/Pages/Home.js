@@ -7,7 +7,7 @@ export default class Home extends React.Component {
 		return (
 			<div className="page">
 				{/* <Navbar /> */}
-				<ImageCarrosel />
+				{/* <ImageCarrosel /> */}
 
 				<div className="home-contents"></div>
 			</div>
