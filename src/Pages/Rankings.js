@@ -5,7 +5,6 @@ import Button from 'react-bootstrap/Button';
 export default function Rankings() {
 	useEffect(() => {
 		document.title = 'AtletismoPT - Rankings';
-		document.querySelector('.navbar').style.background = `rgba(24, 24, 24, 1)`;
 	});
 
 	return (

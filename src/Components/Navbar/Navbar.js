@@ -18,33 +18,35 @@ export default class NavbarComponent extends React.Component {
 	}
 
 	componentDidMount() {
-		window.addEventListener('scroll', (e) => this.handleScroll(e));
-		document.querySelector('.navbar').style.background = `rgba(24, 24, 24, ${this.state.transparencyValue})`;
+		// window.addEventListener('scroll', (e) => this.handleScroll(e));
+		// document.querySelector('.navbar').style.background = `rgba(24, 24, 24, ${this.state.transparencyValue})`;
 	}
 
 	handleScroll(e) {
-		if (['/atletismo', '/'].includes(window.location.pathname)) return;
-		var homeContentsDiv = document.querySelector('.home-contents');
-		var homeContentsDivOffset = homeContentsDiv.offsetTop;
-		var currentScroll = window.scrollY;
+		// var homeContentsDiv = document.querySelector('.home-contents');
 
-		var scrollPercent = Math.min(currentScroll / homeContentsDivOffset, 1);
-		var newTransparency = scrollPercent * 0.8 + 0.2;
+		// if (!homeContentsDiv) return;
 
-		document.querySelector('.navbar').style.background = `rgba(24, 24, 24, ${newTransparency})`;
-		this.setState({ transparencyValue: newTransparency });
+		// var homeContentsDivOffset = homeContentsDiv.offsetTop;
+		// var currentScroll = window.scrollY;
+
+		// var scrollPercent = Math.min(currentScroll / homeContentsDivOffset, 1);
+		// var newTransparency = scrollPercent * 0.8 + 0.2;
+
+		// document.querySelector('.navbar').style.background = `rgba(24, 24, 24, ${newTransparency})`;
+		// this.setState({ transparencyValue: newTransparency });
 	}
 
 	handleHamburgerClick(url = null) {
 		if (this.state.menuOpen) {
 			document.querySelector('.menu-btn').classList.remove('open');
 			document.querySelector('.nav-links-sidebar').classList.remove('open');
-			document.querySelector('.navbar').style.background = `rgba(24, 24, 24, ${this.state.transparencyValue})`;
+			// document.querySelector('.navbar').style.background = `rgba(24, 24, 24, ${this.state.transparencyValue})`;
 			this.setState({ menuOpen: false }, () => <Navigate to={url} />);
 		} else {
 			document.querySelector('.menu-btn').classList.add('open');
 			document.querySelector('.nav-links-sidebar').classList.add('open');
-			document.querySelector('.navbar').style.background = `rgba(24, 24, 24, 1)`;
+			// document.querySelector('.navbar').style.background = `rgba(24, 24, 24, 1)`;
 			this.setState({ menuOpen: true });
 		}
 	}
@@ -58,14 +60,14 @@ export default class NavbarComponent extends React.Component {
 					<Navbar.Brand href="/atletismopt">AtletismoPT</Navbar.Brand>
 
 					<Nav className="me-auto nav-links-container">
-						<NavDropdown title="Competições" id="basic-nav-dropdown" className='pc-nav-link' bg="dark" data-bs-theme="dark">
-							<NavDropdown.Item href="atletismopt/#/competicoes">Calendário</NavDropdown.Item>
-							<NavDropdown.Item href="atletismopt/#/competicoes/resultados">Resultados</NavDropdown.Item>
+						<NavDropdown title="Competições" id="basic-nav-dropdown" className='pc-nav-link'>
+							<NavDropdown.Item href="#/competicoes">Calendário</NavDropdown.Item>
+							<NavDropdown.Item href="#/competicoes/resultados">Resultados</NavDropdown.Item>
 						</NavDropdown>
 
-						<NavDropdown title="Atletas" id="basic-nav-dropdown" className='pc-nav-link' bg="dark" data-bs-theme="dark">
-							<NavDropdown.Item href="atletismopt/#/perfis">Perfis</NavDropdown.Item>
-							<NavDropdown.Item href="atletismopt/#/perfis/confronto">Confronto Direto</NavDropdown.Item>
+						<NavDropdown title="Atletas" id="basic-nav-dropdown" className='pc-nav-link'>
+							<NavDropdown.Item href="#/perfis">Perfis</NavDropdown.Item>
+							<NavDropdown.Item href="#/perfis/confronto">Confronto Direto</NavDropdown.Item>
 						</NavDropdown>
 
 						<Nav.Link className="pc-nav-link" href="/atletismopt/#/rankings">Rankings</Nav.Link>

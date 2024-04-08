@@ -18,24 +18,28 @@ body {
 }
 
 :root {
-	--background-color: #121212;
-	--menu-bar-color: #181818;
-	--top-gradient-color: #404040;
-	--bottom-gradient-color: #282828;
-	--primary-text-color: #fff;
-	--secondary-text-color: #b3b3b3;
+	--mem-color-bg-fill: #ffffff;
+	--mem-color-bg: #f7f7f7;
+	--mem-color-bg-surface-recessed: #edeff3;
+	--grey-350: #B2B7BF;
+	--grey-400: #777f8a;
+	--mem-color-text: #191b1f;
 
-	--primary-item-color: #bb86fc;
+	--blue-100: #e8effd;
+	--blue-200: #89a9ef;
+	--blue-300: #3f74e7;
+	--blue-400: #2966e9;
 
-	background-color: var(--background-color);
+	/* --grey-400: #282828; */
+	/* --mem-color-text: #b3b3b3; */
+
+	/* --blue-400: #bb86fc; */
+
+	background-color: var(--mem-color-bg);
 }
 
 .home-contents {
 	height: 100vh;
-}
-
-.page {
-	background-color: var(--background-color);
 }
 
 /*******************************************************
@@ -82,22 +86,21 @@ body {
 	align-items: center;
 	height: 100vh;
 	flex-direction: column;
-	background-color: var(--background-color);
-	color: var(--primary-text-color);
+	background-color: var(--mem-color-bg);
+	color: var(----mem-color-text);
 }
 
 .template-page-button {
-	background-color: var(--bottom-gradient-color) !important;
-	color: var(--primary-text-color) !important;
-	border-color: var(--primary-item-color) !important;
+	background-color: var(--grey-400) !important;
+	color: var(----mem-color-text) !important;
+	border-color: var(--mem-color-text) !important;
 }
 
 /*******************************************************
  * Footer
  *******************************************************/
 .footer {
-	background: var(--menu-bar-color);
-	color: var(--primary-text-color);
+	background: var(--grey-400);
 	padding: 1rem;
 	display: flex;
 	justify-content: center;
@@ -105,9 +108,13 @@ body {
 	flex-direction: column;
 }
 
+.footer .social-svg-icon {
+	fill: var(--mem-color-text) !important;
+}
+
 .footer p {
 	margin: 0;
-	color: var(--secondary-text-color);
+	color: var(--mem-color-text);
 }
 
 .footer-developer {
@@ -116,4 +123,39 @@ body {
 
 .social-icon:hover {
 	color: red !important;
+}
+
+/*******************************************************
+ * Pages
+ *******************************************************/
+.page {
+	margin-top: 55px;
+	padding: 1rem;
+	color: var(----mem-color-text);
+}
+
+.page th,
+.page td {
+	padding: 5px;
+	text-align: center;
+}
+
+.table {
+	border: 1px solid var(--mem-color-text);
+	border-radius: 8px;
+}
+
+.icon-flag-POR {
+	background-image: url(../public/flags.png);
+	background-position: -171px -208px;
+	width: 19px;
+	height: 13px;
+}
+
+.venus {
+	color: #f5347f;
+}
+
+.mars {
+	color: #0077b6;
 }

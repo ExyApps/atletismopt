@@ -66,7 +66,7 @@
  * Navbar
  *******************************************************/
 .navbar {
-	background: rgba(24, 24, 24, 0.2);
+	background: var(--grey-400);
 	position: relative;
 	height: 55px;
 	padding: 0 1.5rem !important;
@@ -77,7 +77,7 @@
 
 .navbar-brand,
 .nav-link {
-	color: var(--primary-text-color) !important;
+	color: var(--mem-color-text) !important;
 }
 
 .navbar-container {
@@ -87,7 +87,7 @@
 
 .nav-links-container .nav-link {
 	padding: 0 1rem !important;
-	border-left: 1px solid var(--primary-text-color) !important;
+	border-left: 1px solid var(--mem-color-text) !important;
 }
 
 @media (max-width: 767px) {
@@ -108,7 +108,7 @@
 	left: -100vw;
 	width: 100vw + 1px;
 	height: 100vh;
-	background-color: var(--background-color);
+	background-color: var(--mem-color-bg-surface-recessed);
 	transition: all .5s ease-in-out;
 	z-index: 20;
 	padding-top: 55px;
@@ -123,27 +123,27 @@
 
 .mobile-nav-link {
 	padding: 1rem 1.5rem !important;
-	border-bottom: 1px solid var(--secondary-text-color) !important;
-	font-size: 1.1rem;
+	border-bottom: 1px solid var(--mem-color-text) !important;
+	font-size: 1.1rem !important;
 	width: 100vw;
 }
 
 .mobile-nav-link:hover {
-	background-color: var(--menu-bar-color);
+	background-color: var(--mem-color-bg-fill);
 }
 
 .accordion-item {
 	border-radius: 0px !important;
 	border: none !important;
-	border-bottom: 1px solid var(--secondary-text-color) !important;
-	background-color: var(--background-color) !important;
+	border-bottom: 1px solid var(--mem-color-text) !important;
+	background-color: var(--mem-color-bg-surface-recessed) !important;
 }
 
 .accordion-header button {
 	padding: 1rem 1.5rem !important;
 	font-size: 1.1rem !important;
-	color: var(--primary-text-color) !important;
-	background-color: var(--background-color) !important;
+	color: var(--mem-color-text) !important;
+	background-color: var(--mem-color-bg-surface-recessed) !important;
 }
 
 .accordion-body {
@@ -151,7 +151,7 @@
 }
 
 .accordion-body .nav-link:first-child {
-	border-top: 1px solid var(--secondary-text-color) !important;
+	border-top: 1px solid var(--mem-color-text) !important;
 }
 
 .accordion-button:focus {
@@ -160,12 +160,16 @@
 }
 
 .accordion-button:after {
-	background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>") !important;
+	background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23191b1f'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>") !important;
 }
 
 .accordion-body .nav-link {
 	padding: 1rem 2.5rem !important;
 	font-size: 1rem !important;
-	background-color: var(--menu-bar-color) !important;
-	border-bottom: 1px solid var(--top-gradient-color) !important;
+	background-color: var(--mem-color-bg-fill) !important;
+	/* border-bottom: 1px solid var(--mem-color-text) !important; */
+}
+
+.accordion-body .nav-link:not(:nth-last-of-type(1)) {
+	border-bottom: 1px solid var(--mem-color-text) !important;
 }

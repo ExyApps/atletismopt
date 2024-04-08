@@ -5,7 +5,6 @@ import Button from 'react-bootstrap/Button';
 export default function Sobre() {
 	useEffect(() => {
 		document.title = 'AtletismoPT - Sobre';
-		document.querySelector('.navbar').style.background = `rgba(24, 24, 24, 1)`;
 	});
 
 	return (
