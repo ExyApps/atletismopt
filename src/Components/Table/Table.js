@@ -1,8 +1,8 @@
 import * as React from 'react';
 
 import Box from '@mui/material/Box';
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+// import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+// import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
@@ -88,20 +88,6 @@ export default class EnhancedTable extends React.Component {
 		const initialRow = this.state.page * this.state.rowsPerPage + 1;
 		const finalRow = Math.min(this.state.page * this.state.rowsPerPage + this.state.rowsPerPage, this.state.rows.length);
 
-		// Avoid a layout jump when reaching the last page with empty rows.
-		// const emptyRows = this.state.page > 0
-		// 	? Math.max(0, (1 + this.state.page) * this.state.rowsPerPage - rows.length)
-		// 	: 0;
-
-		// const visibleRows = React.useMemo(
-		// 	() =>
-		// 		stableSort(rows, getComparator(this.state.order, this.state.orderBy)).slice(
-		// 			this.state.page * this.state.rowsPerPage,
-		// 			this.state.page * this.state.rowsPerPage + this.state.rowsPerPage,
-		// 		),
-		// 	[this.state.order, this.state.orderBy, this.state.page, this.state.rowsPerPage],
-		// );
-
 		const visibleRows = stableSort(this.state.rows, getComparator(this.state.order, this.state.orderBy)).slice(
 			this.state.page * this.state.rowsPerPage,
 			this.state.page * this.state.rowsPerPage + this.state.rowsPerPage,
@@ -168,7 +154,7 @@ export default class EnhancedTable extends React.Component {
 															<span style={{ marginRight: "4px" }}>
 																{value}
 															</span>
-															<i className={`icon-flag-${value}`} />
+															<i className={`flag icon-flag-${value}`} />
 														</Box>
 													</td>
 												);

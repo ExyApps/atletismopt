@@ -145,17 +145,10 @@ body {
 	border-radius: 8px;
 }
 
-.icon-flag-POR {
-	background-image: url(../public/flags.png);
-	background-position: -171px -208px;
-	width: 19px;
-	height: 13px;
-}
-
 .venus {
 	color: #f5347f;
 }
 
 .mars {
-	color: #0077b6;
+	color: #023e8a;
 }

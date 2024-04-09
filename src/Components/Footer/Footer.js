@@ -4,7 +4,6 @@ import { SocialIcon } from 'react-social-icons';
 export default function Footer() {
 	return (
 		<div className='footer'>
-
 			<div>
 				<SocialIcon
 					className="social-icon"
@@ -13,9 +12,10 @@ export default function Footer() {
 					style={{
 						height: 40,
 						width: 40,
-						margin: 5
+						margin: 0
 					}}
 					url="https://www.instagram.com/exy_apps/"
+					target="_blank"
 				/>
 			</div>
 
