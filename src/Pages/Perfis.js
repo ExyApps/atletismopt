@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import Table from '../Components/Table/Table';
+import AthleteTable from '../Components/Table/AthleteTable';
 
 function createData(name, gender, birthdate, club, protein) {
 	return { name, gender, birthdate, club, protein };
@@ -22,7 +22,7 @@ export default function CustomizedTables() {
 
 	return (
 		<div className='page'>
-			<Table
+			<AthleteTable
 				headers={['Nome', 'Género', 'Data de Nascimento', 'Clube', 'Nacionalidade']}
 				rows={rows}
 			/>
