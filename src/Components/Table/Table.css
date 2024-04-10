@@ -76,3 +76,12 @@
 .foot-select option {
 	color: black;
 }
+
+.search-icon {
+	margin: 0 10px;
+	color: var(--grey-400);
+}
+
+.form-control-table {
+	margin-left: 1rem !important;
+}
