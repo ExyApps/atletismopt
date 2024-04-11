@@ -16,7 +16,7 @@ import Sobre from './Pages/Sobre';
 
 function App() {
 	return (
-		<>
+		<div className="app-body">
 			<NavbarComponent />
 			<HashRouter>
 				<Routes>
@@ -29,7 +29,7 @@ function App() {
 				</Routes>
 			</HashRouter>
 			<Footer />
-		</>
+		</div>
 	);
 }
 
