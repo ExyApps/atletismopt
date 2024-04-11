@@ -90,7 +90,8 @@
 	float: left !important;
 }
 
-@media (max-width: 767px) {
+/* @media (max-width: 767px) { */
+@media (max-width: 1060px) {
 	.search-bar {
 		width: 100% !important;
 		margin-bottom: 12px !important;
