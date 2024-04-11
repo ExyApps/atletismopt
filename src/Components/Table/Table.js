@@ -1,5 +1,4 @@
 import * as React from 'react';
-import './Table.css';
 
 export default class EnhancedTable extends React.Component {
 	constructor(props) {

@@ -24,6 +24,7 @@ import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import { TbMars } from "react-icons/tb";
 import { TbVenus } from "react-icons/tb";
 
+import './AthleteTable.css';
 import Table from './Table';
 import Escaloes from '../../Information/Escaloes';
 
@@ -92,6 +93,284 @@ export default class AthleteTable extends Table {
 		this.setState({ search: value.toLowerCase() });
 	}
 
+	renderHeader() {
+		if (!isMobile) {
+			return (
+				<tr>
+					{
+						this.state.headers.map((header, id) => (
+							<th key={id}>
+								{header}
+							</th>
+						))
+					}
+				</tr>
+			)
+		}
+		return (
+			<tr>
+				<th>Atleta</th>
+				<th>Nasc.</th>
+				<th>Clube</th>
+			</tr>
+		)
+	}
+
+	renderTable(rows) {
+		if (!isMobile) {
+			return (
+				rows.length === 0
+					? <tr>
+						<td colSpan={6}>
+							<div className="empty-table">
+								<span>Não foram encontrados resultados.</span>
+							</div>
+						</td>
+					</tr>
+					: rows.map((row, id) => (
+						<tr key={id} onClick={(event) => this.handleClick(event, row.idid)}>
+							{
+								Object.values(row).map((value, id) => {
+									const header = this.state.headers[id];
+									if (header === 'Género') {
+										return (
+											<td key={id}>
+												{
+													value === 'M'
+														? <Box
+															sx={{
+																display: 'flex',
+																justifyContent: 'center',
+																alignItems: 'center'
+															}}
+														>
+															<TbMars className='mars' size={20} />
+														</Box>
+														: <Box
+															sx={{
+																display: 'flex',
+																justifyContent: 'center',
+																alignItems: 'center'
+															}}
+														>
+															<TbVenus className='venus' size={20} />
+														</Box>
+												}
+											</td>
+										);
+									} else if (header === 'Nacionalidade') {
+										return (
+											<td key={id}>
+												<Box
+													sx={{
+														display: 'flex',
+														flexDirection: 'row',
+														justifyContent: 'center',
+														alignItems: 'center'
+													}}
+												>
+													<span style={{ marginRight: "4px" }}>
+														{value}
+													</span>
+													<i className={`flag icon-flag-${value}`} />
+												</Box>
+											</td>
+										);
+									}
+									return (
+										<td key={id}>
+											{value}
+										</td>
+									);
+								})
+							}
+						</tr>
+					))
+			)
+		}
+
+		return (
+			rows.length === 0
+				? <tr>
+					<td colSpan={3}>
+						<div className="empty-table">
+							<span>Não foram encontrados resultados.</span>
+						</div>
+					</td>
+				</tr>
+				: rows.map((row, id) => (
+					<tr key={id} onClick={(event) => this.handleClick(event, row.id)}>
+						<td key={id}>
+							<Box
+								sx={{
+									display: 'flex',
+									flexDirection: 'row',
+									justifyContent: 'space-between',
+									alignItems: 'center'
+								}}
+							>
+								<i className={`flag icon-flag-${row.nationality}`} />
+								<span style={{
+									marginLeft: "4px",
+								}}>
+									{row.name}
+								</span>
+								{
+									row.gender === 'M'
+										? <Box
+											sx={{
+												display: 'flex',
+												justifyContent: 'center',
+												alignItems: 'center'
+											}}
+										>
+											<TbMars className='mars' size={20} />
+										</Box>
+										: <Box
+											sx={{
+												display: 'flex',
+												justifyContent: 'center',
+												alignItems: 'center'
+											}}
+										>
+											<TbVenus className='venus' size={20} />
+										</Box>
+								}
+							</Box>
+						</td>
+						<td>
+							{row.birthdate.split('-')[0]}
+						</td>
+						<td>
+							{row.club}
+						</td>
+					</tr>
+				))
+		)
+	}
+
+	renderFooter(rows) {
+		const initialRow = Math.min(this.state.page * this.state.rowsPerPage + 1, rows.length);
+		const finalRow = Math.min(this.state.page * this.state.rowsPerPage + this.state.rowsPerPage, rows.length);
+
+		if (!isMobile) {
+			return (
+				<tr>
+					<td colSpan={6}>
+						<div className="foot-table">
+							<span>Linhas por página:</span>
+
+							<FormControl
+								sx={{
+									marginLeft: '2rem',
+									marginRight: '2rem',
+								}}
+							>
+								<NativeSelect
+									className='foot-select'
+									size="small"
+									sx={{
+										color: "#fff",
+										'& .MuiSvgIcon-root': {
+											color: 'white'
+										}
+									}}
+									disableUnderline
+									value={this.state.rowsPerPage}
+									inputProps={{
+										name: 'rowsPerPage',
+										id: 'uncontrolled-native',
+									}}
+									onChange={this.handleChangeRowsPerPage}
+								>
+									<option value={5}>5</option>
+									<option value={10}>10</option>
+									<option value={20}>20</option>
+								</NativeSelect>
+							</FormControl>
+
+							<span>
+								{`${initialRow}-${finalRow} de ${rows.length}`}
+							</span>
+
+							<IconButton
+								sx={{ m: 0, p: 0, marginLeft: '2rem', color: "#fff" }}
+								onClick={(event) => this.handleChangePage(event, this.state.page - 1)}
+								disabled={this.state.page === 0}
+							>
+								<KeyboardArrowLeftIcon />
+							</IconButton>
+							<IconButton
+								sx={{ m: 0, p: 0, color: "#fff" }}
+								onClick={(event) => this.handleChangePage(event, this.state.page + 1)}
+								disabled={this.state.page >= Math.ceil(rows.length / this.state.rowsPerPage) - 1}
+							>
+								<KeyboardArrowRightIcon />
+							</IconButton>
+						</div>
+					</td>
+				</tr>
+			)
+		}
+		return (
+			<tr>
+				<td colSpan={3}>
+					<div className="foot-table">
+						<span>Linhas por página:</span>
+
+						<FormControl
+							sx={{
+								marginLeft: '1rem',
+								marginRight: '1rem',
+							}}
+						>
+							<NativeSelect
+								className='foot-select'
+								size="small"
+								sx={{
+									color: "#fff",
+									'& .MuiSvgIcon-root': {
+										color: 'white'
+									}
+								}}
+								disableUnderline
+								value={this.state.rowsPerPage}
+								inputProps={{
+									name: 'rowsPerPage',
+									id: 'uncontrolled-native',
+								}}
+								onChange={this.handleChangeRowsPerPage}
+							>
+								<option value={5}>5</option>
+								<option value={10}>10</option>
+								<option value={20}>20</option>
+							</NativeSelect>
+						</FormControl>
+
+						<span>
+							{`${initialRow}-${finalRow} de ${rows.length}`}
+						</span>
+
+						<IconButton
+							sx={{ m: 0, p: 0, marginLeft: '1rem', color: "#fff" }}
+							onClick={(event) => this.handleChangePage(event, this.state.page - 1)}
+							disabled={this.state.page === 0}
+						>
+							<KeyboardArrowLeftIcon />
+						</IconButton>
+						<IconButton
+							sx={{ m: 0, p: 0, color: "#fff" }}
+							onClick={(event) => this.handleChangePage(event, this.state.page + 1)}
+							disabled={this.state.page >= Math.ceil(rows.length / this.state.rowsPerPage) - 1}
+						>
+							<KeyboardArrowRightIcon />
+						</IconButton>
+					</div>
+				</td>
+			</tr>
+		)
+	}
+
 	render() {
 		const searchedRows = this.state.rows.filter(row => {
 			// Compare the text field text
@@ -106,9 +385,6 @@ export default class AthleteTable extends Table {
 				&& (this.state.ageSelected === '' || this.isCorrectAge(Object.values(row)[2], this.state.ageSelected));
 		});
 
-		const initialRow = Math.min(this.state.page * this.state.rowsPerPage + 1, searchedRows.length);
-		const finalRow = Math.min(this.state.page * this.state.rowsPerPage + this.state.rowsPerPage, searchedRows.length);
-
 		const visibleRows = this.stableSort(searchedRows, this.getComparator(this.state.order, this.state.orderBy)).slice(
 			this.state.page * this.state.rowsPerPage,
 			this.state.page * this.state.rowsPerPage + this.state.rowsPerPage,
@@ -116,14 +392,14 @@ export default class AthleteTable extends Table {
 
 		return (
 			<Box sx={{ width: '100%' }}>
-
 				<Box
 					sx={{
-						display: 'flex',
-						flexDirection: 'row',
+						boxSizing: 'border-box',
+						width: '100%',
 					}}
 				>
 					<Paper
+						className="search-bar"
 						component="form"
 						sx={{
 							p: '2px 4px',
@@ -360,143 +636,19 @@ export default class AthleteTable extends Table {
 
 				<table className="content-table">
 					<thead>
-						<tr>
-							{
-								this.state.headers.map((header, id) => (
-									<th key={id}>
-										{header}
-									</th>
-								))
-							}
-						</tr>
+						{
+							this.renderHeader()
+						}
 					</thead>
 					<tbody>
 						{
-							visibleRows.length === 0
-								? <tr>
-									<td colSpan={6}>
-										<div className="empty-table">
-											<span>Não foram encontrados resultados.</span>
-										</div>
-									</td>
-								</tr>
-								: visibleRows.map((row, id) => (
-									<tr key={id} onClick={(event) => this.handleClick(event, row.idid)}>
-										{
-											Object.values(row).map((value, id) => {
-												const header = this.state.headers[id];
-												if (header === 'Género') {
-													return (
-														<td key={id}>
-															{
-																value === 'M'
-																	? <Box
-																		sx={{
-																			display: 'flex',
-																			justifyContent: 'center',
-																			alignItems: 'center'
-																		}}
-																	>
-																		<TbMars className='mars' size={20} />
-																	</Box>
-																	: <Box
-																		sx={{
-																			display: 'flex',
-																			justifyContent: 'center',
-																			alignItems: 'center'
-																		}}
-																	>
-																		<TbVenus className='venus' size={20} />
-																	</Box>
-															}
-														</td>
-													);
-												} else if (header === 'Nacionalidade') {
-													return (
-														<td key={id}>
-															<Box
-																sx={{
-																	display: 'flex',
-																	flexDirection: 'row',
-																	justifyContent: 'center',
-																	alignItems: 'center'
-																}}
-															>
-																<span style={{ marginRight: "4px" }}>
-																	{value}
-																</span>
-																<i className={`flag icon-flag-${value}`} />
-															</Box>
-														</td>
-													);
-												}
-												return (
-													<td key={id}>
-														{value}
-													</td>
-												);
-											})
-										}
-									</tr>
-								))
+							this.renderTable(visibleRows)
 						}
 					</tbody>
 					<tfoot>
-						<tr>
-							<td colSpan={6}>
-								<div className="foot-table">
-									<span>Linhas por página:</span>
-
-									<FormControl
-										sx={{
-											marginLeft: '2rem',
-											marginRight: '2rem',
-										}}
-									>
-										<NativeSelect
-											className='foot-select'
-											size="small"
-											sx={{
-												color: "#fff",
-												'& .MuiSvgIcon-root': {
-													color: 'white'
-												}
-											}}
-											disableUnderline
-											value={this.state.rowsPerPage}
-											inputProps={{
-												name: 'rowsPerPage',
-												id: 'uncontrolled-native',
-											}}
-											onChange={this.handleChangeRowsPerPage}
-										>
-											<option value={5}>5</option>
-											<option value={10}>10</option>
-											<option value={20}>20</option>
-										</NativeSelect>
-									</FormControl>
-
-									<span>
-										{`${initialRow}-${finalRow} de ${searchedRows.length}`}
-									</span>
-
-									<IconButton
-										sx={{ m: 0, p: 0, marginLeft: '2rem', color: "#fff" }}
-										onClick={(event) => this.handleChangePage(event, this.state.page - 1)}
-										disabled={this.state.page === 0}
-									>
-										<KeyboardArrowLeftIcon />
-									</IconButton>
-									<IconButton
-										sx={{ m: 0, p: 0, color: "#fff" }}
-										onClick={(event) => this.handleChangePage(event, this.state.page + 1)}
-										disabled={this.state.page >= Math.ceil(searchedRows.length / this.state.rowsPerPage) - 1}
-									>
-										<KeyboardArrowRightIcon />
-									</IconButton>
-								</div>
-							</td>
-						</tr>
+						{
+							this.renderFooter(searchedRows)
+						}
 					</tfoot>
 				</table>
 			</Box>

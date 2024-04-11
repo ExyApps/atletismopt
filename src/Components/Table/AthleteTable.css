@@ -85,3 +85,30 @@
 .form-control-table {
 	margin-left: 1rem !important;
 }
+
+.search-bar {
+	float: left !important;
+}
+
+@media (max-width: 767px) {
+	.search-bar {
+		width: 100% !important;
+		margin-bottom: 12px !important;
+	}
+
+	.form-control-table {
+		float: left !important;
+		width: 49% !important;
+		min-width: 49% !important;
+		margin-left: 0 !important;
+		margin-bottom: 12px !important;
+	}
+
+	.form-control-table .MuiInputBase-formControl {
+		min-width: 49% !important;
+	}
+
+	.form-control-table:nth-child(even) {
+		margin-right: 2% !important;
+	}
+}
