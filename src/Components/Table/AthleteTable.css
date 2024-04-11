@@ -39,11 +39,6 @@
 	cursor: pointer;
 }
 
-/* .content-table tbody tr:hover {
-	font-weight: bold;
-	cursor: pointer;
-} */
-
 .content-table tfoot tr {
 	background-color: var(--grey-350);
 	color: #ffffff;

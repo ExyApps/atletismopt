@@ -48,7 +48,7 @@ export default class AthleteTable extends Table {
 	}
 
 	getAllClubs() {
-		const clubs = this.state.rows.map(row => row.club);
+		const clubs = this.state.rows.map(row => row.club_abbreviation);
 		const uniqueClubs = [...new Set(clubs)];
 		uniqueClubs.sort((a, b) => a.localeCompare(b));
 		this.setState({ clubs: uniqueClubs });
@@ -97,13 +97,11 @@ export default class AthleteTable extends Table {
 		if (!isMobile) {
 			return (
 				<tr>
-					{
-						this.state.headers.map((header, id) => (
-							<th key={id}>
-								{header}
-							</th>
-						))
-					}
+					<th>Nome</th>
+					<th>Género</th>
+					<th>Data de Nascimento</th>
+					<th>Clube</th>
+					<th>Nacionalidade</th>
 				</tr>
 			)
 		}
@@ -128,62 +126,48 @@ export default class AthleteTable extends Table {
 						</td>
 					</tr>
 					: rows.map((row, id) => (
-						<tr key={id} className="clickable-row" onClick={(event) => this.handleClick(event, row.idid)}>
-							{
-								Object.values(row).map((value, id) => {
-									const header = this.state.headers[id];
-									if (header === 'Género') {
-										return (
-											<td key={id}>
-												{
-													value === 'M'
-														? <Box
-															sx={{
-																display: 'flex',
-																justifyContent: 'center',
-																alignItems: 'center'
-															}}
-														>
-															<TbMars className='mars' size={20} />
-														</Box>
-														: <Box
-															sx={{
-																display: 'flex',
-																justifyContent: 'center',
-																alignItems: 'center'
-															}}
-														>
-															<TbVenus className='venus' size={20} />
-														</Box>
-												}
-											</td>
-										);
-									} else if (header === 'Nacionalidade') {
-										return (
-											<td key={id}>
-												<Box
-													sx={{
-														display: 'flex',
-														flexDirection: 'row',
-														justifyContent: 'center',
-														alignItems: 'center'
-													}}
-												>
-													<span style={{ marginRight: "4px" }}>
-														{value}
-													</span>
-													<i className={`flag icon-flag-${value}`} />
-												</Box>
-											</td>
-										);
-									}
-									return (
-										<td key={id}>
-											{value}
-										</td>
-									);
-								})
-							}
+						<tr key={id} className="clickable-row" onClick={(event) => this.handleClick(event, row.id)}>
+							<td>{row.name}</td>
+							<td>
+								{
+									row.gender === 'M'
+										? <Box
+											sx={{
+												display: 'flex',
+												justifyContent: 'center',
+												alignItems: 'center'
+											}}
+										>
+											<TbMars className='mars' size={20} />
+										</Box>
+										: <Box
+											sx={{
+												display: 'flex',
+												justifyContent: 'center',
+												alignItems: 'center'
+											}}
+										>
+											<TbVenus className='venus' size={20} />
+										</Box>
+								}
+							</td>
+							<td>{row.birthdate}</td>
+							<td>{row.club_name} ({row.club_abbreviation})</td>
+							<td>
+								<Box
+									sx={{
+										display: 'flex',
+										flexDirection: 'row',
+										justifyContent: 'center',
+										alignItems: 'center'
+									}}
+								>
+									<span style={{ marginRight: "4px" }}>
+										{row.nationality}
+									</span>
+									<i className={`flag icon-flag-${row.nationality}`} />
+								</Box>
+							</td>
 						</tr>
 					))
 			)
@@ -242,7 +226,7 @@ export default class AthleteTable extends Table {
 							{row.birthdate.split('-')[0]}
 						</td>
 						<td>
-							{row.club}
+							{row.club_abbreviation}
 						</td>
 					</tr>
 				))
@@ -374,15 +358,15 @@ export default class AthleteTable extends Table {
 	render() {
 		const searchedRows = this.state.rows.filter(row => {
 			// Compare the text field text
-			return Object.values(row)[0].toString().toLowerCase().includes(this.state.search)
+			return row.name.toLowerCase().includes(this.state.search)
 				// Compare the gender
-				&& Object.values(row)[1].includes(this.state.genderSelected)
+				&& row.gender.includes(this.state.genderSelected)
 				// Compare the club
-				&& (this.state.clubSelected === '' || Object.values(row)[3] === this.state.clubSelected)
+				&& (this.state.clubSelected === '' || row.club_abbreviation === this.state.clubSelected)
 				// Compare the nationality
-				&& (this.state.nationalitySelected === '' || Object.values(row)[4] === this.state.nationalitySelected)
+				&& (this.state.nationalitySelected === '' || row.nationality === this.state.nationalitySelected)
 				// Compare the age
-				&& (this.state.ageSelected === '' || this.isCorrectAge(Object.values(row)[2], this.state.ageSelected));
+				&& (this.state.ageSelected === '' || this.isCorrectAge(row.birthdate, this.state.ageSelected));
 		});
 
 		const visibleRows = this.stableSort(searchedRows, this.getComparator(this.state.order, this.state.orderBy)).slice(
@@ -434,7 +418,7 @@ export default class AthleteTable extends Table {
 									sx={{
 										minWidth: '120px'
 									}}
-									labelId="gender-select-label"
+									// labelId="gender-select-label"
 									id="gender-select"
 									defaultValue={''}
 									value={this.state.genderSelected}
@@ -456,7 +440,7 @@ export default class AthleteTable extends Table {
 									input={
 										<OutlinedInput />
 									}
-									labelId="gender-sec-select-label"
+									// labelId="gender-sec-select-label"
 									id="gender-sec-select"
 									value={this.state.genderSelected}
 									label="Género"
@@ -480,7 +464,7 @@ export default class AthleteTable extends Table {
 									sx={{
 										minWidth: '120px'
 									}}
-									labelId="club-select-label"
+									// labelId="club-select-label"
 									id="club-select"
 									defaultValue={''}
 									value={this.state.clubSelected}
@@ -507,7 +491,7 @@ export default class AthleteTable extends Table {
 									input={
 										<OutlinedInput />
 									}
-									labelId="club-sec-select-label"
+									// labelId="club-sec-select-label"
 									id="club-sec-select"
 									value={this.state.clubSelected}
 									label="Clube"
@@ -536,7 +520,7 @@ export default class AthleteTable extends Table {
 									sx={{
 										minWidth: '120px'
 									}}
-									labelId="nationality-select-label"
+									// labelId="nationality-select-label"
 									id="nationality-select"
 									defaultValue={''}
 									value={this.state.nationalitySelected}
@@ -563,7 +547,7 @@ export default class AthleteTable extends Table {
 									input={
 										<OutlinedInput />
 									}
-									labelId="nationality-sec-select-label"
+									// labelId="nationality-sec-select-label"
 									id="nationality-sec-select"
 									value={this.state.nationalitySelected}
 									label="Nacionalidade"
@@ -592,7 +576,7 @@ export default class AthleteTable extends Table {
 									sx={{
 										minWidth: '200px'
 									}}
-									labelId="age-select-label"
+									// labelId="age-select-label"
 									id="age-select"
 									defaultValue={''}
 									value={this.state.ageSelected}
@@ -617,7 +601,7 @@ export default class AthleteTable extends Table {
 									input={
 										<OutlinedInput />
 									}
-									labelId="age-sec-select-label"
+									// labelId="age-sec-select-label"
 									id="age-sec-select"
 									value={this.state.ageSelected}
 									label="Escalão"

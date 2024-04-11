@@ -4,10 +4,9 @@ export default class EnhancedTable extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			headers: props.headers,
 			rows: props.rows,
 			order: 'asc',
-			orderBy: props.headers[0],
+			orderBy: 'id',
 			page: 0,
 			rowsPerPage: 10,
 		};

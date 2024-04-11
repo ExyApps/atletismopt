@@ -160,3 +160,7 @@ body {
 .mars {
 	color: #023e8a;
 }
+
+.loader {
+	color: var(--grey-400) !important;
+}
