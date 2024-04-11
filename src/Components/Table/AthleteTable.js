@@ -128,7 +128,7 @@ export default class AthleteTable extends Table {
 						</td>
 					</tr>
 					: rows.map((row, id) => (
-						<tr key={id} onClick={(event) => this.handleClick(event, row.idid)}>
+						<tr key={id} className="clickable-row" onClick={(event) => this.handleClick(event, row.idid)}>
 							{
 								Object.values(row).map((value, id) => {
 									const header = this.state.headers[id];
@@ -199,7 +199,7 @@ export default class AthleteTable extends Table {
 					</td>
 				</tr>
 				: rows.map((row, id) => (
-					<tr key={id} onClick={(event) => this.handleClick(event, row.id)}>
+					<tr key={id} className="clickable-row" onClick={(event) => this.handleClick(event, row.id)}>
 						<td key={id}>
 							<Box
 								sx={{
