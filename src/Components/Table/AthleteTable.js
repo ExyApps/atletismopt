@@ -86,7 +86,7 @@ export default class AthleteTable extends Table {
 	}
 
 	handleClick = (event, id) => {
-
+		// window.location.href = `#/perfil/${id}`;
 	};
 
 	handleSearch(value) {

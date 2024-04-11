@@ -9,7 +9,7 @@ export default class EnhancedTable extends React.Component {
 			order: 'asc',
 			orderBy: props.headers[0],
 			page: 0,
-			rowsPerPage: 5,
+			rowsPerPage: 10,
 		};
 	}
 
