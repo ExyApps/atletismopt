@@ -23,6 +23,9 @@ export default class Perfis extends React.Component {
 				this.setState({
 					loading: false,
 					rows: data["athletes"]
+					// .sort((a, b) => {
+					// 	return a["name"].localeCompare(b["name"]);
+					// })
 				});
 			});
 	}

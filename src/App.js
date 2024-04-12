@@ -11,7 +11,7 @@ import Home from './Pages/Home';
 import Competicoes from './Pages/Competicoes';
 import Perfis from './Pages/Perfis';
 import Rankings from './Pages/Rankings';
-import Sobre from './Pages/Sobre';
+import Sobre from './Pages/Sobre/Sobre';
 import AthleteProfile from './Pages/AthleteProfile/AthleteProfile';
 
 function App() {

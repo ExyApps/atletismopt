@@ -45,6 +45,48 @@ class AthleteProfile extends React.Component {
 			});
 	}
 
+	calculateAge(date) {
+		const today = new Date();
+		const birthdate = new Date(date);
+
+		const age = today.getFullYear() - birthdate.getFullYear();
+		const m = today.getMonth() - birthdate.getMonth();
+		const d = today.getDate() - birthdate.getDate();
+
+		console.log(age, m, d);
+
+		return (m < 0 || (m === 0 && d < 0)) ? age - 1 : age;
+	}
+
+	dateToText(date) {
+		const months = {
+			'01': 'janeiro',
+			'02': 'fevereiro',
+			'03': 'março',
+			'04': 'abril',
+			'05': 'maio',
+			'06': 'junho',
+			'07': 'julho',
+			'08': 'agosto',
+			'09': 'setembro',
+			'10': 'outubro',
+			'11': 'novembro',
+			'12': 'dezembro'
+		};
+
+		const dateArray = date.split('-');
+		const age = this.calculateAge(date);
+
+		date = dateArray[2] + ' de ' + months[dateArray[1]] + ' de ' + dateArray[0];
+		if (age === 1) {
+			date += ' (1 ano)';
+		} else {
+			date += ' (' + age + ' anos)';
+		}
+
+		return date;
+	}
+
 	render() {
 		return (
 			<>
@@ -83,7 +125,7 @@ class AthleteProfile extends React.Component {
 												justifyContent: 'center',
 											}}>
 												<h1><b>{this.state.athlete.name}</b></h1>
-												<h5>{this.state.athlete.birthdate}</h5>
+												<p>{this.dateToText(this.state.athlete.birthdate)}</p>
 											</Box>
 										</Box>
 									</Box>

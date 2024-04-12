@@ -13,8 +13,8 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 
 import { isMobile } from 'react-device-detect';
 
-// import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
-// import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 import SearchIcon from '@mui/icons-material/Search';
 
@@ -31,6 +31,9 @@ import Escaloes from '../../Information/Escaloes';
 export default class AthleteTable extends Table {
 	componentDidMount() {
 		this.setState({
+			orderBy: 'name',
+
+			// Filters
 			search: '',
 			genderSelected: '',
 
@@ -44,11 +47,16 @@ export default class AthleteTable extends Table {
 		}, () => {
 			this.getAllClubs();
 			this.getAllNationalities();
+
+			this.stableSort(
+				this.state.rows,
+				this.getComparator(this.state.order, this.state.orderBy)
+			)
 		});
 	}
 
 	getAllClubs() {
-		const clubs = this.state.rows.map(row => row.club_abbreviation);
+		const clubs = this.state.rows.map(row => `${row.club_abbreviation} (${row.club_name})`);
 		const uniqueClubs = [...new Set(clubs)];
 		uniqueClubs.sort((a, b) => a.localeCompare(b));
 		this.setState({ clubs: uniqueClubs });
@@ -97,19 +105,195 @@ export default class AthleteTable extends Table {
 		if (!isMobile) {
 			return (
 				<tr>
-					<th>Nome</th>
-					<th>Género</th>
-					<th>Data de Nascimento</th>
-					<th>Clube</th>
-					<th>Nacionalidade</th>
+					<th>
+						<Box
+							sx={{
+								display: 'flex',
+								flexDirection: 'row',
+								justifyContent: 'center',
+								alignItems: 'center',
+								':hover': {
+									cursor: 'pointer',
+								}
+							}}
+							onClick={(event) => this.handleRequestSort(event, 'name')}
+						>
+							Nome
+							{
+								this.state.orderBy === 'name'
+									? this.state.order === 'asc'
+										? <ArrowDropUpIcon />
+										: <ArrowDropDownIcon />
+									: null
+							}
+						</Box>
+					</th>
+					<th>
+						<Box
+							sx={{
+								display: 'flex',
+								flexDirection: 'row',
+								justifyContent: 'center',
+								alignItems: 'center',
+								':hover': {
+									cursor: 'pointer',
+								}
+							}}
+							onClick={(event) => this.handleRequestSort(event, 'gender')}
+						>
+							Género
+							{
+								this.state.orderBy === 'gender'
+									? this.state.order === 'asc'
+										? <ArrowDropUpIcon />
+										: <ArrowDropDownIcon />
+									: null
+							}
+						</Box>
+					</th>
+					<th>
+						<Box
+							sx={{
+								display: 'flex',
+								flexDirection: 'row',
+								justifyContent: 'center',
+								alignItems: 'center',
+								':hover': {
+									cursor: 'pointer',
+								}
+							}}
+							onClick={(event) => this.handleRequestSort(event, 'birthdate')}
+						>
+							Data de Nascimento
+							{
+								this.state.orderBy === 'birthdate'
+									? this.state.order === 'asc'
+										? <ArrowDropUpIcon />
+										: <ArrowDropDownIcon />
+									: null
+							}
+						</Box>
+					</th>
+					<th>
+						<Box
+							sx={{
+								display: 'flex',
+								flexDirection: 'row',
+								justifyContent: 'center',
+								alignItems: 'center',
+								':hover': {
+									cursor: 'pointer',
+								}
+							}}
+							onClick={(event) => this.handleRequestSort(event, 'club_name')}
+						>
+							Clube
+							{
+								this.state.orderBy === 'club_name'
+									? this.state.order === 'asc'
+										? <ArrowDropUpIcon />
+										: <ArrowDropDownIcon />
+									: null
+							}
+						</Box>
+					</th>
+					<th>
+						<Box
+							sx={{
+								display: 'flex',
+								flexDirection: 'row',
+								justifyContent: 'center',
+								alignItems: 'center',
+								':hover': {
+									cursor: 'pointer',
+								}
+							}}
+							onClick={(event) => this.handleRequestSort(event, 'nationality')}
+						>
+							Nacionalidade
+							{
+								this.state.orderBy === 'nationality'
+									? this.state.order === 'asc'
+										? <ArrowDropUpIcon />
+										: <ArrowDropDownIcon />
+									: null
+							}
+						</Box>
+					</th>
 				</tr>
 			)
 		}
 		return (
 			<tr>
-				<th>Atleta</th>
-				<th>Nasc.</th>
-				<th>Clube</th>
+				<th>
+					<Box
+						sx={{
+							display: 'flex',
+							flexDirection: 'row',
+							justifyContent: 'center',
+							alignItems: 'center',
+							':hover': {
+								cursor: 'pointer',
+							}
+						}}
+						onClick={(event) => this.handleRequestSort(event, 'name')}
+					>
+						Atleta
+						{
+							this.state.orderBy === 'name'
+								? this.state.order === 'asc'
+									? <ArrowDropUpIcon />
+									: <ArrowDropDownIcon />
+								: null
+						}
+					</Box>
+				</th>
+				<th>
+					<Box
+						sx={{
+							display: 'flex',
+							flexDirection: 'row',
+							justifyContent: 'center',
+							alignItems: 'center',
+							':hover': {
+								cursor: 'pointer',
+							}
+						}}
+						onClick={(event) => this.handleRequestSort(event, 'birthdate')}
+					>
+						Nasc.
+						{
+							this.state.orderBy === 'birthdate'
+								? this.state.order === 'asc'
+									? <ArrowDropUpIcon />
+									: <ArrowDropDownIcon />
+								: null
+						}
+					</Box>
+				</th>
+				<th>
+					<Box
+						sx={{
+							display: 'flex',
+							flexDirection: 'row',
+							justifyContent: 'center',
+							alignItems: 'center',
+							':hover': {
+								cursor: 'pointer',
+							}
+						}}
+						onClick={(event) => this.handleRequestSort(event, 'club_name')}
+					>
+						Clube
+						{
+							this.state.orderBy === 'club_name'
+								? this.state.order === 'asc'
+									? <ArrowDropUpIcon />
+									: <ArrowDropDownIcon />
+								: null
+						}
+					</Box>
+				</th>
 			</tr>
 		)
 	}
@@ -152,7 +336,7 @@ export default class AthleteTable extends Table {
 								}
 							</td>
 							<td>{row.birthdate}</td>
-							<td>{row.club_name} ({row.club_abbreviation})</td>
+							<td>{row.club_abbreviation} ({row.club_name})</td>
 							<td>
 								<Box
 									sx={{
@@ -362,7 +546,7 @@ export default class AthleteTable extends Table {
 				// Compare the gender
 				&& row.gender.includes(this.state.genderSelected)
 				// Compare the club
-				&& (this.state.clubSelected === '' || row.club_abbreviation === this.state.clubSelected)
+				&& (this.state.clubSelected === '' || row.club_abbreviation === this.state.clubSelected.split(" ")[0])
 				// Compare the nationality
 				&& (this.state.nationalitySelected === '' || row.nationality === this.state.nationalitySelected)
 				// Compare the age

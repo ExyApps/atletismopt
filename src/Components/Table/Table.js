@@ -12,6 +12,10 @@ export default class EnhancedTable extends React.Component {
 		};
 	}
 
+	specialCharacterToNormalCharacter = (string) => {
+		return string.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+	};
+
 	// Since 2020 all major browsers ensure sort stability with Array.prototype.sort().
 	// stableSort() brings sort stability to non-modern browsers (notably IE11).
 	stableSort(array, comparator) {
@@ -27,10 +31,10 @@ export default class EnhancedTable extends React.Component {
 	}
 
 	descendingComparator(a, b, orderBy) {
-		if (b[orderBy] < a[orderBy]) {
+		if (this.specialCharacterToNormalCharacter(b[orderBy]) < this.specialCharacterToNormalCharacter(a[orderBy])) {
 			return -1;
 		}
-		if (b[orderBy] > a[orderBy]) {
+		if (this.specialCharacterToNormalCharacter(b[orderBy]) > this.specialCharacterToNormalCharacter(a[orderBy])) {
 			return 1;
 		}
 		return 0;

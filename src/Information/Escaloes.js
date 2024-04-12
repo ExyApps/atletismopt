@@ -1,4 +1,7 @@
 const Escaloes = [
+	"Sub-10 (Benjamins-A)",
+	"Sub-12 (Benjamins-B)",
+	"Sub-14 (Infantis)",
 	"Sub-16 (Iniciados)",
 	"Sub-18 (Juvenis)",
 	"Sub-20 (Juniores)",

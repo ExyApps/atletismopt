@@ -1,0 +1,45 @@
+.about h1 {
+	text-transform: uppercase;
+	font-weight: bold;
+}
+
+.about .detailed-div {
+	border: 1px solid #000;
+	margin: 1rem 5rem;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.about .info-container {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
+	box-sizing: border-box;
+	width: 100%;
+	padding: 1rem;
+}
+
+.about .info-container p {
+	text-align: justify;
+	text-transform: uppercase;
+	font-weight: bold;
+}
+
+.about .info-box {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	float: left;
+}
+
+.about .info-box img {
+	max-height: 125px;
+	border: 1px solid black;
+	border-radius: 1rem;
+	padding: 1rem;
+}
