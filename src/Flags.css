@@ -1,4 +1,6 @@
 .flag {
+	display: inline-block;
+	box-sizing: border-box;
 	box-shadow: 0 0 2px rgba(0, 0, 0, 1);
 }
 
@@ -1635,8 +1637,8 @@
 
 .icon-flag-SUI {
 	background-image: url(../public/flags.png);
-	background-position: -228px -221px;
-	width: 19px;
+	background-position: -231px -221px;
+	width: 13px;
 	height: 13px;
 }
 

@@ -164,3 +164,13 @@ body {
 .loader {
 	color: var(--grey-400) !important;
 }
+
+.loader-container {
+	margin: 0 auto;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 100dvw;
+}

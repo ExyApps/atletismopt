@@ -12,7 +12,7 @@ import Competicoes from './Pages/Competicoes';
 import Perfis from './Pages/Perfis';
 import Rankings from './Pages/Rankings';
 import Sobre from './Pages/Sobre';
-// import Page404 from './Pages/Page404'
+import AthleteProfile from './Pages/AthleteProfile/AthleteProfile';
 
 function App() {
 	return (
@@ -25,7 +25,9 @@ function App() {
 					<Route exact path="/perfis" element={<Perfis />} />
 					<Route exact path="/rankings" element={<Rankings />} />
 					<Route exact path="/sobre" element={<Sobre />} />
-					{/* <Route path="/*" element={<Page404 />} /> */}
+
+					{/* Route that catches all the routes that end in /perfis/<id> */}
+					<Route exact path="/perfis/:id" element={<AthleteProfile />} />
 				</Routes>
 			</HashRouter>
 			<Footer />

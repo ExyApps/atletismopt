@@ -1,0 +1,8 @@
+.profile-pic {
+	border-radius: 50%;
+	border: 2px solid var(--mem-color-text);
+	width: 10rem;
+	height: 10rem;
+	margin-right: 5rem;
+	margin-left: 2rem;
+}

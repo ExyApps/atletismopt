@@ -33,15 +33,10 @@ export default class Perfis extends React.Component {
 				{
 					this.state.loading
 						? <Box
-							sx={{
-								display: 'flex',
-								justifyContent: 'center',
-								alignItems: 'center',
-								flexDirection: 'column'
-							}}
+							className="loader-container"
 						>
 							<CircularProgress className="loader" />
-							<p>Aos seus lugares... Prontos... Vai! 💥</p>
+							<p>Aos seus lugares... Pronto... Vai! 💥</p>
 						</Box>
 						: <AthleteTable
 							rows={this.state.rows}
