@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 
 import AthleteTable from '../Components/Table/AthleteTable';
+import getURL from '../Information/Requests';
 
 export default class Perfis extends React.Component {
 	constructor(props) {
@@ -17,7 +18,7 @@ export default class Perfis extends React.Component {
 	componentDidMount() {
 		document.title = 'AtletismoPT - Perfis';
 
-		fetch(process.env.REACT_APP_API_URL + '/info/athletes')
+		fetch(getURL() + 'info/athletes')
 			.then(response => response.json())
 			.then(data => {
 				this.setState({
@@ -32,20 +33,24 @@ export default class Perfis extends React.Component {
 
 	render() {
 		return (
-			<div className='page'>
+			<>
 				{
 					this.state.loading
-						? <Box
-							className="loader-container"
+						? <div
+							className='page loader-container'
 						>
 							<CircularProgress className="loader" />
 							<p>Aos seus lugares... Pronto... Vai! 💥</p>
-						</Box>
-						: <AthleteTable
-							rows={this.state.rows}
-						/>
+						</div>
+						: <div className='page'>
+							<AthleteTable
+								rows={this.state.rows}
+							/>
+						</div>
 				}
-			</div>
+			</>
+
+
 		);
 	}
 }

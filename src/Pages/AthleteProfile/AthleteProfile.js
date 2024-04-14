@@ -6,6 +6,8 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 import Button from 'react-bootstrap/Button';
 
+import getURL from '../../Information/Requests';
+
 import './AthleteProfile.css';
 
 function withParams(Component) {
@@ -25,7 +27,7 @@ class AthleteProfile extends React.Component {
 	componentDidMount() {
 		document.title = 'AtletismoPT - Atleta';
 
-		fetch(process.env.REACT_APP_API_URL + '/info/athlete/' + this.props.params.id)
+		fetch(getURL() + 'info/athlete/' + this.props.params.id)
 			.then(response => response.json())
 			.then(data => {
 				// If error occurs, redirect to 404
