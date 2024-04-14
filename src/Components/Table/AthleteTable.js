@@ -98,7 +98,7 @@ export default class AthleteTable extends Table {
 	};
 
 	handleSearch(value) {
-		this.setState({ search: value.toLowerCase() });
+		this.setState({ search: value.toLowerCase(), page: 0 });
 	}
 
 	renderHeader() {
@@ -607,7 +607,7 @@ export default class AthleteTable extends Table {
 									defaultValue={''}
 									value={this.state.genderSelected}
 									label="Género"
-									onChange={(event) => this.setState({ genderSelected: event.target.value })}
+									onChange={(event) => this.setState({ genderSelected: event.target.value, page: 0 })}
 								>
 									<MenuItem value={''}>Todos</MenuItem>
 									<MenuItem value={'M'}>Masculino</MenuItem>
@@ -628,7 +628,7 @@ export default class AthleteTable extends Table {
 									id="gender-sec-select"
 									value={this.state.genderSelected}
 									label="Género"
-									onChange={(event) => this.setState({ genderSelected: event.target.value })}
+									onChange={(event) => this.setState({ genderSelected: event.target.value, page: 0 })}
 								>
 									<option value={''}>Todos</option>
 									<option value={'M'}>Masculino</option>
@@ -653,7 +653,7 @@ export default class AthleteTable extends Table {
 									defaultValue={''}
 									value={this.state.clubSelected}
 									label="Clube"
-									onChange={(event) => this.setState({ clubSelected: event.target.value })}
+									onChange={(event) => this.setState({ clubSelected: event.target.value, page: 0 })}
 								>
 									<MenuItem value={''}>Todos</MenuItem>
 									{
@@ -679,7 +679,7 @@ export default class AthleteTable extends Table {
 									id="club-sec-select"
 									value={this.state.clubSelected}
 									label="Clube"
-									onChange={(event) => this.setState({ clubSelected: event.target.value })}
+									onChange={(event) => this.setState({ clubSelected: event.target.value, page: 0 })}
 								>
 									<option value={''}>Todos</option>
 									{
@@ -709,7 +709,7 @@ export default class AthleteTable extends Table {
 									defaultValue={''}
 									value={this.state.nationalitySelected}
 									label="Nacionalidade"
-									onChange={(event) => this.setState({ nationalitySelected: event.target.value })}
+									onChange={(event) => this.setState({ nationalitySelected: event.target.value, page: 0 })}
 								>
 									<MenuItem value={''}>Todos</MenuItem>
 									{
@@ -735,7 +735,7 @@ export default class AthleteTable extends Table {
 									id="nationality-sec-select"
 									value={this.state.nationalitySelected}
 									label="Nacionalidade"
-									onChange={(event) => this.setState({ nationalitySelected: event.target.value })}
+									onChange={(event) => this.setState({ nationalitySelected: event.target.value, page: 0 })}
 								>
 									<option value={''}>Todos</option>
 									{
@@ -765,7 +765,7 @@ export default class AthleteTable extends Table {
 									defaultValue={''}
 									value={this.state.ageSelected}
 									label="Escalão"
-									onChange={(event) => this.setState({ ageSelected: event.target.value })}
+									onChange={(event) => this.setState({ ageSelected: event.target.value, page: 0 })}
 								>
 									<MenuItem value={''}>Todos</MenuItem>
 									{
@@ -789,7 +789,7 @@ export default class AthleteTable extends Table {
 									id="age-sec-select"
 									value={this.state.ageSelected}
 									label="Escalão"
-									onChange={(event) => this.setState({ ageSelected: event.target.value })}
+									onChange={(event) => this.setState({ ageSelected: event.target.value, page: 0 })}
 								>
 									<option value={''}>Todos</option>
 									{
