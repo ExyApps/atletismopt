@@ -594,7 +594,7 @@ export default class AthleteTable extends Table {
 					{/* Gender Dropdown */}
 					{
 						!isMobile
-							? <FormControl size="small" className="form-control-table">
+							? <FormControl size="small" className="form-control-table left-form">
 								<InputLabel id="gender-select-label" shrink={true}>Género</InputLabel>
 								<Select
 									displayEmpty
@@ -614,7 +614,7 @@ export default class AthleteTable extends Table {
 									<MenuItem value={'F'}>Feminino</MenuItem>
 								</Select>
 							</FormControl>
-							: <FormControl size="small" className="form-control-table">
+							: <FormControl size="small" className="form-control-table left-form">
 								<InputLabel id="gender-sec-select-label" shrink={true}>Género</InputLabel>
 								<NativeSelect
 									notched={true}
@@ -696,7 +696,7 @@ export default class AthleteTable extends Table {
 					{/* Nationality Dropdown */}
 					{
 						!isMobile
-							? <FormControl size="small" className="form-control-table">
+							? <FormControl size="small" className="form-control-table left-form">
 								<InputLabel id="nationality-select-label" shrink={true}>Nacionalidade</InputLabel>
 								<Select
 									displayEmpty
@@ -721,7 +721,7 @@ export default class AthleteTable extends Table {
 									}
 								</Select>
 							</FormControl>
-							: <FormControl size="small" className="form-control-table">
+							: <FormControl size="small" className="form-control-table left-form">
 								<InputLabel id="nationality-sec-select-label" shrink={true}>Nacionalidade</InputLabel>
 								<NativeSelect
 									notched={true}

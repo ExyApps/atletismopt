@@ -89,11 +89,13 @@
 }
 
 .form-control-table {
-	margin-left: 1rem !important;
+	margin-right: 1rem !important;
+	margin-bottom: 0.5rem !important;
 }
 
 .search-bar {
 	float: left !important;
+	margin-right: 1rem !important;
 }
 
 /* @media (max-width: 767px) { */
@@ -109,13 +111,44 @@
 		min-width: 49% !important;
 		margin-left: 0 !important;
 		margin-bottom: 12px !important;
+		margin-right: 0 !important;
 	}
 
 	.form-control-table .MuiInputBase-formControl {
 		min-width: 49% !important;
 	}
 
-	.form-control-table:nth-child(even) {
+	.form-control-table.left-form {
 		margin-right: 2% !important;
 	}
+
+	.mode-button {
+		width: 49% !important;
+		margin-right: 0 !important;
+	}
+
+	.mode-button.left-button {
+		margin-right: 2% !important;
+	}
+
+	.profile-buttons {
+		margin: 1rem !important;
+	}
+}
+
+.mode-button {
+	margin-bottom: 0.5rem !important;
+	text-transform: none !important;
+	color: var(--grey-400) !important;
+	border: 1px solid var(--grey-400) !important;
+	width: 150px;
+}
+
+.selected {
+	background-color: var(--grey-400) !important;
+	color: white !important;
+}
+
+.profile-buttons {
+	margin: 1rem 2rem;
 }

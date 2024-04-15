@@ -240,9 +240,7 @@ class AthleteProfile extends React.Component {
 										}
 
 										<Box
-											sx={{
-												m: '1rem 2rem'
-											}}
+											className="profile-buttons"
 										>
 											<Box
 												sx={{
@@ -254,9 +252,12 @@ class AthleteProfile extends React.Component {
 													modes.map((mode, index) => {
 														return <Button
 															key={mode}
-															className={this.state.mode === index ? 'selected mode-button' : 'mode-button'}
+															className={(this.state.mode === index ? 'selected mode-button' : 'mode-button') + (index % 2 === 0 ? ' left-button' : '')}
 															variant={this.state.mode === index ? 'contained' : 'outlined'}
 															onClick={() => this.setState({ mode: index })}
+															sx={{
+																marginRight: '1rem'
+															}}
 														>
 															{mode}
 														</Button>
@@ -276,7 +277,7 @@ class AthleteProfile extends React.Component {
 
 											{
 												this.state.mode === 1
-													? <Box>Mode 1</Box>
+													? <Box></Box>
 													: null
 											}
 										</Box>

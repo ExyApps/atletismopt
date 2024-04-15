@@ -519,110 +519,110 @@ export default class AthleteResultsTable extends Table {
 
 					{/* Event Dropdown */}
 					{
-						this.state.events === undefined
-							? null
-							: !isMobile
-								? <FormControl size="small" sx={{
-									m: '1rem 0',
-								}}>
-									<InputLabel id="event-select-label" shrink={true}>Evento</InputLabel>
-									<Select
-										displayEmpty
-										notched={true}
-										sx={{
-											minWidth: '150px'
-										}}
-										id="event-select"
-										defaultValue={''}
-										value={this.state.eventSelected}
-										label="Evento"
-										onChange={(event) => this.setState({ eventSelected: event.target.value, page: 0 })}
-									>
-										<MenuItem value={''}>Todos</MenuItem>
-										{
-											this.state.events.map((event, id) => (
-												<MenuItem key={id} value={event}>{event}</MenuItem>
+						!isMobile
+							? <FormControl size="small" className="form-control-table left-form">
+								<InputLabel id="event-select-label" shrink={true}>Evento</InputLabel>
+								<Select
+									displayEmpty
+									notched={true}
+									sx={{
+										minWidth: '180px'
+									}}
+									id="event-select"
+									defaultValue={''}
+									value={this.state.eventSelected}
+									label="Evento"
+									onChange={(event) => this.setState({ eventSelected: event.target.value, page: 0 })}
+								>
+									<MenuItem value={''}>Todos</MenuItem>
+									{
+										this.state.events !== undefined
+											? this.state.events.map((ev, id) => (
+												<MenuItem key={id} value={ev}>{ev}</MenuItem>
 											))
-										}
-									</Select>
-								</FormControl>
-								: <FormControl size="small" className="form-control-table">
-									<InputLabel id="event-sec-select-label" shrink={true}>Evento</InputLabel>
-									<NativeSelect
-										notched={true}
-										sx={{
-											minWidth: '120px'
-										}}
-										input={
-											<OutlinedInput />
-										}
-										id="event-sec-select"
-										value={this.state.eventSelected}
-										label="Evento"
-										onChange={(event) => this.setState({ eventSelected: event.target.value, page: 0 })}
-									>
-										<option value={''}>Todos</option>
-										{
-											this.state.events.map((event, id) => (
-												<option key={id} value={event}>{event}</option>
+											: null
+									}
+								</Select>
+							</FormControl>
+							: <FormControl size="small" className="form-control-table left-form">
+								<InputLabel id="event-sec-select-label" shrink={true}>Evento</InputLabel>
+								<NativeSelect
+									notched={true}
+									sx={{
+										minWidth: '180px'
+									}}
+									input={
+										<OutlinedInput />
+									}
+									id="event-sec-select"
+									value={this.state.eventSelected}
+									label="Evento"
+									onChange={(event) => this.setState({ eventSelected: event.target.value, page: 0 })}
+								>
+									<option value={''}>Todos</option>
+									{
+										this.state.events !== undefined
+											? this.state.events.map((ev, id) => (
+												<option key={id} value={ev}>{ev}</option>
 											))
-										}
-									</NativeSelect>
-								</FormControl>
+											: null
+									}
+								</NativeSelect>
+							</FormControl>
 					}
 
 					{/* Year Dropdown */}
 					{
-						this.state.years === undefined
-							? null
-							: !isMobile
-								? <FormControl className="form-control-table" size="small" sx={{
-									marginTop: '1rem',
-								}}>
-									<InputLabel id="year-select-label" shrink={true}>Ano</InputLabel>
-									<Select
-										displayEmpty
-										notched={true}
-										sx={{
-											minWidth: '150px'
-										}}
-										id="year-select"
-										defaultValue={''}
-										value={this.state.yearSelected}
-										label="Ano"
-										onChange={(event) => this.setState({ yearSelected: event.target.value, page: 0 })}
-									>
-										<MenuItem value={''}>Todos</MenuItem>
-										{
-											this.state.years.map((year, id) => (
+						!isMobile
+							? <FormControl size="small" className="form-control-table">
+								<InputLabel id="years-select-label" shrink={true}>Ano</InputLabel>
+								<Select
+									displayEmpty
+									notched={true}
+									sx={{
+										minWidth: '180px'
+									}}
+									id="year-select"
+									defaultValue={''}
+									value={this.state.yearSelected}
+									label="Ano"
+									onChange={(event) => this.setState({ yearSelected: event.target.value, page: 0 })}
+								>
+									<MenuItem value={''}>Todos</MenuItem>
+									{
+										this.state.years !== undefined
+											? this.state.years.map((year, id) => (
 												<MenuItem key={id} value={year}>{year}</MenuItem>
 											))
-										}
-									</Select>
-								</FormControl>
-								: <FormControl size="small" className="form-control-table">
-									<InputLabel id="year-sec-select-label" shrink={true}>Ano</InputLabel>
-									<NativeSelect
-										notched={true}
-										sx={{
-											minWidth: '120px'
-										}}
-										input={
-											<OutlinedInput />
-										}
-										id="year-sec-select"
-										value={this.state.yearSelected}
-										label="Ano"
-										onChange={(event) => this.setState({ yearSelected: event.target.value, page: 0 })}
-									>
-										<option value={''}>Todos</option>
-										{
-											this.state.years.map((year, id) => (
+											: null
+									}
+								</Select>
+							</FormControl>
+							: <FormControl size="small" className="form-control-table">
+								<InputLabel id="year-sec-select-label" shrink={true}>Ano</InputLabel>
+								<NativeSelect
+									notched={true}
+									sx={{
+										minWidth: '180px'
+									}}
+									input={
+										<OutlinedInput />
+									}
+									id="year-sec-select"
+									value={this.state.yearSelected}
+									label="Ano"
+									onChange={(event) => this.setState({ yearSelected: event.target.value, page: 0 })}
+								>
+									<option value={''}>Todos</option>
+									{
+										this.state.years !== undefined
+											? this.state.years.map((year, id) => (
 												<option key={id} value={year}>{year}</option>
 											))
-										}
-									</NativeSelect>
-								</FormControl>
+											: null
+									}
+								</NativeSelect>
+							</FormControl>
 					}
 				</Box>
 
