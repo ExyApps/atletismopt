@@ -1,3 +1,7 @@
+.profile-page {
+	margin-top: 55px;
+}
+
 .profile-pic {
 	border-radius: 50%;
 	border: 2px solid var(--mem-color-text);
@@ -5,4 +9,72 @@
 	height: 10rem;
 	margin-right: 5rem;
 	margin-left: 2rem;
+}
+
+.mobile-profile-pic {
+	border-radius: 50%;
+	border: 2px solid var(--mem-color-text);
+	width: 8rem;
+	height: 8rem;
+}
+
+.profile-background {
+	padding: 2rem 0;
+	background-image: url('../../../public/profile-default-background.png');
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+.profile-background h1,
+.profile-background p,
+.profile-background a,
+.profile-background span {
+	color: white;
+	text-shadow:
+		0.07em 0 black,
+		0 0.07em black,
+		-0.07em 0 black,
+		0 -0.07em black;
+}
+
+.profile-background p,
+.profile-background a,
+.profile-background span {
+	font-size: 18px;
+}
+
+.profile-info {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-evenly;
+	background-color: var(--grey-400);
+}
+
+.profile-info p,
+.profile-info a,
+.profile-info span {
+	color: white;
+	font-size: 25px;
+}
+
+@media (max-width: 767px) {
+	.profile-info {
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.profile-info-box {
+		width: 100vw;
+		float: left;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.info-nationality {
+		justify-content: center !important;
+	}
 }

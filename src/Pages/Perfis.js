@@ -1,6 +1,5 @@
 import React from 'react';
 
-import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 
 import AthleteTable from '../Components/Table/AthleteTable';
@@ -24,9 +23,6 @@ export default class Perfis extends React.Component {
 				this.setState({
 					loading: false,
 					rows: data["athletes"]
-					// .sort((a, b) => {
-					// 	return a["name"].localeCompare(b["name"]);
-					// })
 				});
 			});
 	}

@@ -60,12 +60,12 @@ export default class NavbarComponent extends React.Component {
 					<Navbar.Brand href="/atletismopt">AtletismoPT</Navbar.Brand>
 
 					<Nav className="me-auto nav-links-container">
-						<NavDropdown title="Competições" id="basic-nav-dropdown" className='pc-nav-link'>
+						<NavDropdown title="Competições" id="competition-nav-dropdown" className='pc-nav-link'>
 							<NavDropdown.Item href="#/competicoes">Calendário</NavDropdown.Item>
 							<NavDropdown.Item href="#/competicoes/resultados">Resultados</NavDropdown.Item>
 						</NavDropdown>
 
-						<NavDropdown title="Atletas" id="basic-nav-dropdown" className='pc-nav-link'>
+						<NavDropdown title="Atletas" id="athlete-nav-dropdown" className='pc-nav-link'>
 							<NavDropdown.Item href="#/perfis">Perfis</NavDropdown.Item>
 							<NavDropdown.Item href="#/perfis/confronto">Confronto Direto</NavDropdown.Item>
 						</NavDropdown>

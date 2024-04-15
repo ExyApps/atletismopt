@@ -6,8 +6,9 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 import Button from 'react-bootstrap/Button';
 
-import getURL from '../../Information/Requests';
+import { isMobile } from 'react-device-detect';
 
+import getURL from '../../Information/Requests';
 import './AthleteProfile.css';
 
 function withParams(Component) {
@@ -89,6 +90,119 @@ class AthleteProfile extends React.Component {
 		return date;
 	}
 
+	renderHeader() {
+		if (!isMobile) {
+			return (
+				<Box className='profile-background'
+					sx={{
+						display: 'flex',
+						flexDirection: 'row',
+						alignItems: 'center',
+					}}>
+					<img
+						className="profile-pic"
+						src="https://t4.ftcdn.net/jpg/00/64/67/27/360_F_64672736_U5kpdGs9keUll8CRQ3p3YaEv2M6qkVY5.jpg"
+						alt='Athlete Profile'
+					/>
+					<Box sx={{
+						display: 'flex',
+						flexDirection: 'column',
+						alignItems: 'left',
+						justifyContent: 'center',
+					}}>
+						<Box
+							sx={{
+								display: 'flex',
+								flexDirection: 'row',
+								alignItems: 'center'
+							}}
+						>
+							<h1>
+								<b>
+									{this.state.athlete.name}
+								</b>
+							</h1>
+						</Box>
+						<span>{this.dateToText(this.state.athlete.birthdate)}</span>
+						<Box
+							sx={{
+								display: 'flex',
+								flexDirection: 'row',
+								justifyContent: 'left',
+								alignItems: 'center'
+							}}
+						>
+							<span style={{ marginRight: "4px" }}>
+								{this.state.athlete.nationality}
+							</span>
+							<i className={`flag icon-flag-${this.state.athlete.nationality}`} />
+						</Box>
+						<a href="/atletismopt">
+							{this.state.athlete.club_abbreviation} ({this.state.athlete.club_name})
+						</a>
+					</Box>
+				</Box>
+			)
+		}
+		return (
+			<Box className='profile-background'
+				sx={{
+					display: 'flex',
+					flexDirection: 'column',
+					alignItems: 'center',
+					justifyContent: 'center',
+				}}
+			>
+				<img
+					className="mobile-profile-pic"
+					src="https://t4.ftcdn.net/jpg/00/64/67/27/360_F_64672736_U5kpdGs9keUll8CRQ3p3YaEv2M6qkVY5.jpg"
+					alt='Athlete Profile'
+					sx={{
+						m: 0
+					}}
+				/>
+				<Box sx={{
+					display: 'flex',
+					flexDirection: 'column',
+					alignItems: 'center',
+					justifyContent: 'center',
+				}}>
+					<Box
+						sx={{
+							display: 'flex',
+							flexDirection: 'row',
+							alignItems: 'center',
+							justifyContent: 'center'
+						}}
+					>
+						<h1>
+							<b>
+								{this.state.athlete.name}
+							</b>
+						</h1>
+					</Box>
+					<span>{this.dateToText(this.state.athlete.birthdate)}</span>
+					<Box
+						sx={{
+							display: 'flex',
+							flexDirection: 'row',
+							justifyContent: 'center',
+							alignItems: 'center'
+						}}
+					>
+						<span style={{ marginRight: "4px" }}>
+							{this.state.athlete.nationality}
+						</span>
+						<i className={`flag icon-flag-${this.state.athlete.nationality}`} />
+					</Box>
+					<a href="/atletismopt">
+						{this.state.athlete.club_abbreviation} ({this.state.athlete.club_name})
+					</a>
+				</Box>
+			</Box>
+		)
+	}
+
 	render() {
 		return (
 			<>
@@ -100,39 +214,24 @@ class AthleteProfile extends React.Component {
 
 							<Button className="template-page-button" href="/atletismopt">Voltar à Página Inicial</Button>
 						</div>
-						: <div className='page' >
+						: <>
 							{
 								this.state.loading
-									? <Box
-										className="loader-container"
-									>
-										<CircularProgress className="loader" />
-										<p>A calçar os bicos... 👟</p>
-									</Box>
-									: <Box>
-										<Box sx={{
-											display: 'flex',
-											flexDirection: 'row',
-											alignItems: 'center',
-										}}>
-											<img
-												className="profile-pic"
-												src="https://t4.ftcdn.net/jpg/00/64/67/27/360_F_64672736_U5kpdGs9keUll8CRQ3p3YaEv2M6qkVY5.jpg"
-												alt='Athlete Profile'
-											/>
-											<Box sx={{
-												display: 'flex',
-												flexDirection: 'column',
-												alignItems: 'left',
-												justifyContent: 'center',
-											}}>
-												<h1><b>{this.state.athlete.name}</b></h1>
-												<p>{this.dateToText(this.state.athlete.birthdate)}</p>
-											</Box>
+									? <div className='page'>
+										<Box
+											className="loader-container"
+										>
+											<CircularProgress className="loader" />
+											<p>A calçar os bicos... 👟</p>
 										</Box>
+									</div>
+									: <Box className='profile-page'>
+										{
+											this.renderHeader()
+										}
 									</Box>
 							}
-						</div>
+						</>
 				}
 			</>
 		);
