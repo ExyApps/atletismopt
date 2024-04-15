@@ -78,3 +78,15 @@
 		justify-content: center !important;
 	}
 }
+
+.mode-button {
+	margin-right: 1rem !important;
+	text-transform: none !important;
+	color: var(--grey-400) !important;
+	border: 1px solid var(--grey-400) !important;
+}
+
+.selected {
+	background-color: var(--grey-400) !important;
+	color: white !important;
+}

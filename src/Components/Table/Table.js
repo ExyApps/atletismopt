@@ -13,6 +13,7 @@ export default class EnhancedTable extends React.Component {
 	}
 
 	specialCharacterToNormalCharacter = (string) => {
+		if (string === null || string === undefined) return '0.00';
 		return string.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 	};
 

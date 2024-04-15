@@ -19,6 +19,8 @@
 
 .content-table td {
 	font-size: 0.9em;
+	align-items: center;
+	justify-content: center;
 }
 
 .content-table th,
@@ -32,6 +34,10 @@
 
 .content-table tbody tr:nth-of-type(even) {
 	background-color: #e6e6e6;
+}
+
+.empty-table {
+	text-align: center;
 }
 
 .clickable-row:hover {

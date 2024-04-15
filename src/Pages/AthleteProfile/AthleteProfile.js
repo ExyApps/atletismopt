@@ -3,17 +3,24 @@ import { useParams } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
+import Button from '@mui/material/Button';
 
-import Button from 'react-bootstrap/Button';
 
 import { isMobile } from 'react-device-detect';
 
 import getURL from '../../Information/Requests';
+
+import AthleteResultsTable from '../../Components/Table/AthleteResultsTable';
 import './AthleteProfile.css';
 
 function withParams(Component) {
 	return (props) => <Component {...props} params={useParams()} />;
 }
+
+const modes = [
+	'Resultados',
+	'Recordes'
+]
 
 class AthleteProfile extends React.Component {
 	constructor(props) {
@@ -21,7 +28,9 @@ class AthleteProfile extends React.Component {
 		this.state = {
 			loading: true,
 			error: false,
-			id: null
+			id: null,
+
+			mode: 0,
 		};
 	}
 
@@ -229,6 +238,48 @@ class AthleteProfile extends React.Component {
 										{
 											this.renderHeader()
 										}
+
+										<Box
+											sx={{
+												m: '1rem 2rem'
+											}}
+										>
+											<Box
+												sx={{
+													display: 'flex',
+													flexDirection: 'row',
+												}}
+											>
+												{
+													modes.map((mode, index) => {
+														return <Button
+															key={mode}
+															className={this.state.mode === index ? 'selected mode-button' : 'mode-button'}
+															variant={this.state.mode === index ? 'contained' : 'outlined'}
+															onClick={() => this.setState({ mode: index })}
+														>
+															{mode}
+														</Button>
+													})
+												}
+											</Box>
+
+											{
+												this.state.mode === 0
+													? <Box>
+														<AthleteResultsTable
+															rows={this.state.results}
+														/>
+													</Box>
+													: null
+											}
+
+											{
+												this.state.mode === 1
+													? <Box>Mode 1</Box>
+													: null
+											}
+										</Box>
 									</Box>
 							}
 						</>
