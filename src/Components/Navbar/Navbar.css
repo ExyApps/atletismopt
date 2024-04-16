@@ -12,12 +12,6 @@
 	transition: all .5s ease-in-out;
 }
 
-@media (min-width: 768px) {
-	.menu-btn {
-		display: none;
-	}
-}
-
 .menu-btn__burger {
 	width: 20px;
 	height: 3px;
@@ -72,7 +66,6 @@
 	padding: 0 1.5rem !important;
 	display: flex !important;
 	justify-content: space-between !important;
-	/* transition: all .1s ease-in-out; */
 }
 
 .navbar-brand,
@@ -90,20 +83,8 @@
 	border-left: 1px solid var(--mem-color-bg-link) !important;
 }
 
-@media (max-width: 767px) {
-	.pc-nav-link {
-		display: none !important;
-	}
-
-	.nav-link {
-		color: var(--mem-color-text) !important;
-	}
-}
-
-@media (min-width: 768px) {
-	.nav-links-sidebar {
-		display: none !important;
-	}
+.nav-links-sidebar .nav-link {
+	color: var(--mem-color-text) !important;
 }
 
 .nav-links-sidebar {

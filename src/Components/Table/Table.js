@@ -4,13 +4,21 @@ export default class EnhancedTable extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			width: window.innerWidth,
+
 			rows: props.rows,
+			searchedRows: [...props.rows],
+
 			order: 'asc',
-			orderBy: 'id',
+			orderBy: '',
 			page: 0,
 			rowsPerPage: 10,
 		};
 	}
+
+	updateDimensions = () => {
+		this.setState({ width: window.innerWidth });
+	};
 
 	specialCharacterToNormalCharacter = (string) => {
 		if (string === null || string === undefined) return '0.00';
@@ -47,15 +55,18 @@ export default class EnhancedTable extends React.Component {
 			: (a, b) => -this.descendingComparator(a, b, orderBy);
 	}
 
-	handleRequestSort = (event, property) => {
-		const isAsc = this.state.orderBy === property && this.state.order === 'asc';
+	handleRequestSort = (_, property, initial = false) => {
+		var isAsc = (this.state.orderBy === property && this.state.order === 'asc');
+		if (initial) isAsc = false;
 		this.setState({
 			order: isAsc ? 'desc' : 'asc',
 			orderBy: property,
-		});
+		}, () => this.setState({
+			searchedRows: this.stableSort(this.state.searchedRows, this.getComparator(this.state.order, this.state.orderBy)),
+		}));
 	};
 
-	handleChangePage = (event, newPage) => {
+	handleChangePage = (_, newPage) => {
 		this.setState({ page: newPage });
 	};
 
@@ -67,7 +78,7 @@ export default class EnhancedTable extends React.Component {
 	};
 
 	// This method needs to be implemented by the child class.
-	handleClick = (event, id) => {
+	handleClick = (_, id) => {
 		alert('Clicked on row with id:', id);
 	};
 

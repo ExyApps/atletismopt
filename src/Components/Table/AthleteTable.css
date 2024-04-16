@@ -89,8 +89,11 @@
 }
 
 .form-control-table {
-	margin-right: 1rem !important;
-	margin-bottom: 0.5rem !important;
+	margin-bottom: 0.5rem;
+}
+
+.form-control-table:not(:last-child) {
+	margin-right: 1rem;
 }
 
 .search-bar {
@@ -99,7 +102,7 @@
 }
 
 /* @media (max-width: 767px) { */
-@media (max-width: 1060px) {
+@media (max-width: 1130px) {
 	.search-bar {
 		width: 100% !important;
 		margin-bottom: 12px !important;
@@ -118,7 +121,7 @@
 		min-width: 49% !important;
 	}
 
-	.form-control-table.left-form {
+	.form-control-table:nth-child(even) {
 		margin-right: 2% !important;
 	}
 

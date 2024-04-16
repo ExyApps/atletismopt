@@ -5,10 +5,17 @@ import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import Button from '@mui/material/Button';
 
-
 import { isMobile } from 'react-device-detect';
 
-import getURL from '../../Information/Requests';
+import {
+	isMobileDevice,
+	isMobileDeviceLandscape,
+	isTabletDevice,
+	isSmallDesktopDevice,
+	isLargeDesktopDevice
+} from '../../Utils/WindowSizes';
+
+import getURL from '../../Utils/Requests';
 
 import AthleteResultsTable from '../../Components/Table/AthleteResultsTable';
 import './AthleteProfile.css';
@@ -26,17 +33,25 @@ class AthleteProfile extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			width: window.innerWidth,
+
 			loading: true,
 			error: false,
 			id: null,
 
-			mode: 0,
+			mode: 1,
 		};
+	}
+
+	updateDimensions = () => {
+		this.setState({ width: window.innerWidth });
 	}
 
 	componentDidMount() {
 		document.title = 'AtletismoPT - Atleta';
+		window.addEventListener('resize', this.updateDimensions);
 
+		// Fetch the 
 		fetch(getURL() + 'info/athlete/' + this.props.params.id)
 			.then(response => response.json())
 			.then(data => {
@@ -55,6 +70,10 @@ class AthleteProfile extends React.Component {
 				}
 
 			});
+	}
+
+	componentWillUnmount() {
+		window.removeEventListener('resize', this.updateDimensions);
 	}
 
 	calculateAge(date) {
@@ -213,6 +232,7 @@ class AthleteProfile extends React.Component {
 	}
 
 	render() {
+		var width = window.innerWidth;
 		return (
 			<>
 				{
@@ -277,7 +297,14 @@ class AthleteProfile extends React.Component {
 
 											{
 												this.state.mode === 1
-													? <Box></Box>
+													? <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+														<span>{width}</span>
+														<span>{isMobileDevice() ? 'true' : 'false'}</span>
+														<span>{isMobileDeviceLandscape() ? 'true' : 'false'}</span>
+														<span>{isTabletDevice() ? 'true' : 'false'}</span>
+														<span>{isSmallDesktopDevice() ? 'true' : 'false'}</span>
+														<span>{isLargeDesktopDevice() ? 'true' : 'false'}</span>
+													</Box>
 													: null
 											}
 										</Box>
