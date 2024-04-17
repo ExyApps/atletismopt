@@ -15,7 +15,8 @@ export default function TableHeader(props) {
 					alignItems: 'center',
 					':hover': {
 						cursor: 'pointer',
-					}
+					},
+					userSelect: 'none',
 				}}
 				onClick={(event) => props.parent.handleRequestSort(event, props.field)}
 			>

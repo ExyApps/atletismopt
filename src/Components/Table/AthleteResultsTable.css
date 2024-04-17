@@ -1,5 +1,5 @@
 .form-control-athlete-profile-table {
-	margin-bottom: 0.5rem;
+	margin-bottom: 0.5rem !important;
 }
 
 .form-control-athlete-profile-table:first-child {

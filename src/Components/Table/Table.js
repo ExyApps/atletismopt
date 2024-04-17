@@ -57,7 +57,7 @@ export default class EnhancedTable extends React.Component {
 
 	handleRequestSort = (_, property, initial = false) => {
 		var isAsc = (this.state.orderBy === property && this.state.order === 'asc');
-		if (initial) isAsc = false;
+		if (initial) isAsc = this.state.order === 'asc';
 		this.setState({
 			order: isAsc ? 'desc' : 'asc',
 			orderBy: property,
