@@ -88,11 +88,11 @@
 	color: var(--grey-400);
 }
 
-.form-control-table {
+.form-control-athlete-table {
 	margin-bottom: 0.5rem;
 }
 
-.form-control-table:not(:last-child) {
+.form-control-athlete-table:not(:last-child) {
 	margin-right: 1rem;
 }
 
@@ -101,14 +101,13 @@
 	margin-right: 1rem !important;
 }
 
-/* @media (max-width: 767px) { */
 @media (max-width: 1130px) {
 	.search-bar {
 		width: 100% !important;
 		margin-bottom: 12px !important;
 	}
 
-	.form-control-table {
+	.form-control-athlete-table {
 		float: left !important;
 		width: 49% !important;
 		min-width: 49% !important;
@@ -117,41 +116,11 @@
 		margin-right: 0 !important;
 	}
 
-	.form-control-table .MuiInputBase-formControl {
+	.form-control-athlete-table .MuiInputBase-formControl {
 		min-width: 49% !important;
 	}
 
-	.form-control-table:nth-child(even) {
+	.form-control-athlete-table:nth-child(even) {
 		margin-right: 2% !important;
 	}
-
-	.mode-button {
-		width: 49% !important;
-		margin-right: 0 !important;
-	}
-
-	.mode-button.left-button {
-		margin-right: 2% !important;
-	}
-
-	.profile-buttons {
-		margin: 1rem !important;
-	}
-}
-
-.mode-button {
-	margin-bottom: 0.5rem !important;
-	text-transform: none !important;
-	color: var(--grey-400) !important;
-	border: 1px solid var(--grey-400) !important;
-	width: 150px;
-}
-
-.selected {
-	background-color: var(--grey-400) !important;
-	color: white !important;
-}
-
-.profile-buttons {
-	margin: 1rem 2rem;
 }

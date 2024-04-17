@@ -130,8 +130,8 @@ export default class AthleteTable extends Table {
 	}
 
 	renderMobile(rows) {
-		const initialRow = Math.min(this.state.page * this.state.rowsPerPage + 1, rows.length);
-		const finalRow = Math.min(this.state.page * this.state.rowsPerPage + this.state.rowsPerPage, rows.length);
+		const initialRow = Math.min(this.state.page * this.state.rowsPerPage + 1, this.state.searchedRows.length);
+		const finalRow = Math.min(this.state.page * this.state.rowsPerPage + this.state.rowsPerPage, this.state.searchedRows.length);
 		return (
 			<>
 				<thead>
@@ -286,8 +286,8 @@ export default class AthleteTable extends Table {
 	}
 
 	renderMobileLandscape(rows) {
-		const initialRow = Math.min(this.state.page * this.state.rowsPerPage + 1, rows.length);
-		const finalRow = Math.min(this.state.page * this.state.rowsPerPage + this.state.rowsPerPage, rows.length);
+		const initialRow = Math.min(this.state.page * this.state.rowsPerPage + 1, this.state.searchedRows.length);
+		const finalRow = Math.min(this.state.page * this.state.rowsPerPage + this.state.rowsPerPage, this.state.searchedRows.length);
 		return (
 			<>
 				<thead>
@@ -442,8 +442,8 @@ export default class AthleteTable extends Table {
 	}
 
 	renderTablet(rows) {
-		const initialRow = Math.min(this.state.page * this.state.rowsPerPage + 1, rows.length);
-		const finalRow = Math.min(this.state.page * this.state.rowsPerPage + this.state.rowsPerPage, rows.length);
+		const initialRow = Math.min(this.state.page * this.state.rowsPerPage + 1, this.state.searchedRows.length);
+		const finalRow = Math.min(this.state.page * this.state.rowsPerPage + this.state.rowsPerPage, this.state.searchedRows.length);
 		return (
 			<>
 				<thead>
@@ -596,8 +596,8 @@ export default class AthleteTable extends Table {
 	}
 
 	renderDesktop(rows) {
-		const initialRow = Math.min(this.state.page * this.state.rowsPerPage + 1, rows.length);
-		const finalRow = Math.min(this.state.page * this.state.rowsPerPage + this.state.rowsPerPage, rows.length);
+		const initialRow = Math.min(this.state.page * this.state.rowsPerPage + 1, this.state.searchedRows.length);
+		const finalRow = Math.min(this.state.page * this.state.rowsPerPage + this.state.rowsPerPage, this.state.searchedRows.length);
 		return (
 			<>
 				<thead>
@@ -807,6 +807,7 @@ export default class AthleteTable extends Table {
 
 					<Form
 						parent={this}
+						formClass="form-control-athlete-table"
 						variable="genderSelected"
 						name="Género"
 						options={[
@@ -817,6 +818,7 @@ export default class AthleteTable extends Table {
 
 					<Form
 						key={'Club' + this.state.clubs}
+						formClass="form-control-athlete-table"
 						parent={this}
 						variable="clubSelected"
 						name="Clube"
@@ -831,6 +833,7 @@ export default class AthleteTable extends Table {
 
 					<Form
 						key={'Nat' + this.state.nationalities}
+						formClass="form-control-athlete-table"
 						parent={this}
 						variable="nationalitySelected"
 						name="Nacionalidade"
@@ -844,6 +847,7 @@ export default class AthleteTable extends Table {
 					/>
 
 					<Form
+						formClass="form-control-athlete-table"
 						parent={this}
 						variable="ageSelected"
 						name="Escalão"

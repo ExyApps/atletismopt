@@ -7,7 +7,6 @@
 	border: 2px solid var(--mem-color-text);
 	width: 10rem;
 	height: 10rem;
-	margin-right: 5rem;
 	margin-left: 2rem;
 }
 
@@ -77,4 +76,36 @@
 	.info-nationality {
 		justify-content: center !important;
 	}
+}
+
+@media (max-width: 1023px) {
+	.mode-button {
+		width: 49% !important;
+		margin-right: 0 !important;
+	}
+
+	.mode-button.left-button {
+		margin-right: 2% !important;
+	}
+
+	.profile-buttons {
+		margin: 1rem !important;
+	}
+}
+
+.mode-button {
+	margin-bottom: 0.5rem !important;
+	text-transform: none !important;
+	color: var(--grey-400) !important;
+	border: 1px solid var(--grey-400) !important;
+	width: 150px;
+}
+
+.selected {
+	background-color: var(--grey-400) !important;
+	color: white !important;
+}
+
+.profile-buttons {
+	margin: 1rem 2rem;
 }

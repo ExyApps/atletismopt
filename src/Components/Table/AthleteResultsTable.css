@@ -1,0 +1,18 @@
+.form-control-athlete-profile-table {
+	margin-bottom: 0.5rem;
+}
+
+.form-control-athlete-profile-table:first-child {
+	margin-right: 1rem;
+}
+
+@media (max-width: 1023px) {
+	.form-control-athlete-profile-table {
+		min-width: 49%;
+		width: 49%;
+	}
+
+	.form-control-athlete-profile-table:first-child {
+		margin-right: 2%;
+	}
+}

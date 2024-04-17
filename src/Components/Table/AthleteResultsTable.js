@@ -1,13 +1,10 @@
 import React from 'react';
+import './AthleteResultsTable.css';
 
 import Box from '@mui/material/Box';
 import FormControl from '@mui/material/FormControl';
 import NativeSelect from '@mui/material/NativeSelect';
 import IconButton from '@mui/material/IconButton';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import InputLabel from '@mui/material/InputLabel';
-import OutlinedInput from '@mui/material/OutlinedInput';
 
 import { isMobile } from 'react-device-detect';
 
@@ -17,8 +14,8 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 
-import './AthleteTable.css';
 import Table from './Table';
+import Form from './Form';
 
 export default class AthleteResultsTable extends Table {
 	componentDidMount() {
@@ -64,7 +61,6 @@ export default class AthleteResultsTable extends Table {
 	// };
 
 	renderHeader() {
-		// if (!isMobile) {
 		return (
 			<tr>
 				<th>
@@ -208,83 +204,8 @@ export default class AthleteResultsTable extends Table {
 			</tr>
 		)
 	}
-	// return (
-	// 	<tr>
-	// 		<th>
-	// 			<Box
-	// 				sx={{
-	// 					display: 'flex',
-	// 					flexDirection: 'row',
-	// 					justifyContent: 'center',
-	// 					alignItems: 'center',
-	// 					':hover': {
-	// 						cursor: 'pointer',
-	// 					}
-	// 				}}
-	// 				onClick={(event) => this.handleRequestSort(event, 'name')}
-	// 			>
-	// 				Atleta
-	// 				{
-	// 					this.state.orderBy === 'name'
-	// 						? this.state.order === 'asc'
-	// 							? <ArrowDropUpIcon />
-	// 							: <ArrowDropDownIcon />
-	// 						: null
-	// 				}
-	// 			</Box>
-	// 		</th>
-	// 		<th>
-	// 			<Box
-	// 				sx={{
-	// 					display: 'flex',
-	// 					flexDirection: 'row',
-	// 					justifyContent: 'center',
-	// 					alignItems: 'center',
-	// 					':hover': {
-	// 						cursor: 'pointer',
-	// 					}
-	// 				}}
-	// 				onClick={(event) => this.handleRequestSort(event, 'birthdate')}
-	// 			>
-	// 				Nasc.
-	// 				{
-	// 					this.state.orderBy === 'birthdate'
-	// 						? this.state.order === 'asc'
-	// 							? <ArrowDropUpIcon />
-	// 							: <ArrowDropDownIcon />
-	// 						: null
-	// 				}
-	// 			</Box>
-	// 		</th>
-	// 		<th>
-	// 			<Box
-	// 				sx={{
-	// 					display: 'flex',
-	// 					flexDirection: 'row',
-	// 					justifyContent: 'center',
-	// 					alignItems: 'center',
-	// 					':hover': {
-	// 						cursor: 'pointer',
-	// 					}
-	// 				}}
-	// 				onClick={(event) => this.handleRequestSort(event, 'club_name')}
-	// 			>
-	// 				Clube
-	// 				{
-	// 					this.state.orderBy === 'club_name'
-	// 						? this.state.order === 'asc'
-	// 							? <ArrowDropUpIcon />
-	// 							: <ArrowDropDownIcon />
-	// 						: null
-	// 				}
-	// 			</Box>
-	// 		</th>
-	// 	</tr>
-	// )
-	// }
 
 	renderTable(rows) {
-		// if (!isMobile) {
 		return (
 			rows.length === 0
 				? <tr>
@@ -312,66 +233,6 @@ export default class AthleteResultsTable extends Table {
 				))
 		)
 	}
-
-	// 	return (
-	// 		rows.length === 0
-	// 			? <tr>
-	// 				<td colSpan={3}>
-	// 					<div className="empty-table">
-	// 						<span>Não foram encontrados resultados.</span>
-	// 					</div>
-	// 				</td>
-	// 			</tr>
-	// 			: rows.map((row, id) => (
-	// 				<tr key={id} className="clickable-row" onClick={(event) => this.handleClick(event, row.id)}>
-	// 					<td key={id}>
-	// 						<Box
-	// 							sx={{
-	// 								display: 'flex',
-	// 								flexDirection: 'row',
-	// 								justifyContent: 'space-between',
-	// 								alignItems: 'center'
-	// 							}}
-	// 						>
-	// 							<i className={`flag icon-flag-${row.nationality}`} />
-	// 							<span style={{
-	// 								marginLeft: "4px",
-	// 							}}>
-	// 								{row.name}
-	// 							</span>
-	// 							{
-	// 								row.gender === 'M'
-	// 									? <Box
-	// 										sx={{
-	// 											display: 'flex',
-	// 											justifyContent: 'center',
-	// 											alignItems: 'center'
-	// 										}}
-	// 									>
-	// 										<TbMars className='mars' size={20} />
-	// 									</Box>
-	// 									: <Box
-	// 										sx={{
-	// 											display: 'flex',
-	// 											justifyContent: 'center',
-	// 											alignItems: 'center'
-	// 										}}
-	// 									>
-	// 										<TbVenus className='venus' size={20} />
-	// 									</Box>
-	// 							}
-	// 						</Box>
-	// 					</td>
-	// 					<td>
-	// 						{row.birthdate.split('-')[0]}
-	// 					</td>
-	// 					<td>
-	// 						{row.club_abbreviation}
-	// 					</td>
-	// 				</tr>
-	// 			))
-	// 	)
-	// }
 
 	renderFooter(rows) {
 		const initialRow = Math.min(this.state.page * this.state.rowsPerPage + 1, rows.length);
@@ -517,113 +378,33 @@ export default class AthleteResultsTable extends Table {
 					}}
 				>
 
-					{/* Event Dropdown */}
-					{
-						!isMobile
-							? <FormControl size="small" className="form-control-table left-form">
-								<InputLabel id="event-select-label" shrink={true}>Evento</InputLabel>
-								<Select
-									displayEmpty
-									notched={true}
-									sx={{
-										minWidth: '180px'
-									}}
-									id="event-select"
-									defaultValue={''}
-									value={this.state.eventSelected}
-									label="Evento"
-									onChange={(event) => this.setState({ eventSelected: event.target.value, page: 0 })}
-								>
-									<MenuItem value={''}>Todos</MenuItem>
-									{
-										this.state.events !== undefined
-											? this.state.events.map((ev, id) => (
-												<MenuItem key={id} value={ev}>{ev}</MenuItem>
-											))
-											: null
-									}
-								</Select>
-							</FormControl>
-							: <FormControl size="small" className="form-control-table left-form">
-								<InputLabel id="event-sec-select-label" shrink={true}>Evento</InputLabel>
-								<NativeSelect
-									notched={true}
-									sx={{
-										minWidth: '180px'
-									}}
-									input={
-										<OutlinedInput />
-									}
-									id="event-sec-select"
-									value={this.state.eventSelected}
-									label="Evento"
-									onChange={(event) => this.setState({ eventSelected: event.target.value, page: 0 })}
-								>
-									<option value={''}>Todos</option>
-									{
-										this.state.events !== undefined
-											? this.state.events.map((ev, id) => (
-												<option key={id} value={ev}>{ev}</option>
-											))
-											: null
-									}
-								</NativeSelect>
-							</FormControl>
-					}
+					<Form
+						key={"Events" + this.state.events}
+						formClass="form-control-athlete-profile-table"
+						parent={this}
+						variable="eventSelected"
+						name="Evento"
+						options={
+							this.state.events !== undefined
+								? this.state.events.map(event => ({ name: event, value: event }))
+								: []
+						}
+						minWidth="180px"
+					/>
 
-					{/* Year Dropdown */}
-					{
-						!isMobile
-							? <FormControl size="small" className="form-control-table">
-								<InputLabel id="years-select-label" shrink={true}>Ano</InputLabel>
-								<Select
-									displayEmpty
-									notched={true}
-									sx={{
-										minWidth: '180px'
-									}}
-									id="year-select"
-									defaultValue={''}
-									value={this.state.yearSelected}
-									label="Ano"
-									onChange={(event) => this.setState({ yearSelected: event.target.value, page: 0 })}
-								>
-									<MenuItem value={''}>Todos</MenuItem>
-									{
-										this.state.years !== undefined
-											? this.state.years.map((year, id) => (
-												<MenuItem key={id} value={year}>{year}</MenuItem>
-											))
-											: null
-									}
-								</Select>
-							</FormControl>
-							: <FormControl size="small" className="form-control-table">
-								<InputLabel id="year-sec-select-label" shrink={true}>Ano</InputLabel>
-								<NativeSelect
-									notched={true}
-									sx={{
-										minWidth: '180px'
-									}}
-									input={
-										<OutlinedInput />
-									}
-									id="year-sec-select"
-									value={this.state.yearSelected}
-									label="Ano"
-									onChange={(event) => this.setState({ yearSelected: event.target.value, page: 0 })}
-								>
-									<option value={''}>Todos</option>
-									{
-										this.state.years !== undefined
-											? this.state.years.map((year, id) => (
-												<option key={id} value={year}>{year}</option>
-											))
-											: null
-									}
-								</NativeSelect>
-							</FormControl>
-					}
+					<Form
+						key={"Years" + this.state.years}
+						formClass="form-control-athlete-profile-table"
+						parent={this}
+						variable="yearSelected"
+						name="Ano"
+						options={
+							this.state.years !== undefined
+								? this.state.years.map(year => ({ name: year, value: year }))
+								: []
+						}
+						minWidth="180px"
+					/>
 				</Box>
 
 				<table className="content-table">

@@ -1,24 +1,18 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
+import './AthleteProfile.css';
 
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import Button from '@mui/material/Button';
 
-import { isMobile } from 'react-device-detect';
-
 import {
 	isMobileDevice,
 	isMobileDeviceLandscape,
-	isTabletDevice,
-	isSmallDesktopDevice,
-	isLargeDesktopDevice
 } from '../../Utils/WindowSizes';
 
 import getURL from '../../Utils/Requests';
-
 import AthleteResultsTable from '../../Components/Table/AthleteResultsTable';
-import './AthleteProfile.css';
 
 function withParams(Component) {
 	return (props) => <Component {...props} params={useParams()} />;
@@ -39,7 +33,7 @@ class AthleteProfile extends React.Component {
 			error: false,
 			id: null,
 
-			mode: 1,
+			mode: 0,
 		};
 	}
 
@@ -84,8 +78,6 @@ class AthleteProfile extends React.Component {
 		const m = today.getMonth() - birthdate.getMonth();
 		const d = today.getDate() - birthdate.getDate();
 
-		console.log(age, m, d);
-
 		return (m < 0 || (m === 0 && d < 0)) ? age - 1 : age;
 	}
 
@@ -118,60 +110,10 @@ class AthleteProfile extends React.Component {
 		return date;
 	}
 
-	renderHeader() {
-		if (!isMobile) {
-			return (
-				<Box className='profile-background'
-					sx={{
-						display: 'flex',
-						flexDirection: 'row',
-						alignItems: 'center',
-					}}>
-					<img
-						className="profile-pic"
-						src="https://t4.ftcdn.net/jpg/00/64/67/27/360_F_64672736_U5kpdGs9keUll8CRQ3p3YaEv2M6qkVY5.jpg"
-						alt='Athlete Profile'
-					/>
-					<Box sx={{
-						display: 'flex',
-						flexDirection: 'column',
-						alignItems: 'left',
-						justifyContent: 'center',
-					}}>
-						<Box
-							sx={{
-								display: 'flex',
-								flexDirection: 'row',
-								alignItems: 'center'
-							}}
-						>
-							<h1>
-								<b>
-									{this.state.athlete.name}
-								</b>
-							</h1>
-						</Box>
-						<span>{this.dateToText(this.state.athlete.birthdate)}</span>
-						<Box
-							sx={{
-								display: 'flex',
-								flexDirection: 'row',
-								justifyContent: 'left',
-								alignItems: 'center'
-							}}
-						>
-							<span style={{ marginRight: "4px" }}>
-								{this.state.athlete.nationality}
-							</span>
-							<i className={`flag icon-flag-${this.state.athlete.nationality}`} />
-						</Box>
-						<a href="/atletismopt">
-							{this.state.athlete.club_abbreviation} ({this.state.athlete.club_name})
-						</a>
-					</Box>
-				</Box>
-			)
-		}
+	/*********************************************************
+	 * HEADERS
+	 *********************************************************/
+	renderMobileHeader() {
 		return (
 			<Box className='profile-background'
 				sx={{
@@ -231,6 +173,121 @@ class AthleteProfile extends React.Component {
 		)
 	}
 
+	renderMobileLandscapeHeader() {
+		return (
+			<Box className='profile-background'
+				sx={{
+					display: 'flex',
+					flexDirection: 'row',
+					alignItems: 'center',
+				}}
+			>
+				<img
+					className="mobile-profile-pic"
+					src="https://t4.ftcdn.net/jpg/00/64/67/27/360_F_64672736_U5kpdGs9keUll8CRQ3p3YaEv2M6qkVY5.jpg"
+					alt='Athlete Profile'
+					style={{
+						marginLeft: '2rem'
+					}}
+				/>
+				<Box sx={{
+					display: 'flex',
+					flexDirection: 'column',
+					alignItems: 'left',
+					justifyContent: 'center',
+					marginLeft: '1rem'
+				}}>
+					<Box
+						sx={{
+							display: 'flex',
+							flexDirection: 'row',
+							alignItems: 'center'
+						}}
+					>
+						<h1>
+							<b>
+								{this.state.athlete.name}
+							</b>
+						</h1>
+					</Box>
+					<span>{this.dateToText(this.state.athlete.birthdate)}</span>
+					<Box
+						sx={{
+							display: 'flex',
+							flexDirection: 'row',
+							justifyContent: 'left',
+							alignItems: 'center'
+						}}
+					>
+						<span style={{ marginRight: "4px" }}>
+							{this.state.athlete.nationality}
+						</span>
+						<i className={`flag icon-flag-${this.state.athlete.nationality}`} />
+					</Box>
+					<a href="/atletismopt">
+						{this.state.athlete.club_abbreviation} ({this.state.athlete.club_name})
+					</a>
+				</Box>
+			</Box>
+		)
+	}
+
+	renderHeader() {
+		return (
+			<Box className='profile-background'
+				sx={{
+					display: 'flex',
+					flexDirection: 'row',
+					alignItems: 'center',
+				}}
+			>
+				<img
+					className="profile-pic"
+					src="https://t4.ftcdn.net/jpg/00/64/67/27/360_F_64672736_U5kpdGs9keUll8CRQ3p3YaEv2M6qkVY5.jpg"
+					alt='Athlete Profile'
+				/>
+				<Box sx={{
+					display: 'flex',
+					flexDirection: 'column',
+					alignItems: 'left',
+					justifyContent: 'center',
+					marginLeft: '5rem'
+				}}>
+					<Box
+						sx={{
+							display: 'flex',
+							flexDirection: 'row',
+							alignItems: 'center'
+						}}
+					>
+						<h1>
+							<b>
+								{this.state.athlete.name}
+							</b>
+						</h1>
+					</Box>
+					<span>{this.dateToText(this.state.athlete.birthdate)}</span>
+					<Box
+						sx={{
+							display: 'flex',
+							flexDirection: 'row',
+							justifyContent: 'left',
+							alignItems: 'center'
+						}}
+					>
+						<span style={{ marginRight: "4px" }}>
+							{this.state.athlete.nationality}
+						</span>
+						<i className={`flag icon-flag-${this.state.athlete.nationality}`} />
+					</Box>
+					<a href="/atletismopt">
+						{this.state.athlete.club_abbreviation} ({this.state.athlete.club_name})
+					</a>
+				</Box>
+			</Box>
+		)
+	}
+
 	render() {
 		var width = window.innerWidth;
 		return (
@@ -256,7 +313,11 @@ class AthleteProfile extends React.Component {
 									</div>
 									: <Box className='profile-page'>
 										{
-											this.renderHeader()
+											isMobileDevice()
+												? this.renderMobileHeader()
+												: isMobileDeviceLandscape()
+													? this.renderMobileLandscapeHeader()
+													: this.renderHeader()
 										}
 
 										<Box
@@ -299,11 +360,11 @@ class AthleteProfile extends React.Component {
 												this.state.mode === 1
 													? <Box sx={{ display: 'flex', flexDirection: 'column' }}>
 														<span>{width}</span>
-														<span>{isMobileDevice() ? 'true' : 'false'}</span>
+														{/* <span>{isMobileDevice() ? 'true' : 'false'}</span>
 														<span>{isMobileDeviceLandscape() ? 'true' : 'false'}</span>
-														<span>{isTabletDevice() ? 'true' : 'false'}</span>
-														<span>{isSmallDesktopDevice() ? 'true' : 'false'}</span>
-														<span>{isLargeDesktopDevice() ? 'true' : 'false'}</span>
+														<span>{isTabletDevice() ? 'true' : 'false'}</span> */}
+														{/* <span>{isSmallDesktopDevice() ? 'true' : 'false'}</span>
+														<span>{isLargeDesktopDevice() ? 'true' : 'false'}</span> */}
 													</Box>
 													: null
 											}

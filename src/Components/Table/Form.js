@@ -18,6 +18,7 @@ export default class Form extends React.Component {
 			name: props.name,
 			options: props.options,
 			minWidth: props.minWidth || '120px',
+			formClass: props.formClass || 'form-control-table',
 
 			selectedOption: '',
 		};
@@ -41,7 +42,7 @@ export default class Form extends React.Component {
 				isMobile
 					? <FormControl
 						size="small"
-						className="form-control-table"
+						className={this.state.formClass}
 					>
 						<InputLabel
 							id={`${this.state.variable}-sec-select-label`}
@@ -59,6 +60,7 @@ export default class Form extends React.Component {
 							}}
 							input={<OutlinedInput />}
 							id={`${this.state.variable}-sec-select`}
+							defaultValue={''}
 							value={this.state.selectedOption}
 							label={this.state.name}
 							onChange={this.updateParentVariables}
@@ -81,7 +83,7 @@ export default class Form extends React.Component {
 
 					: <FormControl
 						size="small"
-						className="form-control-table"
+						className={this.state.formClass}
 					>
 						<InputLabel
 							id={`${this.state.variable}-sec-select-label`}
@@ -93,6 +95,7 @@ export default class Form extends React.Component {
 						</InputLabel>
 
 						<Select
+							displayEmpty
 							notched={true}
 							sx={{
 								minWidth: `${this.state.minWidth}`
