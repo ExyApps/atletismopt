@@ -10,7 +10,6 @@ import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 
 import {
-	isMobileDevice,
 	isMobileDeviceLandscape,
 	isTabletDevice
 } from '../../Utils/WindowSizes';
@@ -91,45 +90,9 @@ export default class AthleteResultsTable extends Table {
 					<tr>
 						<TableHeader
 							parent={this}
-							field='date'
-							name='Data'
-							orderBy={this.state.orderBy}
-							order={this.state.order}
-						/>
-						<TableHeader
-							parent={this}
-							field='event_name'
-							name='Evento'
-							orderBy={this.state.orderBy}
-							order={this.state.order}
-						/>
-						<TableHeader
-							parent={this}
-							field='competition_name'
-							name='Competição'
-							orderBy={this.state.orderBy}
-							order={this.state.order}
-						/>
-						<TableHeader
-							parent={this}
-							field='competition_location'
-							name='Local'
-							orderBy={this.state.orderBy}
-							order={this.state.order}
-						/>
-						<TableHeader
-							parent={this}
-							field='result'
-							name='Resultado'
-							orderBy={this.state.orderBy}
-							order={this.state.order}
-						/>
-						<TableHeader
-							parent={this}
-							field='wind'
-							name='Vento'
-							orderBy={this.state.orderBy}
-							order={this.state.order}
+							field=''
+							name='Resultados'
+							sortable={false}
 						/>
 					</tr>
 				</thead>
@@ -137,7 +100,7 @@ export default class AthleteResultsTable extends Table {
 					{
 						rows.length === 0
 							? <tr>
-								<td colSpan={6}>
+								<td>
 									<div className="empty-table">
 										<span>Não foram encontrados resultados.</span>
 									</div>
@@ -145,166 +108,35 @@ export default class AthleteResultsTable extends Table {
 							</tr>
 							: rows.map((row, id) => (
 								<tr key={row.event_id} className="clickable-row" onClick={(event) => this.handleClick(event, row.event_id)}>
-									<td><Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{row.date}</Box></td>
-									<td><Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{row.event_name}</Box></td>
-									<td><Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{row.competition_name}</Box></td>
-									<td><Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{row.competition_location}</Box></td>
-									<td><Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{row.result}</Box></td>
-									<td><Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-										{
-											row.wind === null || row.wind === undefined
-												? '-'
-												: row.wind
-										}
-									</Box></td>
+									<Box sx={{
+										display: 'flex',
+										flexDirection: 'column',
+										alignItems: 'center',
+										justifyContent: 'center',
+										width: '100%',
+									}}>
+										<span>{row.date}</span>
+										<span><b>{row.event_name}</b></span>
+										<span style={{ fontSize: '13px' }}>{row.competition_name}</span>
+										<span style={{ fontSize: '13px' }}>{row.competition_location}</span>
+										<span>
+											<b>
+												{row.result}
+												{
+													row.wind === null || row.wind === undefined
+														? ''
+														: ` (${row.wind}v)`
+												}
+											</b>
+										</span>
+									</Box>
 								</tr>
 							))
 					}
 				</tbody>
 				<tfoot>
 					<tr>
-						<td colSpan={6}>
-							<div className="foot-table">
-								<span>Linhas por página:</span>
-
-								<FormControl
-									sx={{
-										marginLeft: '2rem',
-										marginRight: '2rem',
-									}}
-								>
-									<NativeSelect
-										className='foot-select'
-										size="small"
-										sx={{
-											color: "#fff",
-											'& .MuiSvgIcon-root': {
-												color: 'white'
-											}
-										}}
-										disableUnderline
-										value={this.state.rowsPerPage}
-										inputProps={{
-											name: 'rowsPerPage',
-											id: 'uncontrolled-native',
-										}}
-										onChange={this.handleChangeRowsPerPage}
-									>
-										<option value={5}>5</option>
-										<option value={10}>10</option>
-										<option value={20}>20</option>
-									</NativeSelect>
-								</FormControl>
-
-								<span>
-									{`${initialRow}-${finalRow} de ${this.state.searchedRows.length}`}
-								</span>
-
-								<IconButton
-									sx={{ m: 0, p: 0, marginLeft: '2rem', color: "#fff" }}
-									onClick={(event) => this.handleChangePage(event, this.state.page - 1)}
-									disabled={this.state.page === 0}
-								>
-									<KeyboardArrowLeftIcon />
-								</IconButton>
-								<IconButton
-									sx={{ m: 0, p: 0, color: "#fff" }}
-									onClick={(event) => this.handleChangePage(event, this.state.page + 1)}
-									disabled={this.state.page >= Math.ceil(this.state.searchedRows.length / this.state.rowsPerPage) - 1}
-								>
-									<KeyboardArrowRightIcon />
-								</IconButton>
-							</div>
-						</td>
-					</tr>
-				</tfoot>
-			</>
-		)
-	}
-
-	renderMobileLandscape(rows) {
-		const initialRow = Math.min(this.state.page * this.state.rowsPerPage + 1, this.state.searchedRows.length);
-		const finalRow = Math.min(this.state.page * this.state.rowsPerPage + this.state.rowsPerPage, this.state.searchedRows.length);
-
-		return (
-			<>
-				<thead>
-					<tr>
-						<TableHeader
-							parent={this}
-							field='date'
-							name='Data'
-							orderBy={this.state.orderBy}
-							order={this.state.order}
-						/>
-						<TableHeader
-							parent={this}
-							field='event_name'
-							name='Evento'
-							orderBy={this.state.orderBy}
-							order={this.state.order}
-						/>
-						<TableHeader
-							parent={this}
-							field='competition_name'
-							name='Competição'
-							orderBy={this.state.orderBy}
-							order={this.state.order}
-						/>
-						<TableHeader
-							parent={this}
-							field='competition_location'
-							name='Local'
-							orderBy={this.state.orderBy}
-							order={this.state.order}
-						/>
-						<TableHeader
-							parent={this}
-							field='result'
-							name='Resultado'
-							orderBy={this.state.orderBy}
-							order={this.state.order}
-						/>
-						<TableHeader
-							parent={this}
-							field='wind'
-							name='Vento'
-							orderBy={this.state.orderBy}
-							order={this.state.order}
-						/>
-					</tr>
-				</thead>
-				<tbody>
-					{
-						rows.length === 0
-							? <tr>
-								<td colSpan={6}>
-									<div className="empty-table">
-										<span>Não foram encontrados resultados.</span>
-									</div>
-								</td>
-							</tr>
-							: rows.map((row, id) => (
-								<tr key={row.event_id} className="clickable-row" onClick={(event) => this.handleClick(event, row.event_id)}>
-									<td><Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{row.date}</Box></td>
-									<td><Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{row.event_name}</Box></td>
-									<td><Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{row.competition_name}</Box></td>
-									<td><Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{row.competition_location}</Box></td>
-									<td><Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{row.result}</Box></td>
-									<td><Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-										{
-											row.wind === null || row.wind === undefined
-												? '-'
-												: row.wind
-										}
-									</Box></td>
-								</tr>
-							))
-					}
-				</tbody>
-				<tfoot>
-					<tr>
-						<td colSpan={6}>
+						<td>
 							<div className="foot-table">
 								<span>Linhas por página:</span>
 
@@ -678,13 +510,11 @@ export default class AthleteResultsTable extends Table {
 
 				<table className="content-table">
 					{
-						isMobileDevice()
+						isMobileDeviceLandscape()
 							? this.renderMobile(visibleRows)
-							: isMobileDeviceLandscape()
-								? this.renderMobileLandscape(visibleRows)
-								: isTabletDevice()
-									? this.renderTablet(visibleRows)
-									: this.renderDesktop(visibleRows)
+							: isTabletDevice()
+								? this.renderTablet(visibleRows)
+								: this.renderDesktop(visibleRows)
 					}
 				</table>
 			</Box>

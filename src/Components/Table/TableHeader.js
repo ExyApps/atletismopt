@@ -18,7 +18,11 @@ export default function TableHeader(props) {
 					},
 					userSelect: 'none',
 				}}
-				onClick={(event) => props.parent.handleRequestSort(event, props.field)}
+				onClick={(event) => {
+					if (props.sortable !== false) {
+						props.parent.handleRequestSort(event, props.field)
+					}
+				}}
 			>
 				{
 					props.name

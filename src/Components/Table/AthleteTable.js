@@ -57,9 +57,12 @@ export default class AthleteTable extends Table {
 	}
 
 	updateSearchedRows() {
+		const name = '.*' + this.state.search.toLowerCase().trim().replace(/\s/g, '.*') + '.*';
+		const regExpr = new RegExp(name, 'i');
+
 		var newRows = this.state.rows.filter(row => {
 			// Compare the text field text
-			return row.name.toLowerCase().includes(this.state.search)
+			return regExpr.test(row.name.toLowerCase())
 				// Compare the gender
 				&& row.gender.includes(this.state.genderSelected)
 				// Compare the club

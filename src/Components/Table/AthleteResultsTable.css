@@ -8,6 +8,7 @@
 
 @media (max-width: 1023px) {
 	.form-control-athlete-profile-table {
+		margin-bottom: 0.5rem !important;
 		min-width: 49%;
 		width: 49%;
 	}
