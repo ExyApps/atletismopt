@@ -33,6 +33,8 @@ export default class AthleteTable extends Table {
 		window.addEventListener('resize', this.updateDimensions);
 
 		this.setState({
+			orderBy: 'name',
+
 			// Filters
 			search: '',
 			genderSelected: '',
@@ -45,8 +47,6 @@ export default class AthleteTable extends Table {
 
 			ageSelected: '',
 		}, () => {
-			this.handleRequestSort(null, 'name', true);
-
 			this.getAllClubs();
 			this.getAllNationalities();
 		});

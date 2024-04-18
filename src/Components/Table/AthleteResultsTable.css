@@ -17,3 +17,9 @@
 		margin-right: 2%;
 	}
 }
+
+.mobile-span {
+	display: block;
+	text-align: center;
+	width: 100%;
+}

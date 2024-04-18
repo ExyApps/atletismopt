@@ -35,8 +35,6 @@ export default class AthleteResultsTable extends Table {
 
 			onlyValid: false,
 		}, () => {
-			this.handleRequestSort(null, 'date', true);
-
 			this.getAllYears();
 			this.getAllEvents();
 		});
@@ -115,11 +113,11 @@ export default class AthleteResultsTable extends Table {
 										justifyContent: 'center',
 										width: '100%',
 									}}>
-										<span>{row.date}</span>
-										<span><b>{row.event_name}</b></span>
-										<span style={{ fontSize: '13px' }}>{row.competition_name}</span>
-										<span style={{ fontSize: '13px' }}>{row.competition_location}</span>
-										<span>
+										<span className="mobile-span">{row.date}</span>
+										<span className="mobile-span"><b>{row.event_name}</b></span>
+										<span className="mobile-span" style={{ fontSize: '13px' }}>{row.competition_name}</span>
+										<span className="mobile-span" style={{ fontSize: '13px' }}>{row.competition_location}</span>
+										<span className="mobile-span">
 											<b>
 												{row.result}
 												{
