@@ -85,7 +85,7 @@ export default class AthleteResultsTable extends Table {
 		const finalRow = Math.min(this.state.page * this.state.rowsPerPage + this.state.rowsPerPage, this.state.searchedRows.length);
 
 		return (
-			<>
+			<table className="content-table">
 				<thead>
 					<tr>
 						<TableHeader
@@ -173,25 +173,27 @@ export default class AthleteResultsTable extends Table {
 									{`${initialRow}-${finalRow} de ${this.state.searchedRows.length}`}
 								</span>
 
-								<IconButton
-									sx={{ m: 0, p: 0, marginLeft: '2rem', color: "#fff" }}
-									onClick={(event) => this.handleChangePage(event, this.state.page - 1)}
-									disabled={this.state.page === 0}
-								>
-									<KeyboardArrowLeftIcon />
-								</IconButton>
-								<IconButton
-									sx={{ m: 0, p: 0, color: "#fff" }}
-									onClick={(event) => this.handleChangePage(event, this.state.page + 1)}
-									disabled={this.state.page >= Math.ceil(this.state.searchedRows.length / this.state.rowsPerPage) - 1}
-								>
-									<KeyboardArrowRightIcon />
-								</IconButton>
+								<Box>
+									<IconButton
+										sx={{ m: 0, p: 0, marginLeft: '2rem', color: "#fff" }}
+										onClick={(event) => this.handleChangePage(event, this.state.page - 1)}
+										disabled={this.state.page === 0}
+									>
+										<KeyboardArrowLeftIcon />
+									</IconButton>
+									<IconButton
+										sx={{ m: 0, p: 0, color: "#fff" }}
+										onClick={(event) => this.handleChangePage(event, this.state.page + 1)}
+										disabled={this.state.page >= Math.ceil(this.state.searchedRows.length / this.state.rowsPerPage) - 1}
+									>
+										<KeyboardArrowRightIcon />
+									</IconButton>
+								</Box>
 							</div>
 						</td>
 					</tr>
 				</tfoot>
-			</>
+			</table>
 		)
 	}
 
@@ -200,7 +202,7 @@ export default class AthleteResultsTable extends Table {
 		const finalRow = Math.min(this.state.page * this.state.rowsPerPage + this.state.rowsPerPage, this.state.searchedRows.length);
 
 		return (
-			<>
+			<table className="content-table">
 				<thead>
 					<tr>
 						<TableHeader
@@ -301,25 +303,27 @@ export default class AthleteResultsTable extends Table {
 									{`${initialRow}-${finalRow} de ${this.state.searchedRows.length}`}
 								</span>
 
-								<IconButton
-									sx={{ m: 0, p: 0, marginLeft: '2rem', color: "#fff" }}
-									onClick={(event) => this.handleChangePage(event, this.state.page - 1)}
-									disabled={this.state.page === 0}
-								>
-									<KeyboardArrowLeftIcon />
-								</IconButton>
-								<IconButton
-									sx={{ m: 0, p: 0, color: "#fff" }}
-									onClick={(event) => this.handleChangePage(event, this.state.page + 1)}
-									disabled={this.state.page >= Math.ceil(this.state.searchedRows.length / this.state.rowsPerPage) - 1}
-								>
-									<KeyboardArrowRightIcon />
-								</IconButton>
+								<Box>
+									<IconButton
+										sx={{ m: 0, p: 0, marginLeft: '2rem', color: "#fff" }}
+										onClick={(event) => this.handleChangePage(event, this.state.page - 1)}
+										disabled={this.state.page === 0}
+									>
+										<KeyboardArrowLeftIcon />
+									</IconButton>
+									<IconButton
+										sx={{ m: 0, p: 0, color: "#fff" }}
+										onClick={(event) => this.handleChangePage(event, this.state.page + 1)}
+										disabled={this.state.page >= Math.ceil(this.state.searchedRows.length / this.state.rowsPerPage) - 1}
+									>
+										<KeyboardArrowRightIcon />
+									</IconButton>
+								</Box>
 							</div>
 						</td>
 					</tr>
 				</tfoot>
-			</>
+			</table>
 		)
 	}
 
@@ -328,7 +332,7 @@ export default class AthleteResultsTable extends Table {
 		const finalRow = Math.min(this.state.page * this.state.rowsPerPage + this.state.rowsPerPage, this.state.searchedRows.length);
 
 		return (
-			<>
+			<table className="content-table">
 				<thead>
 					<tr>
 						<TableHeader
@@ -442,25 +446,27 @@ export default class AthleteResultsTable extends Table {
 									{`${initialRow}-${finalRow} de ${this.state.searchedRows.length}`}
 								</span>
 
-								<IconButton
-									sx={{ m: 0, p: 0, marginLeft: '2rem', color: "#fff" }}
-									onClick={(event) => this.handleChangePage(event, this.state.page - 1)}
-									disabled={this.state.page === 0}
-								>
-									<KeyboardArrowLeftIcon />
-								</IconButton>
-								<IconButton
-									sx={{ m: 0, p: 0, color: "#fff" }}
-									onClick={(event) => this.handleChangePage(event, this.state.page + 1)}
-									disabled={this.state.page >= Math.ceil(this.state.searchedRows.length / this.state.rowsPerPage) - 1}
-								>
-									<KeyboardArrowRightIcon />
-								</IconButton>
+								<Box>
+									<IconButton
+										sx={{ m: 0, p: 0, marginLeft: '2rem', color: "#fff" }}
+										onClick={(event) => this.handleChangePage(event, this.state.page - 1)}
+										disabled={this.state.page === 0}
+									>
+										<KeyboardArrowLeftIcon />
+									</IconButton>
+									<IconButton
+										sx={{ m: 0, p: 0, color: "#fff" }}
+										onClick={(event) => this.handleChangePage(event, this.state.page + 1)}
+										disabled={this.state.page >= Math.ceil(this.state.searchedRows.length / this.state.rowsPerPage) - 1}
+									>
+										<KeyboardArrowRightIcon />
+									</IconButton>
+								</Box>
 							</div>
 						</td>
 					</tr>
 				</tfoot>
-			</>
+			</table>
 		)
 	}
 
@@ -508,15 +514,13 @@ export default class AthleteResultsTable extends Table {
 					/>
 				</Box>
 
-				<table className="content-table">
-					{
-						isMobileDeviceLandscape()
-							? this.renderMobile(visibleRows)
-							: isTabletDevice()
-								? this.renderTablet(visibleRows)
-								: this.renderDesktop(visibleRows)
-					}
-				</table>
+				{
+					isMobileDeviceLandscape()
+						? this.renderMobile(visibleRows)
+						: isTabletDevice()
+							? this.renderTablet(visibleRows)
+							: this.renderDesktop(visibleRows)
+				}
 			</Box>
 		);
 	}
