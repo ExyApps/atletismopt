@@ -14,7 +14,7 @@ export default function TableHeader(props) {
 					justifyContent: 'center',
 					alignItems: 'center',
 					':hover': {
-						cursor: 'pointer',
+						cursor: (props.sortable !== false ? 'pointer' : 'normal'),
 					},
 					userSelect: 'none',
 				}}

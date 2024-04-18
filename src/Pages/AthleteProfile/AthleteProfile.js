@@ -13,6 +13,7 @@ import {
 
 import getURL from '../../Utils/Requests';
 import AthleteResultsTable from '../../Components/Table/AthleteResultsTable';
+import AthleteBestResultsTable from '../../Components/Table/AthleteBestResultsTable';
 
 function withParams(Component) {
 	return (props) => <Component {...props} params={useParams()} />;
@@ -56,10 +57,43 @@ class AthleteProfile extends React.Component {
 						loading: false
 					});
 				} else {
+					const events = data["events"];
+					const personal_bests = [];
+
+					const no_results = ["x", "sm"];
+
+					for (let i = 0; i < events.length; i++) {
+						const event = events[i];
+						const matching_events = data["results"].filter(result => result.event_name === event.name);
+
+						if (event.direction === 1) {
+							const best = matching_events.reduce((prev, current) => {
+								if (no_results.includes(prev.result.toLowerCase().trim())) return current;
+								if (no_results.includes(current.result.toLowerCase().trim())) return prev;
+
+								// TODO: Check the wind
+
+								return ((prev.result > current.result) ? prev : current);
+							});
+							personal_bests.push(best);
+						} else {
+							const best = matching_events.reduce((prev, current) => {
+								if (no_results.includes(prev.result.toLowerCase().trim())) return current;
+								if (no_results.includes(current.result.toLowerCase().trim())) return prev;
+
+								// TODO: Check the wind
+
+								return ((prev.result < current.result) ? prev : current);
+							});
+							personal_bests.push(best);
+						}
+					}
+
 					this.setState({
 						loading: false,
 						athlete: data["athlete"],
-						results: data["results"]
+						results: data["results"],
+						personal_bests: personal_bests,
 					})
 				}
 
@@ -165,9 +199,9 @@ class AthleteProfile extends React.Component {
 						</span>
 						<i className={`flag icon-flag-${this.state.athlete.nationality}`} />
 					</Box>
-					<a href="/atletismopt">
+					<span>
 						{this.state.athlete.club_abbreviation} ({this.state.athlete.club_name})
-					</a>
+					</span>
 				</Box>
 			</Box>
 		)
@@ -224,9 +258,9 @@ class AthleteProfile extends React.Component {
 						</span>
 						<i className={`flag icon-flag-${this.state.athlete.nationality}`} />
 					</Box>
-					<a href="/atletismopt">
+					<span>
 						{this.state.athlete.club_abbreviation} ({this.state.athlete.club_name})
-					</a>
+					</span>
 				</Box>
 			</Box>
 		)
@@ -280,16 +314,15 @@ class AthleteProfile extends React.Component {
 						</span>
 						<i className={`flag icon-flag-${this.state.athlete.nationality}`} />
 					</Box>
-					<a href="/atletismopt">
+					<span>
 						{this.state.athlete.club_abbreviation} ({this.state.athlete.club_name})
-					</a>
+					</span>
 				</Box>
 			</Box>
 		)
 	}
 
 	render() {
-		var width = window.innerWidth;
 		return (
 			<>
 				{
@@ -347,26 +380,14 @@ class AthleteProfile extends React.Component {
 											</Box>
 
 											{
-												this.state.mode === 0
-													? <Box>
-														<AthleteResultsTable
-															rows={this.state.results}
-														/>
-													</Box>
-													: null
-											}
-
-											{
-												this.state.mode === 1
-													? <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-														<span>{width}</span>
-														{/* <span>{isMobileDevice() ? 'true' : 'false'}</span>
-														<span>{isMobileDeviceLandscape() ? 'true' : 'false'}</span>
-														<span>{isTabletDevice() ? 'true' : 'false'}</span> */}
-														{/* <span>{isSmallDesktopDevice() ? 'true' : 'false'}</span>
-														<span>{isLargeDesktopDevice() ? 'true' : 'false'}</span> */}
-													</Box>
-													: null
+												{
+													0: <AthleteResultsTable
+														rows={this.state.results}
+													/>,
+													1: <AthleteBestResultsTable
+														rows={this.state.personal_bests}
+													/>
+												}[this.state.mode]
 											}
 										</Box>
 									</Box>
