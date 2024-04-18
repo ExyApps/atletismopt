@@ -481,13 +481,6 @@ export default class AthleteResultsTable extends Table {
 							orderBy={this.state.orderBy}
 							order={this.state.order}
 						/>
-						<TableHeader
-							parent={this}
-							field='wind'
-							name='Vento'
-							orderBy={this.state.orderBy}
-							order={this.state.order}
-						/>
 					</tr>
 				</thead>
 				<tbody>
@@ -506,14 +499,16 @@ export default class AthleteResultsTable extends Table {
 									<td><Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{row.event_name}</Box></td>
 									<td><Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{row.competition_name}</Box></td>
 									<td><Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{row.competition_location}</Box></td>
-									<td><Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{row.result}</Box></td>
-									<td><Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-										{
-											row.wind === null || row.wind === undefined
-												? '-'
-												: row.wind
-										}
-									</Box></td>
+									<td>
+										<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+											{row.result}
+											{
+												row.wind === null || row.wind === undefined
+													? ''
+													: ` (${row.wind}v)`
+											}
+										</Box>
+									</td>
 								</tr>
 							))
 					}
