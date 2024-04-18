@@ -1,5 +1,6 @@
 .form-control-athlete-profile-table {
-	margin-bottom: 0.5rem !important;
+	margin-top: 0.5rem !important;
+	margin-bottom: 0.8rem !important;
 }
 
 .form-control-athlete-profile-table:first-child {
@@ -7,13 +8,17 @@
 }
 
 @media (max-width: 1023px) {
-	.form-control-athlete-profile-table {
-		margin-bottom: 0.5rem !important;
+
+	.form-control-athlete-profile-table,
+	.ordering-form {
+		margin-top: 0.5rem !important;
+		margin-bottom: 0.8rem !important;
 		min-width: 49%;
 		width: 49%;
 	}
 
-	.form-control-athlete-profile-table:first-child {
+	.form-control-athlete-profile-table:first-child,
+	.ordering-form:first-child {
 		margin-right: 2%;
 	}
 }
@@ -22,4 +27,11 @@
 	display: block;
 	text-align: center;
 	width: 100%;
+}
+
+.small-heading {
+	color: var(--grey-400);
+	font-weight: bold;
+	font-size: 14px;
+	text-transform: uppercase;
 }
