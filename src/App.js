@@ -7,7 +7,7 @@ import { HashRouter, Routes, Route } from 'react-router-dom';
 import NavbarComponent from './Components/Navbar/Navbar';
 import Footer from './Components/Footer/Footer';
 
-import Home from './Pages/Home';
+import Home from './Pages/Home/Home';
 import Competicoes from './Pages/Competicoes';
 import Perfis from './Pages/Perfis';
 import Rankings from './Pages/Rankings';

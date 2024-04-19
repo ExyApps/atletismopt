@@ -153,7 +153,7 @@ export default class AthleteBestResultsTable extends Table {
 							<TableHeader
 								parent={this}
 								field=''
-								name='Resultados'
+								name='Recordes'
 								sortable={false}
 							/>
 						</tr>
