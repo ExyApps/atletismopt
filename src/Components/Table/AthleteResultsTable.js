@@ -358,10 +358,10 @@ export default class AthleteResultsTable extends Table {
 							</tr>
 							: rows.map((row, id) => (
 								<tr key={row.event_id} className="clickable-row" onClick={(event) => this.handleClick(event, row.event_id)}>
-									<td><Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{row.date}</Box></td>
-									<td><Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{row.event_name}</Box></td>
-									<td><Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{row.competition_name}</Box></td>
-									<td><Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+									<td><Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>{row.date}</Box></td>
+									<td><Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>{row.event_name}</Box></td>
+									<td><Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>{row.competition_name}</Box></td>
+									<td><Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>
 										{
 											row.result
 										}
@@ -495,12 +495,12 @@ export default class AthleteResultsTable extends Table {
 							</tr>
 							: rows.map((row, id) => (
 								<tr key={row.event_id} className="clickable-row" onClick={(event) => this.handleClick(event, row.event_id)}>
-									<td><Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{row.date}</Box></td>
-									<td><Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{row.event_name}</Box></td>
-									<td><Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{row.competition_name}</Box></td>
-									<td><Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{row.competition_location}</Box></td>
+									<td><Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>{row.date}</Box></td>
+									<td><Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>{row.event_name}</Box></td>
+									<td><Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>{row.competition_name}</Box></td>
+									<td><Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>{row.competition_location}</Box></td>
 									<td>
-										<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+										<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>
 											{row.result}
 											{
 												row.wind === null || row.wind === undefined
