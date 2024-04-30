@@ -21,7 +21,8 @@ function withParams(Component) {
 
 const modes = [
 	'Resultados',
-	'Recordes'
+	'Recordes da Temporada',
+	'Recordes Pessoais'
 ]
 
 class AthleteProfile extends React.Component {
@@ -42,6 +43,80 @@ class AthleteProfile extends React.Component {
 		this.setState({ width: window.innerWidth });
 	}
 
+	filterRecords(events, results) {
+		var personal_bests = [];
+		var season_bests = [];
+
+		const no_results = ["x", "sm"];
+
+		for (let i = 0; i < events.length; i++) {
+			const event = events[i];
+			const matching_events = results.filter(result => result.event_name === event.name);
+			const season_matching_events = matching_events.filter(
+				result => result.event_name === event.name &&
+					((result.date.split('-')[0] === new Date().getFullYear().toString() && parseInt(result.date.split('-')[1]) < 9)
+						||
+						(result.date.split('-')[0] === (new Date().getFullYear() - 1).toString() && parseInt(result.date.split('-')[1]) >= 9))
+			);
+
+			if (event.direction === 1) {
+				const best = matching_events.reduce((prev, current) => {
+					if (no_results.includes(prev.result.toLowerCase().trim())) return current;
+					if (no_results.includes(current.result.toLowerCase().trim())) return prev;
+
+					// TODO: Check the wind
+
+					return ((prev.result > current.result) ? prev : current);
+				});
+
+				personal_bests.push(best);
+
+				if (season_matching_events.length !== 0) {
+					const season_best = season_matching_events.reduce((prev, current) => {
+						if (no_results.includes(prev.result.toLowerCase().trim())) return current;
+						if (no_results.includes(current.result.toLowerCase().trim())) return prev;
+
+						// TODO: Check the wind
+
+						return ((prev.result > current.result) ? prev : current);
+					});
+					season_bests.push(season_best);
+				}
+
+
+			} else {
+				const best = matching_events.reduce((prev, current) => {
+					if (no_results.includes(prev.result.toLowerCase().trim())) return current;
+					if (no_results.includes(current.result.toLowerCase().trim())) return prev;
+
+					// TODO: Check the wind
+
+					return ((prev.result < current.result) ? prev : current);
+				});
+
+				personal_bests.push(best);
+
+				if (season_matching_events.length !== 0) {
+					const season_best = season_matching_events.reduce((prev, current) => {
+						if (no_results.includes(prev.result.toLowerCase().trim())) return current;
+						if (no_results.includes(current.result.toLowerCase().trim())) return prev;
+
+						// TODO: Check the wind
+
+						return ((prev.result < current.result) ? prev : current);
+					});
+
+					season_bests.push(season_best);
+				}
+			}
+		}
+
+		this.setState({
+			personal_bests: personal_bests,
+			season_bests: season_bests
+		});
+	}
+
 	componentDidMount() {
 		document.title = 'AtletismoPT - Atleta';
 		window.addEventListener('resize', this.updateDimensions);
@@ -57,44 +132,13 @@ class AthleteProfile extends React.Component {
 						loading: false
 					});
 				} else {
-					const events = data["events"];
-					const personal_bests = [];
-
-					const no_results = ["x", "sm"];
-
-					for (let i = 0; i < events.length; i++) {
-						const event = events[i];
-						const matching_events = data["results"].filter(result => result.event_name === event.name);
-
-						if (event.direction === 1) {
-							const best = matching_events.reduce((prev, current) => {
-								if (no_results.includes(prev.result.toLowerCase().trim())) return current;
-								if (no_results.includes(current.result.toLowerCase().trim())) return prev;
-
-								// TODO: Check the wind
-
-								return ((prev.result > current.result) ? prev : current);
-							});
-							personal_bests.push(best);
-						} else {
-							const best = matching_events.reduce((prev, current) => {
-								if (no_results.includes(prev.result.toLowerCase().trim())) return current;
-								if (no_results.includes(current.result.toLowerCase().trim())) return prev;
-
-								// TODO: Check the wind
-
-								return ((prev.result < current.result) ? prev : current);
-							});
-							personal_bests.push(best);
-						}
-					}
-
 					this.setState({
 						loading: false,
 						athlete: data["athlete"],
 						results: data["results"],
-						personal_bests: personal_bests,
 					})
+
+					this.filterRecords(data["events"], data["results"]);
 				}
 
 			});
@@ -385,6 +429,11 @@ class AthleteProfile extends React.Component {
 														rows={this.state.results}
 													/>,
 													1: <AthleteBestResultsTable
+														key="season_bests"
+														rows={this.state.season_bests}
+													/>,
+													2: <AthleteBestResultsTable
+														key="personal_bests"
 														rows={this.state.personal_bests}
 													/>
 												}[this.state.mode]
