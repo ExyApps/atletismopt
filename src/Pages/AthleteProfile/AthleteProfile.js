@@ -21,7 +21,7 @@ function withParams(Component) {
 
 const modes = [
 	'Resultados',
-	'Recordes da Temporada',
+	'Recordes da Época',
 	'Recordes Pessoais'
 ]
 
