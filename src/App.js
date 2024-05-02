@@ -13,6 +13,7 @@ import Perfis from './Pages/Perfis';
 import Rankings from './Pages/Rankings';
 import Sobre from './Pages/Sobre/Sobre';
 import AthleteProfile from './Pages/AthleteProfile/AthleteProfile';
+import Feedback from './Pages/Feedback/Feedback';
 
 function App() {
 	return (
@@ -25,6 +26,7 @@ function App() {
 					<Route exact path="/perfis" element={<Perfis />} />
 					<Route exact path="/rankings" element={<Rankings />} />
 					<Route exact path="/sobre" element={<Sobre />} />
+					<Route exact path="/feedback" element={<Feedback />} />
 
 					{/* Route that catches all the routes that end in /perfis/<id> */}
 					<Route exact path="/perfis/:id" element={<AthleteProfile />} />

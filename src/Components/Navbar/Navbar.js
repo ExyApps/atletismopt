@@ -77,7 +77,7 @@ export default class NavbarComponent extends React.Component {
 
 									<Nav.Link className="pc-nav-link" href="/atletismopt/#/rankings">Rankings</Nav.Link>
 									<Nav.Link className="pc-nav-link" href="/atletismopt/#/recordes">Recordes</Nav.Link>
-									<Nav.Link className="pc-nav-link" href="/atletismopt/#/suporte">Feedback / Suporte</Nav.Link>
+									<Nav.Link className="pc-nav-link" href="/atletismopt/#/feedback">Feedback</Nav.Link>
 
 								</Nav>
 								<Nav.Link className="pc-nav-link" href="/atletismopt/#/sobre">Sobre</Nav.Link>
@@ -141,10 +141,10 @@ export default class NavbarComponent extends React.Component {
 							</Nav.Link>
 							<Nav.Link
 								className="mobile-nav-link"
-								href="/atletismopt/#/suporte"
+								href="/atletismopt/#/feedback"
 								onClick={() => this.handleHamburgerClick()}
 							>
-								Feedback / Suporte
+								Feedback
 							</Nav.Link>
 							<Nav.Link
 								className="mobile-nav-link"

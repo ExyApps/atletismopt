@@ -1,0 +1,25 @@
+.feedback-form {
+	width: 100%;
+	margin-top: 8px !important;
+}
+
+.Mui-focused fieldset {
+	border-color: var(--grey-400) !important;
+}
+
+label.Mui-focused {
+	color: var(--grey-400) !important;
+}
+
+.feedback-submit {
+	margin-top: 8px !important;
+	text-transform: none !important;
+	width: fit-content !important;
+	background-color: var(--grey-400) !important;
+}
+
+.feedback-info {
+	margin-bottom: 8px;
+	font-size: 12px;
+	color: var(--grey-400);
+}
