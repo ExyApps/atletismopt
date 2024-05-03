@@ -1,29 +1,38 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import './Feedback.css';
 
-import Button from '@mui/material/Button';
-import InputLabel from '@mui/material/InputLabel';
-import FormControl from '@mui/material/FormControl';
-import OutlinedInput from '@mui/material/OutlinedInput';
 import Box from '@mui/material/Box';
-import Icon from '@mui/material/Icon';
+import Button from '@mui/material/Button';
+import FormControl from '@mui/material/FormControl';
+import FormHelperText from '@mui/material/FormHelperText';
+import InputLabel from '@mui/material/InputLabel';
+import OutlinedInput from '@mui/material/OutlinedInput';
 
-import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
-import ClearRoundedIcon from '@mui/icons-material/ClearRounded';
-import { FormHelperText } from '@mui/material';
+
+import { StatusMessage, StatusMessageType } from '../../Components/StatusMessage/StatusMessage.js';
 
 import getURL from '../../Utils/Requests.js';
 
-export default function Feedback() {
-	const [messageShowing, setMessageShowing] = useState('');
-	const [successMessage, setSuccessMessage] = useState(true);
-	const [submitted, setSubmitted] = useState(false);
+export default class Feedback extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			submitted: false,
+			sending: false
+		}
 
-	useEffect(() => {
+		this.emailRef = React.createRef();
+		this.titleRef = React.createRef();
+		this.descriptionRef = React.createRef();
+
+		this.messageRef = React.createRef();
+	}
+
+	componentDidMount() {
 		document.title = 'AtletismoPT - Feedback';
-	});
+	}
 
-	function verifyEmail(email) {
+	verifyEmail(email) {
 		// Check if email is valid
 		const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
 		if (!emailRegex.test(email)) return {
@@ -35,7 +44,7 @@ export default function Feedback() {
 		}
 	}
 
-	function verifyTitleAndDescription(value) {
+	verifyTitleAndDescription(value) {
 		if (value === '') return {
 			"status": "error",
 			"message": "Este campo não pode estar vazio"
@@ -45,40 +54,33 @@ export default function Feedback() {
 		}
 	}
 
-	function processSubmit() {
-		const email = document.getElementById('feedback-Email*').value;
-		const title = document.getElementById('feedback-Título*').value;
-		const description = document.getElementById('feedback-Descrição*').value;
+	processSubmit() {
+		const email = this.emailRef.current.state.value;
+		const title = this.titleRef.current.state.value;
+		const description = this.descriptionRef.current.state.value;
 
 		// Check if all fields are filled
 		if (email === '' || title === '' || description === '') {
-			setMessageShowing('Por favor preenche todos os campos obrigatórios.');
-			setSuccessMessage(false);
+			this.messageRef.current.updateMessage(
+				'Por favor preenche todos os campos.',
+				StatusMessageType.ERROR
+			)
 			return;
 		}
 
-		const emailCheck = verifyEmail(email);
-		const titleCheck = verifyTitleAndDescription(title);
-		const descriptionCheck = verifyTitleAndDescription(description);
+		const emailError = this.emailRef.current.state.error;
+		const titleError = this.titleRef.current.state.error;
+		const descriptionError = this.descriptionRef.current.state.error;
 
-		if (emailCheck.status === 'error') {
-			setMessageShowing(emailCheck.message);
-			setSuccessMessage(false);
+		if (emailError || titleError || descriptionError) {
+			this.messageRef.current.updateMessage(
+				"Por favor verifica os campos preenchidos. Os campos com erro estão a vermelho.",
+				StatusMessageType.ERROR
+			)
 			return;
 		}
 
-		if (titleCheck.status === 'error') {
-			setMessageShowing(titleCheck.message);
-			setSuccessMessage(false);
-			return;
-		}
-
-		if (descriptionCheck.status === 'error') {
-			setMessageShowing(descriptionCheck.message);
-			setSuccessMessage(false);
-			return;
-		}
-
+		this.setState({ sending: true });
 
 		fetch(getURL() + 'info/feedback', {
 			method: 'POST',
@@ -92,133 +94,139 @@ export default function Feedback() {
 			})
 		}).then(response => {
 			if (response.status === 200) {
-				return response.json();
+				this.messageRef.current.updateMessage(
+					'O teu feedback foi submetido com sucesso!',
+					StatusMessageType.SUCCESS
+				)
 			} else {
-				setMessageShowing('Ocorreu um erro ao submeter o teu feedback. Por favor tenta novamente mais tarde.');
-				setSuccessMessage(false);
-				return {};
+				this.messageRef.current.updateMessage(
+					'Ocorreu um erro ao submeter o teu feedback. Por favor tenta novamente.',
+					StatusMessageType.ERROR
+				)
 			}
-		}).then(data => {
-			if (Object.keys(data).length !== 0) {
-				setMessageShowing('O teu feedback foi submetido com sucesso!');
-				setSuccessMessage(true);
 
-				setSubmitted(true);
-			}
+			this.setState({
+				submitted: response.status === 200,
+				sending: false
+			});
+		}).catch(() => {
+			this.messageRef.current.updateMessage(
+				'Ocorreu um erro ao submeter o teu feedback. Por favor tenta novamente.',
+				StatusMessageType.ERROR
+			)
+			this.setState({ sending: false });
 		});
 	}
 
-	return (
-		<div className='page'>
-			<h1>Feedback</h1>
-			<p>
-				De forma a podermos melhorar o nosso website, é muito importante para nós sabermos a tua opinião!
-				Se tiveres alguma sugestão, feedback ou problema com o website, por favor preenche o formulário abaixo:
-			</p>
+	render() {
 
-			<Box
-				className='status-message'
-				display={messageShowing ? 'flex' : 'none'}
-				sx={{
-					flexDirection: 'row',
-					alignItems: 'center',
+		return (
+			<div className='page' >
+				<h1>Feedback</h1>
+				<p>
+					De forma a podermos melhorar o nosso website, é muito importante para nós sabermos a tua opinião!
+					Se tiveres alguma sugestão, feedback ou problema com o website, por favor preenche o formulário abaixo:
+				</p>
 
-					mb: '8px',
-					borderRadius: '4px',
-					border: '1px solid ' + (successMessage ? '#4CAF50' : '#f44336'),
-					backgroundColor: successMessage ? '#E9F7E1' : '#FFE7E7',
-					color: successMessage ? '#4CAF50' : '#f44336'
-				}}
-			>
-				<Icon
-					sx={{
-						p: 0,
-						m: '8px 8px',
-						color: successMessage ? '#4CAF50' : '#f44336',
-						fontSize: '25px',
-						lineHeight: 0,
-					}}
-				>
-					{
-						successMessage
-							? <CheckRoundedIcon sx={{ fontSize: '25px' }} />
-							: <ClearRoundedIcon sx={{ fontSize: '25px' }} />
-					}
-				</Icon>
-				<span>{messageShowing}</span>
-			</Box>
+				<StatusMessage
+					ref={this.messageRef}
+					message=""
+					type={StatusMessageType.SUCCESS}
+				/>
 
-			{
-				submitted
-					? <p>Muito obrigado pela tua ajuda! Vamos continuar a melhorar o website e manter a base de dados o mais atualizada possível!</p>
-					: <Box>
-						<span className='feedback-info'>* Campo obrigatório</span>
+				{
+					this.state.submitted
+						? <p> Muito obrigado pela tua ajuda! Vamos continuar a melhorar o website e manter a base de dados o mais atualizada possível!</p >
+						: <Box>
+							<span className='feedback-info'>* Campo obrigatório</span>
 
-						<FormControlComponent
-							label='Email*'
-							helperText='O teu email apenas vai ser utilizado caso seja necessário mais informações em caso de erro do website.'
-							verifyInput={verifyEmail}
-						/>
+							<FormControlComponent
+								ref={this.emailRef}
+								label='Email*'
+								helperText='O teu email apenas vai ser utilizado caso seja necessário mais informações em caso de erro do website.'
+								verifyInput={this.verifyEmail}
+							/>
 
-						<FormControlComponent
-							label='Título*'
-							helperText=''
-							verifyInput={verifyTitleAndDescription}
-						/>
+							<FormControlComponent
+								ref={this.titleRef}
+								label='Título*'
+								helperText=''
+								verifyInput={this.verifyTitleAndDescription}
+							/>
 
-						<FormControlComponent
-							label='Descrição*'
-							helperText='Em caso de erro do website, por favor refere a página e os passos que executou até encontrar o erro. Obrigado!'
-							multiline={true}
-							rows={6}
-							verifyInput={verifyTitleAndDescription}
-						/>
+							<FormControlComponent
+								ref={this.descriptionRef}
+								label='Descrição*'
+								helperText='Em caso de erro do website, por favor refere a página e os passos que executou até encontrar o erro. Obrigado!'
+								multiline={true}
+								rows={6}
+								verifyInput={this.verifyTitleAndDescription}
+							/>
 
-						<Button
-							className='feedback-submit'
-							variant='contained'
-							onClick={() => processSubmit()}
-						>
-							Submeter
-						</Button>
-					</Box>
-			}
-		</div>
-	);
+							<Button
+								disabled={this.state.sending}
+								className='feedback-submit'
+								variant='contained'
+								onClick={() => this.processSubmit()}
+							>
+								Submeter
+							</Button>
+						</Box>
+				}
+			</div>
+		);
+	}
+
 }
 
-function FormControlComponent(props) {
-	const [error, setError] = useState(false);
-	const [helperText, setHelperText] = useState(props.helperText);
-	const [value, setValue] = useState('');
+class FormControlComponent extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			originalMessage: props.helperText,
+			label: props.label,
+			helperText: props.helperText,
+			rows: props.rows || 1,
+			multiline: props.multiline || false,
+			verifyInput: props.verifyInput,
 
-	return (
-		<FormControl className='feedback-form' size='small'>
-			<InputLabel htmlFor={`feedback-${props.label}`}>{props.label}</InputLabel>
-			<OutlinedInput
-				error={error}
-				id={`feedback-${props.label}`}
-				label={props.label}
-				multiline={props.multiline || false}
-				rows={props.rows || 1}
-				value={value}
-				onChange={(e) => setValue(e.target.value)}
-				onBlur={() => {
-					const res = props.verifyInput(value);
-					if (res.status === "error") {
-						setError(true);
-						setHelperText(res.message);
-					} else {
-						setError(false);
-						setHelperText(props.helperText);
-					}
-				}}
-			/>
-			{
-				helperText !== ''
-					? <FormHelperText id={`feedback-${props.label}-helper`}>{helperText}</FormHelperText>
-					: null
-			}
-		</FormControl>
-	);
+			error: false,
+			value: ''
+		}
+	}
+
+	render() {
+		return (
+			<FormControl className='feedback-form' size='small'>
+				<InputLabel htmlFor={`feedback-${this.state.label}`}>{this.state.label}</InputLabel>
+				<OutlinedInput
+					error={this.state.error}
+					id={`feedback-${this.state.label}`}
+					label={this.state.label}
+					multiline={this.state.multiline}
+					rows={this.state.rows}
+					value={this.state.value}
+					onChange={(e) => this.setState({ value: e.target.value })}
+					onBlur={() => {
+						const res = this.state.verifyInput(this.state.value);
+						if (res.status === "error") {
+							this.setState({ error: true, helperText: res.message });
+						} else {
+							this.setState({ error: false, helperText: this.state.originalMessage });
+						}
+					}}
+				/>
+				{
+					this.state.helperText !== ''
+						? <FormHelperText
+							id={`feedback-${this.state.label}-helper`}
+							error={this.state.error}
+						>
+							{this.state.helperText}
+						</FormHelperText>
+						: null
+				}
+			</FormControl>
+		)
+	}
 }
