@@ -5,6 +5,7 @@ import Box from '@mui/material/Box';
 import Icon from '@mui/material/Icon';
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
 import ClearRoundedIcon from '@mui/icons-material/ClearRounded';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 
 const StatusMessageType = {
 	SUCCESS: {
@@ -16,7 +17,12 @@ const StatusMessageType = {
 		color: '#F44336',
 		backgroundColor: '#FFE7E7',
 		icon: ClearRoundedIcon
-	}
+	},
+	INFO: {
+		color: '#0047AB',
+		backgroundColor: '#E3F2FD',
+		icon: InfoOutlinedIcon
+	},
 }
 
 class StatusMessage extends React.Component {
