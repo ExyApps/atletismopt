@@ -22,7 +22,7 @@ export default class Home extends React.Component {
 				<br />
 				<span><a href="/atletismopt/#/perfis/123890">Perfil de atletas</a> - Pode consultar os dados acerca de um atleta específico. Se souber o id da federação, basta alterar no URL, senão pode pesquisar pelo nome na página anterior.</span>
 				<br />
-				<span><a href="/atletismopt/#/Feedback">Feedback</a> - Dá-nos a tua opinião ou sugestões de como podemos melhorar o nosso website.</span>
+				<span><a href="/atletismopt/#/feedback">Feedback</a> - Dá-nos a tua opinião ou sugestões de como podemos melhorar o nosso website.</span>
 			</div>
 		);
 	}

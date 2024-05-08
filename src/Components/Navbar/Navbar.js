@@ -66,8 +66,8 @@ export default class NavbarComponent extends React.Component {
 							: <>
 								<Nav className="me-auto nav-links-container">
 									<NavDropdown title="Competições" id="competition-nav-dropdown" className='pc-nav-link'>
-										<NavDropdown.Item href="#/competicoes">Calendário</NavDropdown.Item>
-										<NavDropdown.Item href="#/competicoes/resultados">Resultados</NavDropdown.Item>
+										<NavDropdown.Item href="#/calendario">Calendário</NavDropdown.Item>
+										<NavDropdown.Item href="#/resultados">Resultados</NavDropdown.Item>
 									</NavDropdown>
 
 									<NavDropdown title="Atletas" id="athlete-nav-dropdown" className='pc-nav-link'>
@@ -93,7 +93,7 @@ export default class NavbarComponent extends React.Component {
 									<Accordion.Header>Competições</Accordion.Header>
 									<Accordion.Body>
 										<Nav.Link
-											href="/atletismopt/#/competicoes"
+											href="/atletismopt/#/calendario"
 											onClick={() => this.handleHamburgerClick()}
 										>
 											Calendário

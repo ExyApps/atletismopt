@@ -1,15 +1,15 @@
 import React from 'react';
+import './Calendario.css';
 
 import CircularProgress from '@mui/material/CircularProgress';
 
-import AthleteTable from '../Components/Table/AthleteTable';
-import getURL from '../Utils/Requests';
+import AthleteTable from '../../Components/Table/AthleteTable';
 
-export default class Perfis extends React.Component {
+export default class Calendario extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			windowWidth: window.innerWidth,
+			width: window.innerWidth,
 
 			loading: true,
 			rows: []
@@ -21,17 +21,8 @@ export default class Perfis extends React.Component {
 	}
 
 	componentDidMount() {
-		document.title = 'AtletismoPT - Perfis';
+		document.title = 'AtletismoPT - Calendário';
 		window.addEventListener('resize', this.updateDimensions);
-
-		fetch(getURL() + 'info/athletes')
-			.then(response => response.json())
-			.then(data => {
-				this.setState({
-					loading: false,
-					rows: data["athletes"]
-				});
-			});
 	}
 
 	componentWillUnmount() {
@@ -47,7 +38,7 @@ export default class Perfis extends React.Component {
 							className='page loader-container'
 						>
 							<CircularProgress className="loader" />
-							<p>Aos seus lugares... Pronto... Vai! 💥</p>
+							<p>A carregar as próximas competições... 🕒</p>
 						</div>
 						: <div className='page'>
 							<AthleteTable

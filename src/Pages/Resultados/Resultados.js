@@ -1,15 +1,17 @@
 import React from 'react';
+import './Resultados.css';
 
 import CircularProgress from '@mui/material/CircularProgress';
 
-import AthleteTable from '../Components/Table/AthleteTable';
-import getURL from '../Utils/Requests';
+import CompetitionTable from '../../Components/Table/CompetitionTable';
 
-export default class Perfis extends React.Component {
+import getURL from '../../Utils/Requests';
+
+export default class Resultados extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			windowWidth: window.innerWidth,
+			width: window.innerWidth,
 
 			loading: true,
 			rows: []
@@ -21,15 +23,15 @@ export default class Perfis extends React.Component {
 	}
 
 	componentDidMount() {
-		document.title = 'AtletismoPT - Perfis';
+		document.title = 'AtletismoPT - Resultados';
 		window.addEventListener('resize', this.updateDimensions);
 
-		fetch(getURL() + 'info/athletes')
+		fetch(getURL() + 'info/finished-competitions')
 			.then(response => response.json())
 			.then(data => {
 				this.setState({
 					loading: false,
-					rows: data["athletes"]
+					rows: data["competitions"]
 				});
 			});
 	}
@@ -47,10 +49,10 @@ export default class Perfis extends React.Component {
 							className='page loader-container'
 						>
 							<CircularProgress className="loader" />
-							<p>Aos seus lugares... Pronto... Vai! 💥</p>
+							<p>Os resultados estão a fazer os últimos alongamentos antes de aparecerem! 💪</p>
 						</div>
 						: <div className='page'>
-							<AthleteTable
+							<CompetitionTable
 								rows={this.state.rows}
 							/>
 						</div>

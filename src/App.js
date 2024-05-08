@@ -14,6 +14,8 @@ import Rankings from './Pages/Rankings';
 import Sobre from './Pages/Sobre/Sobre';
 import AthleteProfile from './Pages/AthleteProfile/AthleteProfile';
 import Feedback from './Pages/Feedback/Feedback';
+import Calendario from './Pages/Calendario/Calendario';
+import Resultados from './Pages/Resultados/Resultados';
 
 function App() {
 	return (
@@ -27,6 +29,8 @@ function App() {
 					<Route exact path="/rankings" element={<Rankings />} />
 					<Route exact path="/sobre" element={<Sobre />} />
 					<Route exact path="/feedback" element={<Feedback />} />
+					<Route exact path="/calendario" element={<Calendario />} />
+					<Route exact path="/resultados" element={<Resultados />} />
 
 					{/* Route that catches all the routes that end in /perfis/<id> */}
 					<Route exact path="/perfis/:id" element={<AthleteProfile />} />

@@ -376,7 +376,7 @@ export default class AthleteTable extends Table {
 										</Box>
 									</td>
 									<td>
-										{row.birthdate}
+										{row.birthdate.split('-').reverse().join('/')}
 									</td>
 									<td>
 										{row.club_abbreviation}
@@ -534,7 +534,7 @@ export default class AthleteTable extends Table {
 										</Box>
 									</td>
 									<td>
-										{row.birthdate}
+										{row.birthdate.split('-').reverse().join('/')}
 									</td>
 									<td>{row.club_abbreviation} ({row.club_name})</td>
 								</tr>
@@ -693,7 +693,7 @@ export default class AthleteTable extends Table {
 												</Box>
 										}
 									</td>
-									<td>{row.birthdate}</td>
+									<td>{row.birthdate.split('-').reverse().join('/')}</td>
 									<td>{row.club_abbreviation} ({row.club_name})</td>
 									<td>
 										<Box

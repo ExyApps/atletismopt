@@ -1,0 +1,87 @@
+.form-control-competitions-table {
+	margin-bottom: 0.5rem !important;
+}
+
+.form-control-competitions-table:first-child {
+	margin-right: 1rem;
+}
+
+.date-picker {
+	margin-left: 1rem !important;
+	width: 150px;
+}
+
+@media (max-width: 1023px) {
+	.date-picker {
+		width: 49% !important;
+		margin-left: 0 !important;
+		margin-bottom: 0.8rem !important;
+	}
+
+	.date-picker:nth-child(odd) {
+		margin-right: 2% !important;
+	}
+
+	.search-bar-competition {
+		width: 100% !important;
+		margin-bottom: 12px !important;
+	}
+
+	.form-control-competitions-table,
+	.ordering-form {
+		margin-top: 0.5rem !important;
+		margin-bottom: 0.8rem !important;
+		min-width: 49%;
+		width: 49%;
+	}
+
+	.form-control-competitions-table:first-child,
+	.ordering-form:first-child {
+		margin-right: 2%;
+	}
+
+	.form-control-competitions-table {
+		float: left !important;
+		width: 49% !important;
+		min-width: 49% !important;
+		margin-left: 0 !important;
+		margin-bottom: 12px !important;
+		margin-right: 0 !important;
+		margin-top: 0 !important;
+	}
+
+	.form-control-competitions-table .MuiInputBase-formControl {
+		min-width: 49% !important;
+	}
+
+	.form-control-competitions-table:nth-child(even) {
+		margin-right: 2% !important;
+	}
+
+	.full-form {
+		width: 100% !important;
+	}
+}
+
+.mobile-span {
+	display: block;
+	text-align: center;
+	width: 100%;
+}
+
+.small-heading {
+	color: var(--grey-400);
+	font-weight: bold;
+	font-size: 14px;
+	text-transform: uppercase;
+}
+
+.search-icon {
+	margin: 0 10px;
+	color: var(--grey-400);
+}
+
+.search-bar-competition {
+	float: left !important;
+	margin-right: 1rem !important;
+}
