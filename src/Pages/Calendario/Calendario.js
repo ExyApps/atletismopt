@@ -3,7 +3,9 @@ import './Calendario.css';
 
 import CircularProgress from '@mui/material/CircularProgress';
 
-import AthleteTable from '../../Components/Table/AthleteTable';
+import CompetitionTable from '../../Components/Table/CompetitionTable';
+
+import getURL from '../../Utils/Requests';
 
 export default class Calendario extends React.Component {
 	constructor(props) {
@@ -23,6 +25,15 @@ export default class Calendario extends React.Component {
 	componentDidMount() {
 		document.title = 'AtletismoPT - Calendário';
 		window.addEventListener('resize', this.updateDimensions);
+
+		fetch(getURL() + 'info/next-competitions')
+			.then(response => response.json())
+			.then(data => {
+				this.setState({
+					loading: false,
+					rows: data["competitions"]
+				});
+			});
 	}
 
 	componentWillUnmount() {
@@ -41,7 +52,7 @@ export default class Calendario extends React.Component {
 							<p>A carregar as próximas competições... 🕒</p>
 						</div>
 						: <div className='page'>
-							<AthleteTable
+							<CompetitionTable
 								rows={this.state.rows}
 							/>
 						</div>

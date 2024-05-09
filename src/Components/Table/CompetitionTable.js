@@ -218,7 +218,7 @@ export default class CompetitionTable extends Table {
 							<TableHeader
 								parent={this}
 								field=''
-								name='Resultados'
+								name='Competições'
 								sortable={false}
 							/>
 						</tr>
