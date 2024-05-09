@@ -2,8 +2,8 @@ import React from 'react';
 
 import CircularProgress from '@mui/material/CircularProgress';
 
-import AthleteTable from '../Components/Table/AthleteTable';
-import getURL from '../Utils/Requests';
+import AthleteTable from '../../Components/Table/AthleteTable';
+import getURL from '../../Utils/Requests';
 
 export default class Perfis extends React.Component {
 	constructor(props) {

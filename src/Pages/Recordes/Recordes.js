@@ -2,14 +2,14 @@ import React, { useEffect } from 'react';
 
 import Button from 'react-bootstrap/Button';
 
-export default function Competicoes() {
+export default function Recordes() {
 	useEffect(() => {
-		document.title = 'AtletismoPT - Competições';
+		document.title = 'AtletismoPT - Recordes';
 	});
 
 	return (
 		<div className='template-page'>
-			<h1>Competições</h1>
+			<h1>Recordes</h1>
 			<p>Ups! Página não terminada!</p>
 			<p>Aguarde enquanto acabamos de a desenvolver!</p>
 
