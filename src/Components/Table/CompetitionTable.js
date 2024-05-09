@@ -20,7 +20,9 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import { ptBR } from '@mui/x-date-pickers/locales';
 import dayjs from 'dayjs';
-import 'dayjs/locale/en-gb';
+import 'dayjs/locale/pt';
+
+
 
 import {
 	isMobileDeviceLandscape,
@@ -81,8 +83,12 @@ export default class CompetitionTable extends Table {
 	updateSearchedRows() {
 		var newRows = this.state.rows.filter(row => {
 			// Compare the text field text
+			console.log(row.start_date, row.end_date, this.state.initialDate.localeCompare(row.end_date), this.state.finalDate.localeCompare(row.start_date));
 			return (row.name.toLowerCase().includes(this.state.search.toLowerCase())
-				&& (this.state.organizationSelected === '' || `${row.organization_abbreviation} (${row.organization_name})` === this.state.organizationSelected));
+				&& (this.state.organizationSelected === '' || `${row.organization_abbreviation} (${row.organization_name})` === this.state.organizationSelected)
+				&& (this.state.initialDate.localeCompare(row.end_date) <= 0)
+				&& (this.state.finalDate.localeCompare(row.start_date) >= 0)
+			);
 			// && (this.state.yearSelected === '' || row.date.split('-')[0] === this.state.yearSelected)
 			// && (this.state.onlyValid === false || row.wind === null || row.wind <= 2)
 		});
@@ -589,29 +595,6 @@ export default class CompetitionTable extends Table {
 		)
 	}
 
-	weekdayTranslation(weekday) {
-		const day = weekday.format('dd');
-
-		switch (day) {
-			case 'Mo':
-				return 'S';
-			case 'Tu':
-				return 'T';
-			case 'We':
-				return 'Q';
-			case 'Th':
-				return 'Q';
-			case 'Fr':
-				return 'S';
-			case 'Sa':
-				return 'S';
-			case 'Su':
-				return 'D';
-			default:
-				return '';
-		}
-	}
-
 	render() {
 		const visibleRows = this.state.searchedRows.slice(
 			this.state.page * this.state.rowsPerPage,
@@ -669,7 +652,7 @@ export default class CompetitionTable extends Table {
 
 					<LocalizationProvider
 						dateAdapter={AdapterDayjs}
-						adapterLocale={"en-gb"}
+						adapterLocale={"pt"}
 						localeText={ptBR.components.MuiLocalizationProvider.defaultProps.localeText}
 					>
 						<MobileDatePicker
@@ -677,15 +660,19 @@ export default class CompetitionTable extends Table {
 							inputFormat="dd/MM/yyyy"
 							label="Desde"
 							value={dayjs(this.state.initialDate)}
-							onChange={(newValue) => this.setState({ initialDate: newValue })}
+							onChange={
+								(newValue) => {
+									const s = newValue.format('YYYY-MM-DD');
+									this.setState({ initialDate: s }, this.updateSearchedRows)
+								}
+							}
 							slotProps={{ textField: { size: 'small' } }}
-							dayOfWeekFormatter={(weekday) => this.weekdayTranslation(weekday)}
 						/>
 					</LocalizationProvider>
 
 					<LocalizationProvider
 						dateAdapter={AdapterDayjs}
-						adapterLocale={"en-gb"}
+						adapterLocale={"pt"}
 						localeText={ptBR.components.MuiLocalizationProvider.defaultProps.localeText}
 					>
 						<MobileDatePicker
@@ -693,9 +680,13 @@ export default class CompetitionTable extends Table {
 							inputFormat="dd/MM/yyyy"
 							label="Até"
 							value={dayjs(this.state.finalDate)}
-							onChange={(newValue) => this.setState({ finalDate: newValue })}
+							onChange={
+								(newValue) => {
+									const s = newValue.format('YYYY-MM-DD');
+									this.setState({ finalDate: s }, this.updateSearchedRows)
+								}
+							}
 							slotProps={{ textField: { size: 'small' } }}
-							dayOfWeekFormatter={(weekday) => this.weekdayTranslation(weekday)}
 						/>
 					</LocalizationProvider>
 				</Box>
