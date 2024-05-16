@@ -143,7 +143,7 @@ export default class Feedback extends React.Component {
 							<FormControlComponent
 								ref={this.emailRef}
 								label='Email*'
-								helperText='O teu email apenas vai ser utilizado caso seja necessário mais informações em caso de erro do website.'
+								helperText='O teu email apenas vai ser utilizado caso seja necessário mais informações.'
 								verifyInput={this.verifyEmail}
 							/>
 
@@ -157,7 +157,7 @@ export default class Feedback extends React.Component {
 							<FormControlComponent
 								ref={this.descriptionRef}
 								label='Descrição*'
-								helperText='Em caso de erro do website, por favor refere a página e os passos que executou até encontrar o erro. Obrigado!'
+								helperText='Em caso de erro do website, por favor refere a página e os passos que executaste até encontrar o erro. Obrigado!'
 								multiline={true}
 								rows={6}
 								verifyInput={this.verifyTitleAndDescription}
