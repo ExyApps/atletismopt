@@ -36,6 +36,9 @@ class AthleteProfile extends React.Component {
 			id: null,
 
 			mode: 0,
+
+			backgroundImageLoading: true,
+			profileImageLoading: true,
 		};
 	}
 
@@ -140,7 +143,6 @@ class AthleteProfile extends React.Component {
 
 					this.filterRecords(data["events"], data["results"]);
 				}
-
 			});
 	}
 
@@ -203,7 +205,11 @@ class AthleteProfile extends React.Component {
 			>
 				<img
 					className="mobile-profile-pic"
-					src="https://t4.ftcdn.net/jpg/00/64/67/27/360_F_64672736_U5kpdGs9keUll8CRQ3p3YaEv2M6qkVY5.jpg"
+					src={
+						this.state.athlete.profile_image
+							? this.state.athlete.profile_image
+							: "https://t4.ftcdn.net/jpg/00/64/67/27/360_F_64672736_U5kpdGs9keUll8CRQ3p3YaEv2M6qkVY5.jpg"
+					}
 					alt='Athlete Profile'
 					sx={{
 						m: 0
@@ -262,7 +268,11 @@ class AthleteProfile extends React.Component {
 			>
 				<img
 					className="mobile-profile-pic"
-					src="https://t4.ftcdn.net/jpg/00/64/67/27/360_F_64672736_U5kpdGs9keUll8CRQ3p3YaEv2M6qkVY5.jpg"
+					src={
+						this.state.athlete.profile_image
+							? this.state.athlete.profile_image
+							: "https://t4.ftcdn.net/jpg/00/64/67/27/360_F_64672736_U5kpdGs9keUll8CRQ3p3YaEv2M6qkVY5.jpg"
+					}
 					alt='Athlete Profile'
 					style={{
 						marginLeft: '2rem'
@@ -321,7 +331,11 @@ class AthleteProfile extends React.Component {
 			>
 				<img
 					className="profile-pic"
-					src="https://t4.ftcdn.net/jpg/00/64/67/27/360_F_64672736_U5kpdGs9keUll8CRQ3p3YaEv2M6qkVY5.jpg"
+					src={
+						this.state.athlete.profile_image
+							? this.state.athlete.profile_image
+							: "https://t4.ftcdn.net/jpg/00/64/67/27/360_F_64672736_U5kpdGs9keUll8CRQ3p3YaEv2M6qkVY5.jpg"
+					}
 					alt='Athlete Profile'
 				/>
 				<Box sx={{
