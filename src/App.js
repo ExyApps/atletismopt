@@ -16,6 +16,7 @@ import Feedback from './Pages/Feedback/Feedback';
 import Calendario from './Pages/Calendario/Calendario';
 import Resultados from './Pages/Resultados/Resultados';
 import Recordes from './Pages/Recordes/Recordes';
+import Admin from './Pages/Admin/Admin';
 
 function App() {
 	return (
@@ -31,6 +32,7 @@ function App() {
 					<Route exact path="/calendario" element={<Calendario />} />
 					<Route exact path="/resultados" element={<Resultados />} />
 					<Route exact path="/recordes" element={<Recordes />} />
+					<Route exact path="/admin-tools" element={<Admin />} />
 
 					{/* Route that catches all the routes that end in /perfis/<id> */}
 					<Route exact path="/perfis/:id" element={<AthleteProfile />} />

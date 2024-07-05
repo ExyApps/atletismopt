@@ -1,0 +1,26 @@
+span {
+	font-size: 13px;
+}
+
+.info-header span {
+	letter-spacing: 1px;
+	margin-right: 5px;
+}
+
+.info-text span {
+	background-color: white;
+	color: black;
+	padding: 2px 4px;
+	border-radius: 20px;
+}
+
+.info-box {
+	display: inline-flex;
+	background-color: #ED4337;
+	color: white;
+	padding: 1px 4px 1px 10px;
+	border-radius: 20px;
+	margin-right: 8px;
+	margin-bottom: 2px;
+	cursor: pointer;
+}
