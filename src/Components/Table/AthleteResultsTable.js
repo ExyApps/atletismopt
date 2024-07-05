@@ -211,7 +211,7 @@ export default class AthleteResultsTable extends Table {
 								</tr>
 								: rows.map((row, id) => (
 									<tr
-										key={row.event_id}
+										key={row.event_id + " " + row.attempt}
 										className="clickable-row"
 										onClick={(event) => this.handleClick(event, row.event_id)}
 									>
@@ -357,7 +357,7 @@ export default class AthleteResultsTable extends Table {
 								</td>
 							</tr>
 							: rows.map((row, id) => (
-								<tr key={row.event_id} className="clickable-row" onClick={(event) => this.handleClick(event, row.event_id)}>
+								<tr key={row.event_id + " " + row.attempt} className="clickable-row" onClick={(event) => this.handleClick(event, row.event_id)}>
 									<td><Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>{row.date.split('-').reverse().join('/')}</Box></td>
 									<td><Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>{row.event_name}</Box></td>
 									<td><Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>{row.competition_name}</Box></td>
@@ -494,7 +494,7 @@ export default class AthleteResultsTable extends Table {
 								</td>
 							</tr>
 							: rows.map((row, id) => (
-								<tr key={row.event_id} className="clickable-row" onClick={(event) => this.handleClick(event, row.event_id)}>
+								<tr key={row.event_id + " " + row.attempt} className="clickable-row" onClick={(event) => this.handleClick(event, row.event_id)}>
 									<td><Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>{row.date.split('-').reverse().join('/')}</Box></td>
 									<td><Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>{row.event_name}</Box></td>
 									<td><Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>{row.competition_name}</Box></td>

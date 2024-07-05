@@ -83,7 +83,6 @@ export default class CompetitionTable extends Table {
 	updateSearchedRows() {
 		var newRows = this.state.rows.filter(row => {
 			// Compare the text field text
-			console.log(row.start_date, row.end_date, this.state.initialDate.localeCompare(row.end_date), this.state.finalDate.localeCompare(row.start_date));
 			return (row.name.toLowerCase().includes(this.state.search.toLowerCase())
 				&& (this.state.organizationSelected === '' || `${row.organization_abbreviation} (${row.organization_name})` === this.state.organizationSelected)
 				&& (this.state.initialDate.localeCompare(row.end_date) <= 0)

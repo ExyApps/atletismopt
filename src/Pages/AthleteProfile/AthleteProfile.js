@@ -62,7 +62,7 @@ class AthleteProfile extends React.Component {
 						(result.date.split('-')[0] === (new Date().getFullYear() - 1).toString() && parseInt(result.date.split('-')[1]) >= 9))
 			);
 
-			if (event.direction === 1) {
+			if (event.ascending === 0) {
 				const best = matching_events.reduce((prev, current) => {
 					if (no_results.includes(prev.result.toLowerCase().trim())) return current;
 					if (no_results.includes(current.result.toLowerCase().trim())) return prev;
